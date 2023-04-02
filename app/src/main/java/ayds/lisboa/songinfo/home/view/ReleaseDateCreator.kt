@@ -5,10 +5,11 @@ interface ReleaseDateCreator{
 }
 internal class ReleaseDateCreatorIml: ReleaseDateCreator {
     override fun createDate(precision: String, date: String): String {
+        val dateArray = date.split("-")
         val datePrecision = when (precision) {
-            "day" -> {"${date[0]}/${date[1]}/${date[2]}"}
-            "month" -> {"${getMonth(date[1].code)}, $date[0]"}
-            "year" -> {"${date[0]}, (${leapYear(date[0].code)})"}
+            "day" -> {"${dateArray[0]}/${dateArray[1]}/${dateArray[2]}"}
+            "month" -> {"${getMonth(dateArray[1].toInt())}, ${dateArray[0]}"}
+            "year" -> {"${dateArray[0]}, (${leapYear(dateArray[0].toInt())})"}
             else -> { "ERROR when(releaseDatePrecision)" }
 
         }

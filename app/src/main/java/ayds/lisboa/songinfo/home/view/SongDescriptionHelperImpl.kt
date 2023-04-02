@@ -20,7 +20,7 @@ internal class SongDescriptionHelperImpl(releaseDateCreator: ReleaseDateCreator)
                 }\n" +
                         "Artist: ${song.artistName}\n" +
                         "Album: ${song.albumName}\n" +
-                        "Year: ${releaseDateCreator.createDate(song.releaseDatePrecision,song.releaseDate)}"
+                        "Release Date: ${releaseDateCreator.createDate(song.releaseDatePrecision,song.releaseDate)}"
             else -> "Song not found"
         }
     }
