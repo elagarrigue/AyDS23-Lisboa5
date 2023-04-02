@@ -18,7 +18,7 @@ object HomeModelInjector {
 
     fun initHomeModel(homeView: HomeView) {
         val spotifyLocalStorage: SpotifyLocalStorage = SpotifyLocalStorageImpl(
-          homeView as Context, CursorToSpotifySongMapperImpl()
+            homeView as Context, CursorToSpotifySongMapperImpl()
         )
         val spotifyTrackService: SpotifyTrackService = SpotifyInjector.spotifyTrackService
 
