@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.home.controller
+package ayds.lisboa.songinfo.utils.navigation.controller
 
 import ayds.lisboa.songinfo.home.model.HomeModel
 import ayds.lisboa.songinfo.home.model.entities.Song
