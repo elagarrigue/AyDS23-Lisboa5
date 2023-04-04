@@ -20,8 +20,14 @@ internal class SongDescriptionHelperImpl(releaseDateCreator: ReleaseDateCreator)
                 }\n" +
                         "Artist: ${song.artistName}\n" +
                         "Album: ${song.albumName}\n" +
-                        "Release Date: ${releaseDateCreator.createDate(song.releaseDatePrecision,song.releaseDate)}"
+                        "Release Date: ${createDate(song)}"
             else -> "Song not found"
         }
+    }
+
+    private fun createDate(song: SpotifySong): String{
+        val releaseDatePrecision = song.releaseDatePrecision
+        val releaseDate = song.releaseDate
+        return releaseDateCreator.createDate(releaseDatePrecision,releaseDate)
     }
 }
