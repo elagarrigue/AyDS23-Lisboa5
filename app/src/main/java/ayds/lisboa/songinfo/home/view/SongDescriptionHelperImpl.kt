@@ -9,7 +9,7 @@ interface SongDescriptionHelper {
     fun getSongDescriptionText(song: Song = EmptySong): String
 }
 
-internal class SongDescriptionHelperImpl(releaseDateCreator: ReleaseDateCreator) : SongDescriptionHelper {
+internal class SongDescriptionHelperImpl : SongDescriptionHelper {
 
     override fun getSongDescriptionText(song: Song): String {
         return when (song) {

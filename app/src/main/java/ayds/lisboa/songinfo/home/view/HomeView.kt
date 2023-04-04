@@ -16,6 +16,7 @@ import ayds.lisboa.songinfo.home.model.entities.Song.EmptySong
 import ayds.lisboa.songinfo.home.model.entities.Song
 import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
 import ayds.lisboa.songinfo.home.view.HomeUiState.Companion.DEFAULT_IMAGE
+import ayds.lisboa.songinfo.home.view.HomeViewInjector.songDescriptionHelper
 import ayds.lisboa.songinfo.moredetails.fulllogic.OtherInfoWindow
 import ayds.lisboa.songinfo.utils.UtilsInjector
 import ayds.lisboa.songinfo.utils.navigation.NavigationUtils
@@ -35,7 +36,6 @@ class HomeViewActivity : AppCompatActivity(), HomeView {
 
     private val onActionSubject = Subject<HomeUiEvent>()
     private lateinit var homeModel: HomeModel
-    private val songDescriptionHelper: SongDescriptionHelper = HomeViewInjector.songDescriptionHelper
     private val imageLoader: ImageLoader = UtilsInjector.imageLoader
     private val navigationUtils: NavigationUtils = UtilsInjector.navigationUtils
 
