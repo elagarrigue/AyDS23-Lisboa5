@@ -11,11 +11,3 @@
 .externalNativeBuild
 .cxx
 local.properties
-
-#Archivos gradle
-build.gradle
-gradle.properties
-gradle/wrapper/gradle-wrapper.properties
-observer/build.gradle
-
-
