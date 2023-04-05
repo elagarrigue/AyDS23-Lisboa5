@@ -4,17 +4,23 @@ interface ReleaseDateCreator{
     fun createDate(precision:String, date:String):String
 }
 internal class ReleaseDateCreatorIml: ReleaseDateCreator {
-    override fun createDate(precision: String, date: String): String {
-        val dateArray = date.split("-")
-        val datePrecision = when (precision) {
-            "day" -> {"${dateArray[0]}/${dateArray[1]}/${dateArray[2]}"}
-            "month" -> {"${getMonth(dateArray[1].toInt())}, ${dateArray[0]}"}
-            "year" -> {"${dateArray[0]}, (${leapYear(dateArray[0].toInt())})"}
-            else -> { "ERROR when(releaseDatePrecision)" }
 
+    private var dateArray = emptyArray<String>()
+
+    override fun createDate(precision: String, date: String): String {
+        dateArray = date.split("-").toTypedArray()
+        val datePrecision = when (precision) {
+            "day" -> formatDay()
+            "month" -> formatMouth()
+            "year" -> formatYear()
+            else -> "ERROR when(releaseDatePrecision)"
         }
         return datePrecision
     }
+
+    private fun formatYear() = "${dateArray[0]}, (${leapYear(dateArray[0].toInt())})"
+    private fun formatMouth() = "${getMonth(dateArray[1].toInt())}, ${dateArray[0]}"
+    private fun formatDay() = "${dateArray[0]}/${dateArray[1]}/${dateArray[2]}"
 
     private fun getMonth(month: Int) = when (month) {
         1 -> "January"
