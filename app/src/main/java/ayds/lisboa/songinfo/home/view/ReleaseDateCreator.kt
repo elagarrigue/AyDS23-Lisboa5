@@ -37,10 +37,10 @@ internal class ReleaseDateCreatorIml: ReleaseDateCreator {
     }
 
     private fun leapYear(year: Int) : String {
-        if (isLeapYear(year))
-            return "leap year"
+        return if (isLeapYear(year))
+            "leap year"
         else
-            return "not leap year"
+            "not leap year"
     }
 
 }

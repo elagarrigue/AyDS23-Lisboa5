@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.home.controller
+package ayds.lisboa.songinfo.utils.navigation.controller
 
 import ayds.lisboa.songinfo.home.model.HomeModelInjector
 import ayds.lisboa.songinfo.home.view.HomeView
