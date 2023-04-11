@@ -5,7 +5,7 @@ import ayds.lisboa.songinfo.home.model.entities.Song
 import ayds.lisboa.songinfo.home.view.HomeUiEvent
 import ayds.lisboa.songinfo.home.view.HomeUiState
 import ayds.lisboa.songinfo.home.view.HomeView
-import ayds.lisboa.songinfo.utils.navigation.controller.HomeControllerImpl
+import ayds.lisboa.songinfo.home.controller.HomeControllerImpl
 import ayds.observer.Subject
 import io.mockk.every
 import io.mockk.mockk
