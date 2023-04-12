@@ -1,5 +1,3 @@
-import android.os.Build
-import androidx.annotation.RequiresApi
 import ayds.lisboa.songinfo.home.view.DateWrapper
 
 object DateFormatFactory {
@@ -16,21 +14,17 @@ sealed class DateCreator(val date: String) {
 }
 
 class DayFactory(date: String) : DateCreator(date) {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun createDate() = DateWrapper(date).formatDay()
 }
 
 class MonthFactory(date: String): DateCreator(date) {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun createDate() = DateWrapper(date).formatMonth()
 }
 
 class YearFactory(date: String): DateCreator(date) {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun createDate()= DateWrapper(date).formatYear()
 }
 
 class DefaultFactory(date: String): DateCreator(date) {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun createDate()= "ERROR: Precision desconocida"
 }
