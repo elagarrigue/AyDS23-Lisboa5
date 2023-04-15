@@ -1,10 +1,13 @@
 import ayds.lisboa.songinfo.home.view.DateWrapper
 
 object DateFormatFactory {
+    private const val DAY ="day"
+    private const val MONTH ="month"
+    private const val YEAR ="year"
     fun get(precision: String, date: String) = when (precision) {
-        "day" -> DayFactory(date)
-        "month" -> MonthFactory(date)
-        "year" -> YearFactory(date)
+        DAY -> DayFactory(date)
+        MONTH -> MonthFactory(date)
+        YEAR -> YearFactory(date)
         else -> DefaultFactory(date)
     }
 }
