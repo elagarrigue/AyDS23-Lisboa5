@@ -29,5 +29,5 @@ private class YearFactory(date: String): DateCreator(date) {
 }
 
 private class DefaultFactory(date: String): DateCreator(date) {
-    override fun createDate()= "ERROR: Precision desconocida"
+    override fun createDate()= date
 }
