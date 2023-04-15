@@ -16,18 +16,18 @@ sealed class DateCreator(val date: String) {
     abstract fun createDate(): String
 }
 
-class DayFactory(date: String) : DateCreator(date) {
+private class DayFactory(date: String) : DateCreator(date) {
     override fun createDate() = DateWrapper(date).formatDay()
 }
 
-class MonthFactory(date: String): DateCreator(date) {
+private class MonthFactory(date: String): DateCreator(date) {
     override fun createDate() = DateWrapper(date).formatMonth()
 }
 
-class YearFactory(date: String): DateCreator(date) {
+private class YearFactory(date: String): DateCreator(date) {
     override fun createDate()= DateWrapper(date).formatYear()
 }
 
-class DefaultFactory(date: String): DateCreator(date) {
+private class DefaultFactory(date: String): DateCreator(date) {
     override fun createDate()= "ERROR: Precision desconocida"
 }
