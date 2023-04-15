@@ -8,9 +8,7 @@ interface SongDescriptionHelper {
     fun getSongDescriptionText(song: Song = EmptySong): String
 }
 
-internal class SongDescriptionHelperImpl(
-    private var releaseDateCreator: ReleaseDateCreator
-) : SongDescriptionHelper {
+internal class SongDescriptionHelperImpl() : SongDescriptionHelper {
 
     override fun getSongDescriptionText(song: Song): String {
         return when (song) {
@@ -21,14 +19,14 @@ internal class SongDescriptionHelperImpl(
                 }\n" +
                         "Artist: ${song.artistName}\n" +
                         "Album: ${song.albumName}\n" +
-                        "Release Date: ${createDate(song)}"
+                        "Release Date: ${song.createDate()}"
             else -> "Song not found"
         }
     }
 
-    private fun createDate(song: SpotifySong): String{
-        val releaseDatePrecision = song.releaseDatePrecision
-        val releaseDate = song.releaseDate
-        return releaseDateCreator.createDate(releaseDatePrecision,releaseDate)
+    private fun SpotifySong.createDate(): String{
+        val releaseDatePrecision = this.releaseDatePrecision
+        val releaseDate = this.releaseDate
+        return DateFormatFactory.get(releaseDatePrecision,releaseDate).createDate()
     }
 }
