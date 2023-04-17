@@ -1,9 +1,12 @@
-object DateFormatFactory {
+interface DateFormatFactory{
+    fun get(precision: String, date: String): DateCreator
+}
+object DateFormatFactoryImpl: DateFormatFactory{
     private const val DAY ="day"
     private const val MONTH ="month"
     private const val YEAR ="year"
     var dateArray = emptyArray<String>()
-    fun get(precision: String, date: String):DateCreator{
+    override fun get(precision: String, date: String):DateCreator{
         dateArray = date.split("-").toTypedArray()
         return when (precision) {
             DAY -> DayFactory(dateArray)
