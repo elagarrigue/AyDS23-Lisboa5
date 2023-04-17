@@ -25,8 +25,6 @@ internal class SongDescriptionHelperImpl() : SongDescriptionHelper {
     }
 
     private fun SpotifySong.createDate(): String{
-        val releaseDatePrecision = this.releaseDatePrecision
-        val releaseDate = this.releaseDate
-        return DateFormatFactory.get(releaseDatePrecision,releaseDate).createDate()
+        return DateFormatFactory.get(this.releaseDatePrecision,this.releaseDate).createDate()
     }
 }
