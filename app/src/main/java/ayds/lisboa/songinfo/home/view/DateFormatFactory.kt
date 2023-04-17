@@ -19,7 +19,12 @@ sealed class DateCreator(val dateArray: Array<String>) {
 }
 
 private class DayFactory(dateArray: Array<String>) : DateCreator(dateArray) {
-    override fun createDate() = "${dateArray[2]}/${dateArray[1]}/${dateArray[0]}"
+    override fun createDate(): String {
+        val day = dateArray[2]
+        val month = dateArray[1]
+        val year = dateArray[0]
+        return "$day/$month/$year"
+    }
 }
 
 private class MonthFactory(dateArray: Array<String>): DateCreator(dateArray) {
