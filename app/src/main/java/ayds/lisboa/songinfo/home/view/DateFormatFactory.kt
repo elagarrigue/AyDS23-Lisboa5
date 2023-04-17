@@ -35,7 +35,11 @@ private class MonthFactory(dateArray: Array<String>): DateCreator(dateArray) {
 }
 
 private class YearFactory(dateArray: Array<String>): DateCreator(dateArray) {
-    override fun createDate()= "${dateArray[0]}, (${leapYear(dateArray[0].toInt())})"
+    override fun createDate() :String {
+        val year = dateArray[0].toInt()
+        val isLeapYear = leapYear(year)
+        return "$year ($isLeapYear)"
+    }
 
     private fun leapYear(year: Int) = if (isLeapYear(year)) "leap year" else "not leap year"
     private fun isLeapYear(year: Int) = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
