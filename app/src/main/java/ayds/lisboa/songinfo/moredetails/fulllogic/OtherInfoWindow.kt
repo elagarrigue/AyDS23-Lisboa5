@@ -35,10 +35,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun getArtistInfo(artistName: String?) {
 
         // create
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://ws.audioscrobbler.com/2.0/")
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
+        val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
@@ -57,6 +54,13 @@ class OtherInfoWindow : AppCompatActivity() {
                 textPane2!!.text = Html.fromHtml(finalText)
             }
         }.start()
+    }
+
+    private fun createRetrofit(): Retrofit{
+        return Retrofit.Builder()
+                .baseUrl("https://ws.audioscrobbler.com/2.0/")
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build()
     }
 
     private var dataBase: DataBase? = null
