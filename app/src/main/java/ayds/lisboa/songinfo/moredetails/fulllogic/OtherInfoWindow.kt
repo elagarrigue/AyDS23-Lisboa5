@@ -88,27 +88,26 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
         val callResponse: Response<String>
-        var text: String = "No Results"
+        var textFromService= "No Results"
         try {
             callResponse = lastFMAPI.getArtistInfo(artistName).execute()
-            Log.e("TAG", "JSON " + callResponse.body())
-            val gson = Gson()
-            val jobj = gson.fromJson(callResponse.body(), JsonObject::class.java)
-            val artist = jobj["artist"].asJsonObject
-            val bio = artist["bio"].asJsonObject
-            val extract = bio["content"]
-            val url = artist["url"]
-            if (extract == null) {
-                text = "No Results"
+
+            val gsonObject = Gson()
+            val jobjFromGsonObject = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
+            val artist = jobjFromGsonObject["artist"].asJsonObject
+            val artistBio = artist["bio"].asJsonObject
+            val artistBioContent = artistBio["content"]
+            val artistUrl = artist["url"]
+
+            if (artistBioContent == null) {
+                textFromService = "No Results"
             } else {
-                text = extract.asString.replace("\\n", "\n")
-                text = textToHtml(text, artistName)
+                textFromService = artistBioContent.asString.replace("\\n", "\n")
+                textFromService = textToHtml(textFromService, artistName)
 
-
-                // save to DB  <o/
-                DataBase.saveArtist(dataBase, artistName, text)
+                DataBase.saveArtist(dataBase, artistName, textFromService)
             }
-            val urlString = url.asString
+            val urlString = artistUrl.asString
             findViewById<View>(R.id.openUrlButton).setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW)
                 intent.data = Uri.parse(urlString)
@@ -118,6 +117,6 @@ class OtherInfoWindow : AppCompatActivity() {
             Log.e("TAG", "Error $e1")
             e1.printStackTrace()
         }
-        return text
+        return textFromService
     }
 }
