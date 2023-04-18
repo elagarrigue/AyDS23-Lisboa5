@@ -45,14 +45,7 @@ class OtherInfoWindow : AppCompatActivity() {
             } else { // get from service
                 artistInfoText=getTextFromService(lastFMAPI,artistName)
             }
-            val imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
-
-            val finalText = artistInfoText
-            runOnUiThread {
-                Picasso.get().load(imageUrl).into(findViewById<View>(R.id.imageView) as ImageView)
-                textPane2!!.text = Html.fromHtml(finalText)
-            }
+            setTextPane(artistInfoText)
         }.start()
     }
 
@@ -61,6 +54,16 @@ class OtherInfoWindow : AppCompatActivity() {
                 .baseUrl("https://ws.audioscrobbler.com/2.0/")
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
+    }
+
+    private fun setTextPane(artistInfoText: String) {
+        val imageUrl =
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
+
+        runOnUiThread {
+            Picasso.get().load(imageUrl).into(findViewById<View>(R.id.imageView) as ImageView)
+            textPane2!!.text = Html.fromHtml(artistInfoText)
+        }
     }
 
     private var dataBase: DataBase? = null
