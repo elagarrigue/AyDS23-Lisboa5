@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
 import com.google.gson.Gson
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.squareup.picasso.Picasso
 import retrofit2.Response
@@ -107,16 +108,19 @@ class OtherInfoWindow : AppCompatActivity() {
 
                 DataBase.saveArtist(dataBase, artistName, textFromService)
             }
-            val urlString = artistUrl.asString
-            findViewById<View>(R.id.openUrlButton).setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(urlString)
-                startActivity(intent)
-            }
-        } catch (e1: IOException) {
-            Log.e("TAG", "Error $e1")
-            e1.printStackTrace()
+            setOpenUrlButton(artistUrl)
+        } catch (exception: IOException) {
+            exception.printStackTrace()
         }
         return textFromService
+    }
+
+    private fun setOpenUrlButton(artistUrl: JsonElement) {
+        val urlString = artistUrl.asString
+        findViewById<View>(R.id.openUrlButton).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(urlString)
+            startActivity(intent)
+        }
     }
 }
