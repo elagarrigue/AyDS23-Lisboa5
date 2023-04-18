@@ -45,7 +45,9 @@ class OtherInfoWindow : AppCompatActivity() {
             } else { // get from service
                 artistInfoText=getTextFromService(lastFMAPI,artistName)
             }
-            setTextPane(artistInfoText)
+            val imageUrl =
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
+            setTextPane(artistInfoText,imageUrl)
         }.start()
     }
 
@@ -56,10 +58,7 @@ class OtherInfoWindow : AppCompatActivity() {
                 .build()
     }
 
-    private fun setTextPane(artistInfoText: String) {
-        val imageUrl =
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
-
+    private fun setTextPane(artistInfoText: String, imageUrl: String) {
         runOnUiThread {
             Picasso.get().load(imageUrl).into(findViewById<View>(R.id.imageView) as ImageView)
             textPane2!!.text = Html.fromHtml(artistInfoText)
