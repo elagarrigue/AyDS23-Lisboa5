@@ -33,16 +33,14 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun getArtistInfo(artistName: String?) {
-
-        // create
         val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
             var artistInfoText = DataBase.getInfo(dataBase, artistName)
-            if (artistInfoText != null) { // exists in db
+            if (artistInfoText != null) {
                 artistInfoText = "[*]$artistInfoText"
-            } else { // get from service
+            } else {
                 artistInfoText=getTextFromService(lastFMAPI,artistName)
             }
             val imageUrl =
