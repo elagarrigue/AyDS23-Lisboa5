@@ -32,7 +32,7 @@ class OtherInfoWindow : AppCompatActivity() {
         open(intent.getStringExtra("artistName"))
     }
 
-    fun getARtistInfo(artistName: String?) {
+    private fun getArtistInfo(artistName: String?) {
 
         // create
         val retrofit = Retrofit.Builder()
@@ -40,18 +40,18 @@ class OtherInfoWindow : AppCompatActivity() {
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
-        Log.e("TAG", "artistName $artistName")
+
         Thread {
-            var text = DataBase.getInfo(dataBase, artistName)
-            if (text != null) { // exists in db
-                text = "[*]$text"
+            var artistInfoText = DataBase.getInfo(dataBase, artistName)
+            if (artistInfoText != null) { // exists in db
+                artistInfoText = "[*]$artistInfoText"
             } else { // get from service
-                text=getTextFromService(lastFMAPI,artistName)
+                artistInfoText=getTextFromService(lastFMAPI,artistName)
             }
             val imageUrl =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
-            Log.e("TAG", "Get Image from $imageUrl")
-            val finalText = text
+
+            val finalText = artistInfoText
             runOnUiThread {
                 Picasso.get().load(imageUrl).into(findViewById<View>(R.id.imageView) as ImageView)
                 textPane2!!.text = Html.fromHtml(finalText)
@@ -65,7 +65,7 @@ class OtherInfoWindow : AppCompatActivity() {
         DataBase.saveArtist(dataBase, "test", "sarasa")
         Log.e("TAG", "" + DataBase.getInfo(dataBase, "test"))
         Log.e("TAG", "" + DataBase.getInfo(dataBase, "nada"))
-        getARtistInfo(artist)
+        getArtistInfo(artist)
     }
 
     companion object {
