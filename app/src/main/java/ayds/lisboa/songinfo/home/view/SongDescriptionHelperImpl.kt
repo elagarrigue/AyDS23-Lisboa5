@@ -1,5 +1,6 @@
 package ayds.lisboa.songinfo.home.view
 
+import DateFormatFactory
 import ayds.lisboa.songinfo.home.model.entities.Song.EmptySong
 import ayds.lisboa.songinfo.home.model.entities.Song
 import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
@@ -8,7 +9,8 @@ interface SongDescriptionHelper {
     fun getSongDescriptionText(song: Song = EmptySong): String
 }
 
-internal class SongDescriptionHelperImpl : SongDescriptionHelper {
+internal class SongDescriptionHelperImpl(val dateFormatFactory: DateFormatFactory) : SongDescriptionHelper {
+
     override fun getSongDescriptionText(song: Song): String {
         return when (song) {
             is SpotifySong ->
@@ -18,8 +20,12 @@ internal class SongDescriptionHelperImpl : SongDescriptionHelper {
                 }\n" +
                         "Artist: ${song.artistName}\n" +
                         "Album: ${song.albumName}\n" +
-                        "Year: ${song.year}"
+                        "Release Date: ${song.createDate()}"
             else -> "Song not found"
         }
+    }
+
+    private fun SpotifySong.createDate(): String{
+        return dateFormatFactory.get(this.releaseDatePrecision,this.releaseDate).createDate()
     }
 }
