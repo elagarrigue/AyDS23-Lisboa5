@@ -94,8 +94,8 @@ class OtherInfoWindow : AppCompatActivity() {
             callResponse = lastFMAPI.getArtistInfo(artistName).execute()
 
             val gsonObject = Gson()
-            val jobjFromGsonObject = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
-            val artist = jobjFromGsonObject["artist"].asJsonObject
+            val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
+            val artist = jObjFromGson["artist"].asJsonObject
             val artistBio = artist["bio"].asJsonObject
             val artistBioContent = artistBio["content"]
             val artistUrl = artist["url"]
@@ -103,8 +103,8 @@ class OtherInfoWindow : AppCompatActivity() {
             if (artistBioContent == null) {
                 textFromService = "No Results"
             } else {
-                textFromService = artistBioContent.asString.replace("\\n", "\n")
-                textFromService = textToHtml(textFromService, artistName)
+                val artistBioContentReformatted = artistBioContent.asString.replace("\\n", "\n")
+                textFromService = textToHtml(artistBioContentReformatted, artistName)
 
                 DataBase.saveArtist(dataBase, artistName, textFromService)
             }
