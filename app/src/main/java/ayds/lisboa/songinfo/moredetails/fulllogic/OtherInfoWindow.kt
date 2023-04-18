@@ -45,36 +45,7 @@ class OtherInfoWindow : AppCompatActivity() {
             if (text != null) { // exists in db
                 text = "[*]$text"
             } else { // get from service
-                val callResponse: Response<String>
-                try {
-                    callResponse = lastFMAPI.getArtistInfo(artistName).execute()
-                    Log.e("TAG", "JSON " + callResponse.body())
-                    val gson = Gson()
-                    val jobj = gson.fromJson(callResponse.body(), JsonObject::class.java)
-                    val artist = jobj["artist"].asJsonObject
-                    val bio = artist["bio"].asJsonObject
-                    val extract = bio["content"]
-                    val url = artist["url"]
-                    if (extract == null) {
-                        text = "No Results"
-                    } else {
-                        text = extract.asString.replace("\\n", "\n")
-                        text = textToHtml(text, artistName)
-
-
-                        // save to DB  <o/
-                        DataBase.saveArtist(dataBase, artistName, text)
-                    }
-                    val urlString = url.asString
-                    findViewById<View>(R.id.openUrlButton).setOnClickListener {
-                        val intent = Intent(Intent.ACTION_VIEW)
-                        intent.data = Uri.parse(urlString)
-                        startActivity(intent)
-                    }
-                } catch (e1: IOException) {
-                    Log.e("TAG", "Error $e1")
-                    e1.printStackTrace()
-                }
+                text=getTextFromService(lastFMAPI,artistName)
             }
             val imageUrl =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
@@ -113,5 +84,40 @@ class OtherInfoWindow : AppCompatActivity() {
             builder.append("</font></div></html>")
             return builder.toString()
         }
+    }
+
+    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
+        val callResponse: Response<String>
+        var text: String = "No Results"
+        try {
+            callResponse = lastFMAPI.getArtistInfo(artistName).execute()
+            Log.e("TAG", "JSON " + callResponse.body())
+            val gson = Gson()
+            val jobj = gson.fromJson(callResponse.body(), JsonObject::class.java)
+            val artist = jobj["artist"].asJsonObject
+            val bio = artist["bio"].asJsonObject
+            val extract = bio["content"]
+            val url = artist["url"]
+            if (extract == null) {
+                text = "No Results"
+            } else {
+                text = extract.asString.replace("\\n", "\n")
+                text = textToHtml(text, artistName)
+
+
+                // save to DB  <o/
+                DataBase.saveArtist(dataBase, artistName, text)
+            }
+            val urlString = url.asString
+            findViewById<View>(R.id.openUrlButton).setOnClickListener {
+                val intent = Intent(Intent.ACTION_VIEW)
+                intent.data = Uri.parse(urlString)
+                startActivity(intent)
+            }
+        } catch (e1: IOException) {
+            Log.e("TAG", "Error $e1")
+            e1.printStackTrace()
+        }
+        return text
     }
 }
