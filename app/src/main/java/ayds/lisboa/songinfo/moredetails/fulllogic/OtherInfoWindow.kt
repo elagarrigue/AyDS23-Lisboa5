@@ -35,12 +35,7 @@ class OtherInfoWindow : AppCompatActivity() {
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
-            var artistInfoText = DataBase.getInfo(dataBase, artistName)
-            if (artistInfoText != null) {
-                artistInfoText = "[*]$artistInfoText"
-            } else {
-                artistInfoText = getTextFromService(lastFMAPI, artistName)
-            }
+            val artistInfoText = DataBase.getInfo(dataBase, artistName)?.let { "[*]$it" } ?: getTextFromService(lastFMAPI, artistName)
             val imageUrl =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
             setTextPane(artistInfoText, imageUrl)
