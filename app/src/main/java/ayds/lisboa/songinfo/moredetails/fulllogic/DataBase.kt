@@ -17,8 +17,6 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
     fun saveArtist(artist: String?, info: String?) {
-    // Gets the data repository in write mode
-    val db = this.writableDatabase
 
 // Create a new map of values, where column names are the keys
         val values = ContentValues()
@@ -27,7 +25,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         values.put("source", 1)
 
 // Insert the new row, returning the primary key value of the new row
-        db.insert("artists", null, values)
+        this.writableDatabase.insert("artists", null, values)
     }
 
     fun getInfo(artist: String): String? {
