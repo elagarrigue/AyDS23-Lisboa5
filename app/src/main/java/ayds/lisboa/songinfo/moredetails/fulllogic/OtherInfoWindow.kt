@@ -26,6 +26,7 @@ class OtherInfoWindow : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
         textPane2 = findViewById(R.id.textPane2)
+        dataBaseConnection()
         open(intent.getStringExtra("artistName"))
     }
 
@@ -61,8 +62,11 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private var dataBase: DataBase? = null
-    private fun open(artist: String?) {
+
+    private fun dataBaseConnection(){
         dataBase = DataBase(this)
+    }
+    private fun open(artist: String?) {
         getArtistInfo(artist)
     }
 
