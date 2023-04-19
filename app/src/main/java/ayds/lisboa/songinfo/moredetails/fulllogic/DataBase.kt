@@ -27,7 +27,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         values.put("source", 1)
 
 // Insert the new row, returning the primary key value of the new row
-        val newRowId = db.insert("artists", null, values)
+        db.insert("artists", null, values)
     }
 
     fun getInfo(artist: String): String? {
