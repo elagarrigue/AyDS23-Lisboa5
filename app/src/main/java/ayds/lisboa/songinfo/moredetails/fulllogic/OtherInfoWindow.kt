@@ -27,7 +27,7 @@ class OtherInfoWindow : AppCompatActivity() {
         setContentView(R.layout.activity_other_info)
         textPane2 = findViewById(R.id.textPane2)
         dataBaseConnection()
-        open(intent.getStringExtra("artistName"))
+        openArtistInfo(intent.getStringExtra("artistName"))
     }
 
     private fun getArtistInfo(artistName: String?) {
@@ -66,7 +66,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun dataBaseConnection(){
         dataBase = DataBase(this)
     }
-    private fun open(artist: String?) {
+    private fun openArtistInfo(artist: String?) {
         getArtistInfo(artist)
     }
 
