@@ -23,8 +23,6 @@ import java.util.*
 class OtherInfoWindow : AppCompatActivity() {
     private var textPane2: TextView? = null
 
-    //private JPanel imagePanel;
-    // private JLabel posterImageLabel;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
@@ -41,19 +39,19 @@ class OtherInfoWindow : AppCompatActivity() {
             if (artistInfoText != null) {
                 artistInfoText = "[*]$artistInfoText"
             } else {
-                artistInfoText=getTextFromService(lastFMAPI,artistName)
+                artistInfoText = getTextFromService(lastFMAPI, artistName)
             }
             val imageUrl =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
-            setTextPane(artistInfoText,imageUrl)
+            setTextPane(artistInfoText, imageUrl)
         }.start()
     }
 
-    private fun createRetrofit(): Retrofit{
+    private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-                .baseUrl("https://ws.audioscrobbler.com/2.0/")
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .build()
+            .baseUrl("https://ws.audioscrobbler.com/2.0/")
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
     }
 
     private fun setTextPane(artistInfoText: String, imageUrl: String) {
@@ -93,7 +91,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
         val callResponse: Response<String>
-        var textFromService= "No Results"
+        var textFromService = "No Results"
         try {
             callResponse = lastFMAPI.getArtistInfo(artistName).execute()
 
