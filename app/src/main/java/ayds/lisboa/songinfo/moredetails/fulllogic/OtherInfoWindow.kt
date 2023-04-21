@@ -28,14 +28,14 @@ private const val URL = "url"
 
 class OtherInfoWindow : AppCompatActivity() {
     private var artistInfoPanel: TextView? = null
-    private var dataBase: DataBase? = null
+    private lateinit var dataBase: DataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
         artistInfoPanel = findViewById(R.id.textPane2)
         dataBase = dataBaseConnection()
-        openArtistInfo(intent.getStringExtra("artistName"),dataBase!!)
+        openArtistInfo(intent.getStringExtra("artistName"),dataBase)
     }
 
     private fun getArtistInfo(artistName: String?, dataBase: DataBase) {
