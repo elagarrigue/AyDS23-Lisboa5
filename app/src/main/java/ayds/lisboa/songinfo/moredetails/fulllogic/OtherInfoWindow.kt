@@ -19,6 +19,14 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.IOException
 import java.util.*
 
+
+private const val IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
+private const val RETROFIT_URL = "https://ws.audioscrobbler.com/2.0/"
+private const val ARTIST = "artist"
+private const val BIO = "bio"
+private const val CONTENT = "content"
+private const val URL = "url"
+
 class OtherInfoWindow : AppCompatActivity() {
     private var textPane2: TextView? = null
     private var dataBase: DataBase? = null
@@ -37,15 +45,13 @@ class OtherInfoWindow : AppCompatActivity() {
 
         Thread {
             val artistInfoText = artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
-            val imageUrl =
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
-            setTextPane(artistInfoText, imageUrl)
+            setTextPane(artistInfoText, IMAGE_URL)
         }.start()
     }
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://ws.audioscrobbler.com/2.0/")
+            .baseUrl(RETROFIT_URL)
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
     }
@@ -90,10 +96,10 @@ class OtherInfoWindow : AppCompatActivity() {
 
             val gsonObject = Gson()
             val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
-            val artist = jObjFromGson["artist"].asJsonObject
-            val artistBio = artist["bio"].asJsonObject
-            val artistBioContent = artistBio["content"]
-            val artistUrl = artist["url"]
+            val artist = jObjFromGson[ARTIST].asJsonObject
+            val artistBio = artist[BIO].asJsonObject
+            val artistBioContent = artistBio[CONTENT]
+            val artistUrl = artist[URL]
 
             if (artistBioContent == null) {
                 textFromService = "No Results"
