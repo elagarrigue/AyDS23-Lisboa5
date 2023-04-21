@@ -103,7 +103,7 @@ class OtherInfoWindow : AppCompatActivity() {
             val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
-                val artistBioContentReformatted = artistBioContent.asString.replace("\\n", "\n")
+                val artistBioContentReformatted = artistBioContent.reformatArtistBio()
                 textFromService = textToHtml(artistBioContentReformatted, artistName)
 
                 dataBase.saveArtist(artistName, textFromService)
@@ -115,6 +115,8 @@ class OtherInfoWindow : AppCompatActivity() {
         }
         return textFromService
     }
+
+    private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
 
     private fun getArtistAsJsonObject(lastFMAPI: LastFMAPI,artistName: String?): JsonObject {
         val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
