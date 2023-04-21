@@ -44,10 +44,17 @@ class OtherInfoWindow : AppCompatActivity() {
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
-            val artistInfoText = artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
-            setTextPane(artistInfoText)
+            setTextPaneWithArtistInfo(artistName,dataBase,lastFMAPI)
         }.start()
     }
+
+    private fun setTextPaneWithArtistInfo(artistName: String?, dataBase: DataBase,lastFMAPI: LastFMAPI) {
+        val artistInfoText = getArtistInfoText(artistName, dataBase,lastFMAPI)
+        setTextPane(artistInfoText)
+    }
+
+    private fun getArtistInfoText(artistName: String?,dataBase: DataBase,lastFMAPI: LastFMAPI) =
+        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
 
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
