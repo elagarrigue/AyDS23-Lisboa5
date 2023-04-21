@@ -38,6 +38,12 @@ class OtherInfoWindow : AppCompatActivity() {
         openArtistInfo(intent.getStringExtra("artistName"),dataBase)
     }
 
+    private fun dataBaseConnection()= DataBase(this)
+
+    private fun openArtistInfo(artist: String?, dataBase: DataBase) {
+        startArtistInfoThread(artist,dataBase)
+    }
+
     private fun startArtistInfoThread(artistName: String?, dataBase: DataBase) {
         val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
@@ -45,6 +51,13 @@ class OtherInfoWindow : AppCompatActivity() {
         Thread {
             setTextPaneWithArtistInfo(artistName,dataBase,lastFMAPI)
         }.start()
+    }
+
+    private fun createRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(RETROFIT_URL)
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
     }
 
     private fun setTextPaneWithArtistInfo(artistName: String?, dataBase: DataBase,lastFMAPI: LastFMAPI) {
@@ -55,43 +68,11 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun getArtistInfoText(artistName: String?,dataBase: DataBase,lastFMAPI: LastFMAPI) =
         artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
 
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(RETROFIT_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-    }
-
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
             artistInfoPanel!!.text = Html.fromHtml(artistInfoText)
-        }
-    }
-
-    private fun dataBaseConnection()= DataBase(this)
-
-    private fun openArtistInfo(artist: String?, dataBase: DataBase) {
-        startArtistInfoThread(artist,dataBase)
-    }
-
-    companion object {
-        const val ARTIST_NAME_EXTRA = "artistName"
-        fun textToHtml(text: String, term: String?): String {
-            val builder = StringBuilder()
-            builder.append("<html><div width=400>")
-            builder.append("<font face=\"arial\">")
-            val textWithBold = text
-                .replace("'", " ")
-                .replace("\n", "<br>")
-                .replace(
-                    "(?i)$term".toRegex(),
-                    "<b>" + term!!.uppercase(Locale.getDefault()) + "</b>"
-                )
-            builder.append(textWithBold)
-            builder.append("</font></div></html>")
-            return builder.toString()
         }
     }
 
@@ -114,13 +95,6 @@ class OtherInfoWindow : AppCompatActivity() {
         return textFromService
     }
 
-    private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
-
-    private fun artistBioAsHTML(artistBioContent: JsonElement, artistName: String?): String {
-        val artistBioContentReformatted = artistBioContent.reformatArtistBio()
-        return textToHtml(artistBioContentReformatted, artistName)
-    }
-
     private fun getArtistAsJsonObject(lastFMAPI: LastFMAPI,artistName: String?): JsonObject {
         val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
         val gsonObject = Gson()
@@ -132,12 +106,38 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun JsonObject.getArtistUrl() = this[URL]
 
+    private fun artistBioAsHTML(artistBioContent: JsonElement, artistName: String?): String {
+        val artistBioContentReformatted = artistBioContent.reformatArtistBio()
+        return textToHtml(artistBioContentReformatted, artistName)
+    }
+
+    private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
+
     private fun JsonElement.setOpenUrlButton() {
         val urlString = this.asString
         findViewById<View>(R.id.openUrlButton).setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(urlString)
             startActivity(intent)
+        }
+    }
+
+    companion object {
+        const val ARTIST_NAME_EXTRA = "artistName"
+        fun textToHtml(text: String, term: String?): String {
+            val builder = StringBuilder()
+            builder.append("<html><div width=400>")
+            builder.append("<font face=\"arial\">")
+            val textWithBold = text
+                .replace("'", " ")
+                .replace("\n", "<br>")
+                .replace(
+                    "(?i)$term".toRegex(),
+                    "<b>" + term!!.uppercase(Locale.getDefault()) + "</b>"
+                )
+            builder.append(textWithBold)
+            builder.append("</font></div></html>")
+            return builder.toString()
         }
     }
 }
