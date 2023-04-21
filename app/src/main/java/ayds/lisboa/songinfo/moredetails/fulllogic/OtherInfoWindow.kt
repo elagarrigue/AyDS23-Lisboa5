@@ -21,21 +21,22 @@ import java.util.*
 
 class OtherInfoWindow : AppCompatActivity() {
     private var textPane2: TextView? = null
+    private var dataBase: DataBase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
         textPane2 = findViewById(R.id.textPane2)
-        dataBaseConnection()
-        openArtistInfo(intent.getStringExtra("artistName"))
+        dataBase = dataBaseConnection()
+        openArtistInfo(intent.getStringExtra("artistName"),dataBase!!)
     }
 
-    private fun getArtistInfo(artistName: String?) {
+    private fun getArtistInfo(artistName: String?, dataBase: DataBase) {
         val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
-            val artistInfoText = DataBase.getInfo(dataBase, artistName)?.let { "[*]$it" } ?: getTextFromService(lastFMAPI, artistName)
+            val artistInfoText = artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
             val imageUrl =
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
             setTextPane(artistInfoText, imageUrl)
@@ -56,13 +57,10 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
-    private var dataBase: DataBase? = null
+    private fun dataBaseConnection()= DataBase(this)
 
-    private fun dataBaseConnection(){
-        dataBase = DataBase(this)
-    }
-    private fun openArtistInfo(artist: String?) {
-        getArtistInfo(artist)
+    private fun openArtistInfo(artist: String?, dataBase: DataBase) {
+        getArtistInfo(artist,dataBase)
     }
 
     companion object {
@@ -84,7 +82,7 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
-    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
+    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?, dataBase: DataBase): String {
         val callResponse: Response<String>
         var textFromService = "No Results"
         try {
@@ -103,7 +101,7 @@ class OtherInfoWindow : AppCompatActivity() {
                 val artistBioContentReformatted = artistBioContent.asString.replace("\\n", "\n")
                 textFromService = textToHtml(artistBioContentReformatted, artistName)
 
-                DataBase.saveArtist(dataBase, artistName, textFromService)
+                dataBase.saveArtist(artistName, textFromService)
             }
             setOpenUrlButton(artistUrl)
         } catch (exception: IOException) {
