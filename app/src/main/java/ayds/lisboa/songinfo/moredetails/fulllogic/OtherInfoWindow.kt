@@ -45,7 +45,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
         Thread {
             val artistInfoText = artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
-            setTextPane(artistInfoText, IMAGE_URL)
+            setTextPane(artistInfoText)
         }.start()
     }
 
@@ -56,9 +56,9 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun setTextPane(artistInfoText: String, imageUrl: String) {
+    private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
-            Picasso.get().load(imageUrl).into(findViewById<View>(R.id.imageView) as ImageView)
+            Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
             textPane2!!.text = Html.fromHtml(artistInfoText)
         }
     }
