@@ -38,7 +38,7 @@ class OtherInfoWindow : AppCompatActivity() {
         openArtistInfo(intent.getStringExtra("artistName"),dataBase)
     }
 
-    private fun getArtistInfo(artistName: String?, dataBase: DataBase) {
+    private fun startArtistInfoThread(artistName: String?, dataBase: DataBase) {
         val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
@@ -73,7 +73,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun dataBaseConnection()= DataBase(this)
 
     private fun openArtistInfo(artist: String?, dataBase: DataBase) {
-        getArtistInfo(artist,dataBase)
+        startArtistInfoThread(artist,dataBase)
     }
 
     companion object {
