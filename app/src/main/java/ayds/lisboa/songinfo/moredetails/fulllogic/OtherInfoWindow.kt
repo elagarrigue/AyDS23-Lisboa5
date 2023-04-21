@@ -100,8 +100,8 @@ class OtherInfoWindow : AppCompatActivity() {
         var textFromService = "No Results"
         try {
             val artist = getArtistAsJsonObject(lastFMAPI,artistName)
-            val artistBioContent = getArtistBioContent(artist)
-            val artistUrl = getArtistUrl(artist)
+            val artistBioContent = artist.getArtistBioContent()
+            val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
                 val artistBioContentReformatted = artistBioContent.asString.replace("\\n", "\n")
@@ -109,7 +109,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
                 dataBase.saveArtist(artistName, textFromService)
             }
-            setOpenUrlButton(artistUrl)
+            artistUrl.setOpenUrlButton()
 
         } catch (exception: IOException) {
             exception.printStackTrace()
@@ -124,12 +124,12 @@ class OtherInfoWindow : AppCompatActivity() {
         return jObjFromGson[ARTIST].asJsonObject
     }
 
-    private fun getArtistBioContent(artist: JsonObject): JsonElement = artist[BIO].asJsonObject[CONTENT]
+    private fun JsonObject.getArtistBioContent() = this[BIO].asJsonObject[CONTENT]
 
-    private fun getArtistUrl(artist: JsonObject) = artist[URL]
+    private fun JsonObject.getArtistUrl() = this[URL]
 
-    private fun setOpenUrlButton(artistUrl: JsonElement) {
-        val urlString = artistUrl.asString
+    private fun JsonElement.setOpenUrlButton() {
+        val urlString = this.asString
         findViewById<View>(R.id.openUrlButton).setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(urlString)
