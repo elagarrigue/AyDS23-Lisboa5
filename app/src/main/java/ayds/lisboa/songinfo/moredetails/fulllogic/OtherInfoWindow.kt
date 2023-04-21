@@ -28,13 +28,13 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 class OtherInfoWindow : AppCompatActivity() {
-    private var textPane2: TextView? = null
+    private var artistInfoPanel: TextView? = null
     private var dataBase: DataBase? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
-        textPane2 = findViewById(R.id.textPane2)
+        artistInfoPanel = findViewById(R.id.textPane2)
         dataBase = dataBaseConnection()
         openArtistInfo(intent.getStringExtra("artistName"),dataBase!!)
     }
@@ -67,7 +67,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
-            textPane2!!.text = Html.fromHtml(artistInfoText)
+            artistInfoPanel!!.text = Html.fromHtml(artistInfoText)
         }
     }
 
