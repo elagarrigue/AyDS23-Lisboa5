@@ -97,32 +97,36 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?, dataBase: DataBase): String {
-        val callResponse: Response<String>
         var textFromService = "No Results"
         try {
-            callResponse = lastFMAPI.getArtistInfo(artistName).execute()
+            val artist = getArtistAsJsonObject(lastFMAPI,artistName)
+            val artistBioContent = getArtistBioContent(artist)
+            val artistUrl = getArtistUrl(artist)
 
-            val gsonObject = Gson()
-            val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
-            val artist = jObjFromGson[ARTIST].asJsonObject
-            val artistBio = artist[BIO].asJsonObject
-            val artistBioContent = artistBio[CONTENT]
-            val artistUrl = artist[URL]
-
-            if (artistBioContent == null) {
-                textFromService = "No Results"
-            } else {
+            if (artistBioContent != null) {
                 val artistBioContentReformatted = artistBioContent.asString.replace("\\n", "\n")
                 textFromService = textToHtml(artistBioContentReformatted, artistName)
 
                 dataBase.saveArtist(artistName, textFromService)
             }
             setOpenUrlButton(artistUrl)
+
         } catch (exception: IOException) {
             exception.printStackTrace()
         }
         return textFromService
     }
+
+    private fun getArtistAsJsonObject(lastFMAPI: LastFMAPI,artistName: String?): JsonObject {
+        val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
+        val gsonObject = Gson()
+        val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
+        return jObjFromGson[ARTIST].asJsonObject
+    }
+
+    private fun getArtistBioContent(artist: JsonObject): JsonElement = artist[BIO].asJsonObject[CONTENT]
+
+    private fun getArtistUrl(artist: JsonObject) = artist[URL]
 
     private fun setOpenUrlButton(artistUrl: JsonElement) {
         val urlString = artistUrl.asString
