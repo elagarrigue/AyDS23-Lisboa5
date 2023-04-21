@@ -56,6 +56,7 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
+    @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
