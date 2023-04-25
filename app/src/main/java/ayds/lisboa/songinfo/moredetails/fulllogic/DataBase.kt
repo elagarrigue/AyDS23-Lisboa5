@@ -27,7 +27,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         database.insert("artists", null, values)
     }
 
-    fun getInfo(artist: String): String? {
+    fun getInfo(artist: String): String {
         val database = this.readableDatabase
         val table = "artists"
         val columnsToSelect= arrayOf(
@@ -49,7 +49,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         return searchInfoArtist(cursor)
     }
 
-    private fun searchInfoArtist(cursor: Cursor): String? {
+    private fun searchInfoArtist(cursor: Cursor): String {
         val infoArtist: MutableList<String> = ArrayList()
         while (cursor.moveToNext()) {
             val numberColum = cursor.getColumnIndexOrThrow("info")
@@ -57,6 +57,6 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
             infoArtist.add(info)
         }
         cursor.close()
-        return if (infoArtist.isEmpty()) null else infoArtist[0]
+        return if (infoArtist.isEmpty()) "" else infoArtist[0]
     }
 }
