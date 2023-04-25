@@ -7,7 +7,12 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
+private const val ARTIST = "artist"
+private const val INFO = "info"
+private const val ID = "id"
+private const val SOURCE = "source"
 class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", null, 1) {
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "create table artists (id INTEGER PRIMARY KEY AUTOINCREMENT, artist string, info string, source integer)"
@@ -20,23 +25,23 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
     fun saveArtist(artist: String?, info: String?) {
         val database = this.writableDatabase
         val values = ContentValues()
-        values.put("artist", artist)
-        values.put("info", info)
-        values.put("source", 1)
+        values.put(ARTIST ,artist)
+        values.put(INFO, info)
+        values.put(SOURCE, 1)
 
-        database.insert("artists", null, values)
+        database.insert(ARTIST, null, values)
     }
 
     fun getInfo(artist: String): String {
         val database = this.readableDatabase
-        val table = "artists"
+        val table = ARTIST
         val columnsToSelect= arrayOf(
-            "id",
-            "artist",
-            "info"
+            ID,
+            ARTIST,
+            INFO
         )
         val selectionArgs = arrayOf(artist)
-        val sortOrder = "artist DESC"
+        val sortOrder = "$ARTIST DESC"
         val cursor = database.query(
             table,
             columnsToSelect,
@@ -52,7 +57,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
     private fun searchInfoArtist(cursor: Cursor): String {
         val infoArtist: MutableList<String> = ArrayList()
         while (cursor.moveToNext()) {
-            val numberColum = cursor.getColumnIndexOrThrow("info")
+            val numberColum = cursor.getColumnIndexOrThrow(INFO)
             val info = cursor.getString(numberColum)
             infoArtist.add(info)
         }
