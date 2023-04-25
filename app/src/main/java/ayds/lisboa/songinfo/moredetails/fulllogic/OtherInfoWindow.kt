@@ -27,7 +27,7 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 class OtherInfoWindow : AppCompatActivity() {
-    private var artistInfoPanel: TextView? = null
+    private lateinit var artistInfoPanel: TextView
     private lateinit var dataBase: DataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
