@@ -37,22 +37,22 @@ class OtherInfoWindow : AppCompatActivity() {
         initProperties()
         initDataBase()
 
-        openArtistInfo(intent.getStringExtra("artistName"),dataBase)
+        openArtistInfo(intent.getStringExtra("artistName"))
     }
 
     private fun initProperties() { artistInfoPanel = findViewById(R.id.textPane2) }
     private fun initDataBase() { dataBase = DataBase(this) }
 
-    private fun openArtistInfo(artist: String?, dataBase: DataBase) {
-        startArtistInfoThread(artist,dataBase)
+    private fun openArtistInfo(artist: String?) {
+        startArtistInfoThread(artist)
     }
 
-    private fun startArtistInfoThread(artistName: String?, dataBase: DataBase) {
+    private fun startArtistInfoThread(artistName: String?) {
         val retrofit = createRetrofit()
         val lastFMAPI = retrofit.create(LastFMAPI::class.java)
 
         Thread {
-            setTextPaneWithArtistInfo(artistName,dataBase,lastFMAPI)
+            setTextPaneWithArtistInfo(artistName,lastFMAPI)
         }.start()
     }
 
@@ -63,13 +63,13 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun setTextPaneWithArtistInfo(artistName: String?, dataBase: DataBase,lastFMAPI: LastFMAPI) {
-        val artistInfoText = getArtistInfoText(artistName, dataBase,lastFMAPI)
+    private fun setTextPaneWithArtistInfo(artistName: String?,lastFMAPI: LastFMAPI) {
+        val artistInfoText = getArtistInfoText(artistName,lastFMAPI)
         setTextPane(artistInfoText)
     }
 
-    private fun getArtistInfoText(artistName: String?,dataBase: DataBase,lastFMAPI: LastFMAPI) =
-        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
+    private fun getArtistInfoText(artistName: String?,lastFMAPI: LastFMAPI) =
+        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName)
 
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
@@ -79,7 +79,7 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
-    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?, dataBase: DataBase): String {
+    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
         var textFromService = "No Results"
         try {
             val artist = getArtistAsJsonObject(lastFMAPI,artistName)
