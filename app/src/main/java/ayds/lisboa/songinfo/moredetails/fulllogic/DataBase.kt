@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 private const val ARTIST = "artist"
+private const val ARTISTS = "artists"
 private const val INFO = "info"
 private const val ID = "id"
 private const val SOURCE = "source"
@@ -29,12 +30,12 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         values.put(INFO, info)
         values.put(SOURCE, 1)
 
-        database.insert(ARTIST, null, values)
+        database.insert(ARTISTS, null, values)
     }
 
-    fun getInfo(artist: String): String {
+    fun getInfo(artist: String): String? {
         val database = this.readableDatabase
-        val table = ARTIST
+        val table = ARTISTS
         val columnsToSelect= arrayOf(
             ID,
             ARTIST,
@@ -42,10 +43,11 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         )
         val selectionArgs = arrayOf(artist)
         val sortOrder = "$ARTIST DESC"
+        val selection = "$ARTIST = ?"
         val cursor = database.query(
             table,
             columnsToSelect,
-            artist,
+            selection,
             selectionArgs,  // The values for the WHERE clause
             null,
             null,
@@ -54,7 +56,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
         return searchInfoArtist(cursor)
     }
 
-    private fun searchInfoArtist(cursor: Cursor): String {
+    private fun searchInfoArtist(cursor: Cursor): String? {
         val infoArtist: MutableList<String> = ArrayList()
         while (cursor.moveToNext()) {
             val numberColum = cursor.getColumnIndexOrThrow(INFO)
@@ -62,6 +64,6 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", n
             infoArtist.add(info)
         }
         cursor.close()
-        return if (infoArtist.isEmpty()) "" else infoArtist[0]
+        return if (infoArtist.isEmpty()) null else infoArtist[0]
     }
 }
