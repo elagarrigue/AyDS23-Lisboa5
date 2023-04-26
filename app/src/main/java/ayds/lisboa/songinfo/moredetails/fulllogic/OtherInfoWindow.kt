@@ -78,8 +78,22 @@ class OtherInfoWindow : AppCompatActivity() {
         setTextPane(artistInfoText)
     }
 
-    private fun getArtistInfoText() =
-        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService()
+    private fun getArtistInfoText():String {
+        val artistInfoText: String
+        val artistInfo = obtainArtistInfo()
+        if (artistInfo != null){
+            artistInfoText = "[*]$artistInfo"
+        }
+        else{
+            artistInfoText = getTextFromService()
+        }
+
+        return artistInfoText
+    }
+
+    private fun obtainArtistInfo():String? {
+        return dataBase.getInfo(artistName)
+    }
 
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
