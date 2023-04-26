@@ -121,7 +121,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun artistBioAsHTML(artistBioContent: JsonElement): String {
         val artistBioContentReformatted = artistBioContent.reformatArtistBio()
-        return textToHtml(artistBioContentReformatted, artistName)
+        return textToHtml(artistBioContentReformatted)
     }
 
     private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
@@ -135,22 +135,23 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
+    private fun textToHtml(text: String): String {
+        val builder = StringBuilder()
+        builder.append("<html><div width=400>")
+        builder.append("<font face=\"arial\">")
+        val textWithBold = text
+            .replace("'", " ")
+            .replace("\n", "<br>")
+            .replace(
+                "(?i)$artistName".toRegex(),
+                "<b>" + artistName!!.uppercase(Locale.getDefault()) + "</b>"
+            )
+        builder.append(textWithBold)
+        builder.append("</font></div></html>")
+        return builder.toString()
+    }
+
     companion object {
         const val ARTIST_NAME_EXTRA = "artistName"
-        fun textToHtml(text: String, term: String?): String {
-            val builder = StringBuilder()
-            builder.append("<html><div width=400>")
-            builder.append("<font face=\"arial\">")
-            val textWithBold = text
-                .replace("'", " ")
-                .replace("\n", "<br>")
-                .replace(
-                    "(?i)$term".toRegex(),
-                    "<b>" + term!!.uppercase(Locale.getDefault()) + "</b>"
-                )
-            builder.append(textWithBold)
-            builder.append("</font></div></html>")
-            return builder.toString()
-        }
     }
 }
