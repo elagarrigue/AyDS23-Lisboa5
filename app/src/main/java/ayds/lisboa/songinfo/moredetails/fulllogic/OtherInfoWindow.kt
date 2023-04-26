@@ -29,18 +29,27 @@ private const val URL = "url"
 class OtherInfoWindow : AppCompatActivity() {
     private lateinit var artistTextView: TextView
     private lateinit var dataBase: DataBase
+    private lateinit var retrofit: Retrofit
+    private lateinit var lastFMAPI: LastFMAPI
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
 
         initProperties()
+        initAPI()
         initDataBase()
 
         openArtistInfo(intent.getStringExtra("artistName"))
     }
 
-    private fun initProperties() { artistTextView = findViewById(R.id.artistInfoPane) }
+    private fun initProperties(){ artistTextView = findViewById(R.id.artistInfoPane) }
+
+    private fun initAPI() {
+        retrofit = createRetrofit()
+        lastFMAPI = retrofit.create(LastFMAPI::class.java)
+    }
+
     private fun initDataBase() { dataBase = DataBase(this) }
 
     private fun openArtistInfo(artist: String?) {
@@ -48,9 +57,6 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun startArtistInfoThread(artistName: String?) {
-        val retrofit = createRetrofit()
-        val lastFMAPI = retrofit.create(LastFMAPI::class.java)
-
         Thread {
             setTextPaneWithArtistInfo(artistName,lastFMAPI)
         }.start()
