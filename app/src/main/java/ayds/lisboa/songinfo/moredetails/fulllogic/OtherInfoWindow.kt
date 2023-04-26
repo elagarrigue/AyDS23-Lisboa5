@@ -82,15 +82,13 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun getArtistInfoText():String {
-        val artistInfoText: String
         val artistInfo = obtainArtistInfo()
-        if (artistInfo != null) {
-            artistInfoText = "[*]$artistInfo"
+        return if (artistInfo != null) {
+            "[*]$artistInfo"
         }
         else{
-            artistInfoText = getTextFromService()
+            getTextFromService()
         }
-        return artistInfoText
     }
 
     private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
