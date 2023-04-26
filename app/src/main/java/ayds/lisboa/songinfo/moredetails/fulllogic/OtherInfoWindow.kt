@@ -58,16 +58,12 @@ class OtherInfoWindow : AppCompatActivity() {
         lastFMAPI = retrofit.create(LastFMAPI::class.java)
     }
 
-    private fun initDataBase() { dataBase = DataBase(this) }
-
-    private fun openArtistInfo() {
-        startArtistInfoThread()
+    private fun initDataBase() {
+        dataBase = DataBase(this)
     }
 
-    private fun startArtistInfoThread() {
-        Thread {
-            setTextPaneWithArtistInfo()
-        }.start()
+    private fun openArtistInfo() {
+        Thread { setTextPaneWithArtistInfo() }.start()
     }
 
     private fun createRetrofit(): Retrofit {
