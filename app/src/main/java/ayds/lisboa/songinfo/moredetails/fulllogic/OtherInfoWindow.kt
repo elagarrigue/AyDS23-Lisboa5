@@ -89,7 +89,7 @@ class OtherInfoWindow : AppCompatActivity() {
         }
         saveArtistInfo(artistInfoText)
 
-        return artistInfoText
+        return artistBioAsHTML(artistInfoText)
     }
 
     private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
@@ -114,7 +114,7 @@ class OtherInfoWindow : AppCompatActivity() {
             val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
-                textFromService = artistBioAsHTML(artistBioContent)
+                textFromService = artistBioContent.asString
             }
             artistUrl.setOpenUrlButton()
 
@@ -135,12 +135,12 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun JsonObject.getArtistUrl() = this[URL]
 
-    private fun artistBioAsHTML(artistBioContent: JsonElement): String {
+    private fun artistBioAsHTML(artistBioContent: String): String {
         val artistBioContentReformatted = artistBioContent.reformatArtistBio()
         return textToHtml(artistBioContentReformatted)
     }
 
-    private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
+    private fun String.reformatArtistBio() = this.replace("\\n", "\n")
 
     private fun JsonElement.setOpenUrlButton() {
         val urlString = this.asString
