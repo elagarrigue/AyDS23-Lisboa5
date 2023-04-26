@@ -42,7 +42,7 @@ class OtherInfoWindow : AppCompatActivity() {
         initDataBase()
         initIntentData()
 
-        openArtistInfo()
+        updateArtistInfoAsync()
     }
 
     private fun initProperties(){
@@ -62,8 +62,8 @@ class OtherInfoWindow : AppCompatActivity() {
         dataBase = DataBase(this)
     }
 
-    private fun openArtistInfo() {
-        Thread { setTextPaneWithArtistInfo() }.start()
+    private fun updateArtistInfoAsync() {
+        Thread { updateArtistInfo() }.start()
     }
 
     private fun createRetrofit(): Retrofit {
@@ -73,7 +73,7 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun setTextPaneWithArtistInfo() {
+    private fun updateArtistInfo() {
         val artistInfoText = getArtistInfoText()
         setTextPane(artistInfoText)
     }
