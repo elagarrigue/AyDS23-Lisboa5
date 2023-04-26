@@ -42,7 +42,7 @@ class OtherInfoWindow : AppCompatActivity() {
         initDataBase()
         initIntentData()
 
-        openArtistInfo(artistName)
+        openArtistInfo()
     }
 
     private fun initProperties(){
@@ -60,13 +60,13 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun initDataBase() { dataBase = DataBase(this) }
 
-    private fun openArtistInfo(artist: String?) {
-        startArtistInfoThread(artist)
+    private fun openArtistInfo() {
+        startArtistInfoThread()
     }
 
-    private fun startArtistInfoThread(artistName: String?) {
+    private fun startArtistInfoThread() {
         Thread {
-            setTextPaneWithArtistInfo(artistName,lastFMAPI)
+            setTextPaneWithArtistInfo()
         }.start()
     }
 
@@ -77,13 +77,13 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun setTextPaneWithArtistInfo(artistName: String?,lastFMAPI: LastFMAPI) {
-        val artistInfoText = getArtistInfoText(artistName,lastFMAPI)
+    private fun setTextPaneWithArtistInfo() {
+        val artistInfoText = getArtistInfoText()
         setTextPane(artistInfoText)
     }
 
-    private fun getArtistInfoText(artistName: String?,lastFMAPI: LastFMAPI) =
-        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName)
+    private fun getArtistInfoText() =
+        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService()
 
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
@@ -93,15 +93,15 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
-    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?): String {
+    private fun getTextFromService(): String {
         var textFromService = "No Results"
         try {
-            val artist = getArtistAsJsonObject(lastFMAPI,artistName)
+            val artist = getArtistAsJsonObject()
             val artistBioContent = artist.getArtistBioContent()
             val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
-                textFromService = artistBioAsHTML(artistBioContent, artistName)
+                textFromService = artistBioAsHTML(artistBioContent)
                 dataBase.saveArtist(artistName, textFromService)
             }
             artistUrl.setOpenUrlButton()
@@ -112,7 +112,7 @@ class OtherInfoWindow : AppCompatActivity() {
         return textFromService
     }
 
-    private fun getArtistAsJsonObject(lastFMAPI: LastFMAPI,artistName: String?): JsonObject {
+    private fun getArtistAsJsonObject(): JsonObject {
         val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
         val gsonObject = Gson()
         val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
@@ -123,7 +123,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun JsonObject.getArtistUrl() = this[URL]
 
-    private fun artistBioAsHTML(artistBioContent: JsonElement, artistName: String?): String {
+    private fun artistBioAsHTML(artistBioContent: JsonElement): String {
         val artistBioContentReformatted = artistBioContent.reformatArtistBio()
         return textToHtml(artistBioContentReformatted, artistName)
     }
