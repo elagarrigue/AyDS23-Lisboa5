@@ -103,7 +103,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
-            artistTextView!!.text = Html.fromHtml(artistInfoText)
+            artistTextView.text = Html.fromHtml(artistInfoText)
         }
     }
 
@@ -116,7 +116,6 @@ class OtherInfoWindow : AppCompatActivity() {
             if (artistBioContent != null) {
                 textFromService = artistBioContent.asString
             }
-
         } catch (exception: IOException) {
             exception.printStackTrace()
         }
@@ -160,16 +159,20 @@ class OtherInfoWindow : AppCompatActivity() {
         val builder = StringBuilder()
         builder.append("<html><div width=400>")
         builder.append("<font face=\"arial\">")
-        val textWithBold = text
+        val textWithBold = textAsBold(text)
+        builder.append(textWithBold)
+        builder.append("</font></div></html>")
+        return builder.toString()
+    }
+
+    private fun textAsBold(text: String) : String {
+        return text
             .replace("'", " ")
             .replace("\n", "<br>")
             .replace(
                 "(?i)$artistName".toRegex(),
-                "<b>" + artistName!!.uppercase(Locale.getDefault()) + "</b>"
+                "<b>" + artistName.uppercase(Locale.getDefault()) + "</b>"
             )
-        builder.append(textWithBold)
-        builder.append("</font></div></html>")
-        return builder.toString()
     }
 
     companion object {
