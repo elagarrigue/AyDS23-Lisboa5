@@ -31,6 +31,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private lateinit var dataBase: DataBase
     private lateinit var retrofit: Retrofit
     private lateinit var lastFMAPI: LastFMAPI
+    private lateinit var artistName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +40,18 @@ class OtherInfoWindow : AppCompatActivity() {
         initProperties()
         initAPI()
         initDataBase()
+        initIntentData()
 
-        openArtistInfo(intent.getStringExtra("artistName"))
+        openArtistInfo(artistName)
     }
 
-    private fun initProperties(){ artistTextView = findViewById(R.id.artistInfoPane) }
+    private fun initProperties(){
+        artistTextView = findViewById(R.id.artistInfoPane)
+    }
+
+    private fun initIntentData(){
+        artistName = intent.getStringExtra("artistName")!!
+    }
 
     private fun initAPI() {
         retrofit = createRetrofit()
