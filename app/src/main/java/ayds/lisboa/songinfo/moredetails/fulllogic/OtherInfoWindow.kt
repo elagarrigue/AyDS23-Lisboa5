@@ -75,7 +75,9 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun updateArtistInfo() {
         val artistInfoText = getArtistInfoText()
-        setTextPane(artistInfoText)
+        saveArtistInfo(artistInfoText)
+        val artistInfoHTML = artistBioAsHTML(artistInfoText)
+        setTextPane(artistInfoHTML)
         setURLButton()
     }
 
@@ -88,9 +90,7 @@ class OtherInfoWindow : AppCompatActivity() {
         else{
             artistInfoText = getTextFromService()
         }
-        saveArtistInfo(artistInfoText)
-
-        return artistBioAsHTML(artistInfoText)
+        return artistInfoText
     }
 
     private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
