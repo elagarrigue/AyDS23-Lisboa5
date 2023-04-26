@@ -27,7 +27,7 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 class OtherInfoWindow : AppCompatActivity() {
-    private lateinit var artistInfoPanel: TextView
+    private lateinit var artistTextView: TextView
     private lateinit var dataBase: DataBase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class OtherInfoWindow : AppCompatActivity() {
         openArtistInfo(intent.getStringExtra("artistName"))
     }
 
-    private fun initProperties() { artistInfoPanel = findViewById(R.id.artistInfoPane) }
+    private fun initProperties() { artistTextView = findViewById(R.id.artistInfoPane) }
     private fun initDataBase() { dataBase = DataBase(this) }
 
     private fun openArtistInfo(artist: String?) {
@@ -75,7 +75,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
-            artistInfoPanel!!.text = Html.fromHtml(artistInfoText)
+            artistTextView!!.text = Html.fromHtml(artistInfoText)
         }
     }
 
