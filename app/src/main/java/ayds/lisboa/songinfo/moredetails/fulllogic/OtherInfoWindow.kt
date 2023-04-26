@@ -76,6 +76,7 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun updateArtistInfo() {
         val artistInfoText = getArtistInfoText()
         setTextPane(artistInfoText)
+        setURLButton()
     }
 
     private fun getArtistInfoText():String {
@@ -111,17 +112,21 @@ class OtherInfoWindow : AppCompatActivity() {
         try {
             val artist = getArtistAsJsonObject()
             val artistBioContent = artist.getArtistBioContent()
-            val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
                 textFromService = artistBioContent.asString
             }
-            artistUrl.setOpenUrlButton()
 
         } catch (exception: IOException) {
             exception.printStackTrace()
         }
         return textFromService
+    }
+
+    private fun setURLButton() {
+        val artist = getArtistAsJsonObject()
+        val artistUrl = artist.getArtistUrl()
+        artistUrl.setOpenUrlButton()
     }
 
     private fun getArtistAsJsonObject(): JsonObject {
