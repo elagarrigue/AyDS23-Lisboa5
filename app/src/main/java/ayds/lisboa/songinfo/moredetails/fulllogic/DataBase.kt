@@ -2,66 +2,63 @@ package ayds.lisboa.songinfo.moredetails.fulllogic
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
+private const val ARTIST_NAME = "artist"
+private const val ARTISTS_TABLE = "artists"
+private const val INFO = "info"
+private const val ID = "id"
+private const val SOURCE = "source"
 class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", null, 1) {
+
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(
             "create table artists (id INTEGER PRIMARY KEY AUTOINCREMENT, artist string, info string, source integer)"
         )
-        Log.i("DB", "DB created")
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
     fun saveArtist(artist: String?, info: String?) {
-
-// Create a new map of values, where column names are the keys
         val values = ContentValues()
-        values.put("artist", artist)
-        values.put("info", info)
-        values.put("source", 1)
+        values.put(ARTIST_NAME ,artist)
+        values.put(INFO, info)
+        values.put(SOURCE, 1)
 
-// Insert the new row, returning the primary key value of the new row
-        this.writableDatabase.insert("artists", null, values)
+        writableDatabase.insert(ARTISTS_TABLE, null, values)
     }
 
-    fun getInfo(artist: String): String? {
-        val db = this.readableDatabase
-
-// Define a projection that specifies which columns from the database
-// you will actually use after this query.
-        val projection = arrayOf(
-            "id",
-            "artist",
-            "info"
+    fun getInfo(artist: String): String {
+        val columnsToSelect= arrayOf(
+            ID,
+            ARTIST_NAME,
+            INFO
         )
-
-// Filter results WHERE "title" = 'My Title'
-        val selection = "artist  = ?"
         val selectionArgs = arrayOf(artist)
-
-// How you want the results sorted in the resulting Cursor
-        val sortOrder = "artist DESC"
-        val cursor = db.query(
-            "artists",  // The table to query
-            projection,  // The array of columns to return (pass null to get all)
-            selection,  // The columns for the WHERE clause
-            selectionArgs,  // The values for the WHERE clause
-            null,  // don't group the rows
-            null,  // don't filter by row groups
-            sortOrder // The sort order
+        val sortOrder = "$ARTIST_NAME DESC"
+        val selection = "$ARTIST_NAME = ?"
+        val cursor = readableDatabase.query(
+            ARTISTS_TABLE,
+            columnsToSelect,
+            selection,
+            selectionArgs,
+            null,
+            null,
+            sortOrder
         )
-        val items: MutableList<String> = ArrayList()
+        return searchInfoArtist(cursor)
+    }
+
+    private fun searchInfoArtist(cursor: Cursor): String {
+        val infoArtistList: MutableList<String> = ArrayList()
         while (cursor.moveToNext()) {
-            val info = cursor.getString(
-                cursor.getColumnIndexOrThrow("info")
-            )
-            items.add(info)
+            val numberColum = cursor.getColumnIndexOrThrow(INFO)
+            val info = cursor.getString(numberColum)
+            infoArtistList.add(info)
         }
         cursor.close()
-        return if (items.isEmpty()) null else items[0]
+        return infoArtistList.firstOrNull() ?: ""
     }
 }
