@@ -40,7 +40,7 @@ class OtherInfoWindow : AppCompatActivity() {
         openArtistInfo(intent.getStringExtra("artistName"))
     }
 
-    private fun initProperties() { artistInfoPanel = findViewById(R.id.textPane2) }
+    private fun initProperties() { artistInfoPanel = findViewById(R.id.artistInfoPane) }
     private fun initDataBase() { dataBase = DataBase(this) }
 
     private fun openArtistInfo(artist: String?) {
