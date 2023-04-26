@@ -81,15 +81,18 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun getArtistInfoText():String {
         val artistInfoText: String
         val artistInfo = obtainArtistInfo()
-        if (artistInfo != null){
+        if (artistInfo != null) {
             artistInfoText = "[*]$artistInfo"
         }
         else{
             artistInfoText = getTextFromService()
         }
+        saveArtistInfo(artistInfoText)
 
         return artistInfoText
     }
+
+    private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
 
     private fun obtainArtistInfo():String? {
         return dataBase.getInfo(artistName)
@@ -112,7 +115,6 @@ class OtherInfoWindow : AppCompatActivity() {
 
             if (artistBioContent != null) {
                 textFromService = artistBioAsHTML(artistBioContent)
-                dataBase.saveArtist(artistName, textFromService)
             }
             artistUrl.setOpenUrlButton()
 
