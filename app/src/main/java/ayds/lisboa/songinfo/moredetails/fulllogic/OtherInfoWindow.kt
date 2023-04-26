@@ -27,30 +27,43 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 class OtherInfoWindow : AppCompatActivity() {
-    private var artistInfoPanel: TextView? = null
+    private lateinit var artistTextView: TextView
     private lateinit var dataBase: DataBase
+    private lateinit var retrofit: Retrofit
+    private lateinit var lastFMAPI: LastFMAPI
+    private lateinit var artistName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
-        artistInfoPanel = findViewById(R.id.textPane2)
-        dataBase = dataBaseConnection()
-        openArtistInfo(intent.getStringExtra("artistName"),dataBase)
+
+        initProperties()
+        initAPI()
+        initDataBase()
+        initIntentData()
+
+        updateArtistInfoAsync()
     }
 
-    private fun dataBaseConnection()= DataBase(this)
-
-    private fun openArtistInfo(artist: String?, dataBase: DataBase) {
-        startArtistInfoThread(artist,dataBase)
+    private fun initProperties(){
+        artistTextView = findViewById(R.id.artistInfoPane)
     }
 
-    private fun startArtistInfoThread(artistName: String?, dataBase: DataBase) {
-        val retrofit = createRetrofit()
-        val lastFMAPI = retrofit.create(LastFMAPI::class.java)
+    private fun initIntentData(){
+        artistName = intent.getStringExtra("artistName")!!
+    }
 
-        Thread {
-            setTextPaneWithArtistInfo(artistName,dataBase,lastFMAPI)
-        }.start()
+    private fun initAPI() {
+        retrofit = createRetrofit()
+        lastFMAPI = retrofit.create(LastFMAPI::class.java)
+    }
+
+    private fun initDataBase() {
+        dataBase = DataBase(this)
+    }
+
+    private fun updateArtistInfoAsync() {
+        Thread { updateArtistInfo() }.start()
     }
 
     private fun createRetrofit(): Retrofit {
@@ -60,42 +73,60 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun setTextPaneWithArtistInfo(artistName: String?, dataBase: DataBase,lastFMAPI: LastFMAPI) {
-        val artistInfoText = getArtistInfoText(artistName, dataBase,lastFMAPI)
-        setTextPane(artistInfoText)
+    private fun updateArtistInfo() {
+        val artistInfoText = getArtistInfoText()
+        saveArtistInfo(artistInfoText)
+        val artistInfoHTML = artistBioAsHTML(artistInfoText)
+        setTextPane(artistInfoHTML)
+        setURLButton()
     }
 
-    private fun getArtistInfoText(artistName: String?,dataBase: DataBase,lastFMAPI: LastFMAPI) =
-        artistName?.let { dataBase.getInfo(it)?.let { "[*]$it" } } ?: getTextFromService(lastFMAPI, artistName, dataBase)
+    private fun getArtistInfoText():String {
+        val artistInfo = obtainArtistInfo()
+        return if (artistInfo != null) {
+            "[*]$artistInfo"
+        }
+        else{
+            getTextFromService()
+        }
+    }
+
+    private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
+
+    private fun obtainArtistInfo():String? {
+        return dataBase.getInfo(artistName)
+    }
 
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
-            artistInfoPanel!!.text = Html.fromHtml(artistInfoText)
+            artistTextView.text = Html.fromHtml(artistInfoText)
         }
     }
 
-    private fun getTextFromService(lastFMAPI: LastFMAPI, artistName: String?, dataBase: DataBase): String {
+    private fun getTextFromService(): String {
         var textFromService = "No Results"
         try {
-            val artist = getArtistAsJsonObject(lastFMAPI,artistName)
+            val artist = getArtistAsJsonObject()
             val artistBioContent = artist.getArtistBioContent()
-            val artistUrl = artist.getArtistUrl()
 
             if (artistBioContent != null) {
-                textFromService = artistBioAsHTML(artistBioContent, artistName)
-                dataBase.saveArtist(artistName, textFromService)
+                textFromService = artistBioContent.asString
             }
-            artistUrl.setOpenUrlButton()
-
         } catch (exception: IOException) {
             exception.printStackTrace()
         }
         return textFromService
     }
 
-    private fun getArtistAsJsonObject(lastFMAPI: LastFMAPI,artistName: String?): JsonObject {
+    private fun setURLButton() {
+        val artist = getArtistAsJsonObject()
+        val artistUrl = artist.getArtistUrl()
+        artistUrl.setOpenUrlButton()
+    }
+
+    private fun getArtistAsJsonObject(): JsonObject {
         val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
         val gsonObject = Gson()
         val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
@@ -106,12 +137,12 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun JsonObject.getArtistUrl() = this[URL]
 
-    private fun artistBioAsHTML(artistBioContent: JsonElement, artistName: String?): String {
+    private fun artistBioAsHTML(artistBioContent: String): String {
         val artistBioContentReformatted = artistBioContent.reformatArtistBio()
-        return textToHtml(artistBioContentReformatted, artistName)
+        return textToHtml(artistBioContentReformatted)
     }
 
-    private fun JsonElement.reformatArtistBio() = this.asString.replace("\\n", "\n")
+    private fun String.reformatArtistBio() = this.replace("\\n", "\n")
 
     private fun JsonElement.setOpenUrlButton() {
         val urlString = this.asString
@@ -122,22 +153,27 @@ class OtherInfoWindow : AppCompatActivity() {
         }
     }
 
+    private fun textToHtml(text: String): String {
+        val builder = StringBuilder()
+        builder.append("<html><div width=400>")
+        builder.append("<font face=\"arial\">")
+        val textWithBold = textAsBold(text)
+        builder.append(textWithBold)
+        builder.append("</font></div></html>")
+        return builder.toString()
+    }
+
+    private fun textAsBold(text: String) : String {
+        return text
+            .replace("'", " ")
+            .replace("\n", "<br>")
+            .replace(
+                "(?i)$artistName".toRegex(),
+                "<b>" + artistName.uppercase(Locale.getDefault()) + "</b>"
+            )
+    }
+
     companion object {
         const val ARTIST_NAME_EXTRA = "artistName"
-        fun textToHtml(text: String, term: String?): String {
-            val builder = StringBuilder()
-            builder.append("<html><div width=400>")
-            builder.append("<font face=\"arial\">")
-            val textWithBold = text
-                .replace("'", " ")
-                .replace("\n", "<br>")
-                .replace(
-                    "(?i)$term".toRegex(),
-                    "<b>" + term!!.uppercase(Locale.getDefault()) + "</b>"
-                )
-            builder.append(textWithBold)
-            builder.append("</font></div></html>")
-            return builder.toString()
-        }
     }
 }
