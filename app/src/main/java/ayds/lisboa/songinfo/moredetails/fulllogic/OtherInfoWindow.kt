@@ -25,6 +25,8 @@ private const val ARTIST = "artist"
 private const val BIO = "bio"
 private const val CONTENT = "content"
 private const val URL = "url"
+private const val HTML_OPENING_TAG = "<html><div width=400><font face=\"arial\">"
+private const val HTML_CLOSING_TAG = "</font></div></html>"
 
 class OtherInfoWindow : AppCompatActivity() {
     private lateinit var artistTextView: TextView
@@ -159,11 +161,12 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun textToHtml(text: String): String {
         val builder = StringBuilder()
-        builder.append("<html><div width=400>")
-        builder.append("<font face=\"arial\">")
         val textWithBold = textAsBold(text)
+
+        builder.append(HTML_OPENING_TAG)
         builder.append(textWithBold)
-        builder.append("</font></div></html>")
+        builder.append(HTML_CLOSING_TAG)
+
         return builder.toString()
     }
 
