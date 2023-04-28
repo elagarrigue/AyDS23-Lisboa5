@@ -32,6 +32,8 @@ class OtherInfoWindow : AppCompatActivity() {
     private lateinit var retrofit: Retrofit
     private lateinit var lastFMAPI: LastFMAPI
     private lateinit var artistName: String
+    private lateinit var imageView: ImageView
+    private lateinit var openUrlButton: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,8 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun initProperties(){
         artistTextView = findViewById(R.id.artistInfoPane)
+        imageView = findViewById<View>(R.id.imageView) as ImageView
+        openUrlButton = findViewById(R.id.openUrlButton)
     }
 
     private fun initIntentData(){
@@ -100,7 +104,7 @@ class OtherInfoWindow : AppCompatActivity() {
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
-            Picasso.get().load(IMAGE_URL).into(findViewById<View>(R.id.imageView) as ImageView)
+            Picasso.get().load(IMAGE_URL).into(imageView)
             artistTextView.text = Html.fromHtml(artistInfoText)
         }
     }
@@ -146,7 +150,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun JsonElement.setOpenUrlButton() {
         val urlString = this.asString
-        findViewById<View>(R.id.openUrlButton).setOnClickListener {
+        openUrlButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(urlString)
             startActivity(intent)
