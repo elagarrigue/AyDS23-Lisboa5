@@ -50,7 +50,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun initIntentData(){
-        artistName = intent.getStringExtra("artistName")!!
+        artistName = intent.getStringExtra("artistName") ?: ""
     }
 
     private fun initAPI() {
