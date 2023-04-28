@@ -11,12 +11,12 @@ private const val ARTISTS_TABLE = "artists"
 private const val INFO = "info"
 private const val ID = "id"
 private const val SOURCE = "source"
-class DataBase(context: Context?) : SQLiteOpenHelper(context, "dictionary.db", null, 1) {
+private const val CREATE_ARTISTS_QUERY = "create table artists (id INTEGER PRIMARY KEY AUTOINCREMENT, artist string, info string, source integer)"
+private const val DB_NAME = "dictionary.db"
+class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) {
 
     override fun onCreate(db: SQLiteDatabase) {
-        db.execSQL(
-            "create table artists (id INTEGER PRIMARY KEY AUTOINCREMENT, artist string, info string, source integer)"
-        )
+        db.execSQL(CREATE_ARTISTS_QUERY)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
