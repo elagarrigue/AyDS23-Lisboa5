@@ -83,7 +83,7 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun getArtistInfoText():String {
         val artistInfo = obtainArtistInfo()
-        return if (artistInfo != null) {
+        return if (artistInfo != "") {
             "[*]$artistInfo"
         }
         else{
