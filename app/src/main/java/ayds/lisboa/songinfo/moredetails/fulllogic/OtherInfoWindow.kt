@@ -81,7 +81,8 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun updateArtistInfo() {
         val artistInfoText = getArtistInfoText()
-        saveArtistInfo(artistInfoText)
+        if (!artistInfoText.startsWith("[*]"))
+            saveArtistInfo(artistInfoText)
         val artistInfoHTML = artistBioAsHTML(artistInfoText)
         setTextPane(artistInfoHTML)
         setURLButton()
