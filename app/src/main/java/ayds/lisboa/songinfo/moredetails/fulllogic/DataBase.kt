@@ -31,7 +31,12 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) 
     }
 
     fun getInfo(artist: String): String {
-        val columnsToSelect= arrayOf(
+        val cursor = createCursorInfoArtist(artist)
+        return searchInfoArtist(cursor)
+    }
+
+    private fun createCursorInfoArtist(artist: String): Cursor {
+        val columnsToSelect = arrayOf(
             ID,
             ARTIST_NAME,
             INFO
@@ -39,7 +44,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) 
         val selectionArgs = arrayOf(artist)
         val sortOrder = "$ARTIST_NAME DESC"
         val selection = "$ARTIST_NAME = ?"
-        val cursor = readableDatabase.query(
+        return readableDatabase.query(
             ARTISTS_TABLE,
             columnsToSelect,
             selection,
@@ -48,7 +53,6 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) 
             null,
             sortOrder
         )
-        return searchInfoArtist(cursor)
     }
 
     private fun searchInfoArtist(cursor: Cursor): String {
