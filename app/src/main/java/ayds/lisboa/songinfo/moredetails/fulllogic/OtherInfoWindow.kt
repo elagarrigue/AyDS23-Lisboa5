@@ -15,7 +15,6 @@ import com.google.gson.JsonObject
 import com.squareup.picasso.Picasso
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.io.IOException
 import java.util.*
 
 
@@ -69,7 +68,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun updateArtistInfoAsync() {
-        Thread { updateArtistInfo() }.start()
+        Thread { updateArtistInfo2() }.start()
     }
 
     private fun createRetrofit(): Retrofit {
@@ -79,52 +78,12 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    private fun updateArtistInfo() {
-        val artistInfoText = getArtistInfoText()
-        if (!artistInfoText.startsWith("[*]"))
-            saveArtistInfo(artistInfoText)
-        val artistInfoHTML = artistBioAsHTML(artistInfoText)
-        setTextPane(artistInfoHTML)
-        setURLButton()
-    }
-
-    private fun getArtistInfoText():String {
-        val artistInfo = obtainArtistInfo()
-        return if (artistInfo != "") {
-            "[*]$artistInfo"
-        }
-        else{
-            getTextFromService()
-        }
-    }
-
-    private fun saveArtistInfo(textFromService: String) = dataBase.saveArtist(artistName, textFromService)
-
-    private fun obtainArtistInfo():String? {
-        return dataBase.getInfo(artistName)
-    }
-
     @Suppress("DEPRECATION")
     private fun setTextPane(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(imageView)
             artistTextView.text = Html.fromHtml(artistInfoText)
         }
-    }
-
-    private fun getTextFromService(): String {
-        var textFromService = "No Results"
-        try {
-            val artist = getArtistAsJsonObject()
-            val artistBioContent = artist.getArtistBioContent()
-
-            if (artistBioContent != null) {
-                textFromService = artistBioContent.asString
-            }
-        } catch (exception: IOException) {
-            exception.printStackTrace()
-        }
-        return textFromService
     }
 
     private fun setURLButton() {
@@ -184,4 +143,44 @@ class OtherInfoWindow : AppCompatActivity() {
     companion object {
         const val ARTIST_NAME_EXTRA = "artistName"
     }
+
+    private fun updateArtistInfo2() {
+        val artist = algorithmRepository() as Artist.ArtistData
+        val artistInfoHTML = artistBioAsHTML(artist.artistBioContent)
+        setTextPane(artistInfoHTML)
+        setURLButton()
+    }
+
+    private fun algorithmRepository(): Artist {
+        var artistObj = dataBase.getArtist(artistName) as Artist.ArtistData?
+        when {
+            artistObj!!.artistBioContent != "" -> {
+                val artistInfo = "[*]${artistObj.artistBioContent}"
+                artistObj = Artist.ArtistData(artistObj.artistName,artistInfo,artistObj.artistURL)
+            }
+
+            else -> {
+                try {
+                    artistObj = getArtistFromlastFMAPI() as Artist.ArtistData?
+
+                    (artistObj as Artist.ArtistData?).let {
+                        saveArtistInfo2(artistObj as Artist.ArtistData)
+                    }
+                }
+                catch (e: Exception){
+                    artistObj= null
+                }
+            }
+        }
+        return artistObj ?: Artist.EmptyArtist
+    }
+
+    private fun getArtistFromlastFMAPI(): Artist {
+        val artistJsonObj=getArtistAsJsonObject()
+        val artistInfo=artistJsonObj.getArtistBioContent()
+        val artistURL=artistJsonObj.getArtistUrl()
+        return Artist.ArtistData(artistName,artistInfo.asString,artistURL.asString)
+    }
+
+    private fun saveArtistInfo2(artistObj: Artist.ArtistData) = dataBase.saveArtist(artistName, artistObj.artistBioContent,artistObj.artistURL)
 }
