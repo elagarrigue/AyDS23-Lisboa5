@@ -13,6 +13,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.squareup.picasso.Picasso
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.*
@@ -94,6 +95,10 @@ class OtherInfoWindow : AppCompatActivity() {
 
     private fun getArtistAsJsonObject(): JsonObject {
         val callResponse = lastFMAPI.getArtistInfo(artistName).execute()
+        return getArtistFromCallResponse(callResponse)
+    }
+
+    private fun getArtistFromCallResponse(callResponse: Response<String>): JsonObject{
         val gsonObject = Gson()
         val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
         return jObjFromGson[ARTIST].asJsonObject
