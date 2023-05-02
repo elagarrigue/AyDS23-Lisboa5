@@ -26,6 +26,7 @@ private const val CONTENT = "content"
 private const val URL = "url"
 private const val HTML_OPENING_TAG = "<html><div width=400><font face=\"arial\">"
 private const val HTML_CLOSING_TAG = "</font></div></html>"
+private const val PREFIX = "[*]"
 
 class OtherInfoWindow : AppCompatActivity() {
     private lateinit var artistTextView: TextView
@@ -151,20 +152,19 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun searchArtist(): Artist {
-        var artistObj = dataBase.getArtist(artistName) as Artist.ArtistData?
+        var artistObj: Artist?
+        artistObj = dataBase.getArtist(artistName) as Artist.ArtistData
         when {
-            artistObj!!.artistBioContent != "" -> {
-                val artistInfo = "[*]${artistObj.artistBioContent}"
+            artistObj.artistBioContent != "" -> {
+                val artistInfo = "$PREFIX${artistObj.artistBioContent}"
                 artistObj = Artist.ArtistData(artistObj.artistName,artistInfo,artistObj.artistURL)
             }
 
             else -> {
                 try {
-                    artistObj = getArtistFromlastFMAPI() as Artist.ArtistData?
+                    artistObj = getArtistFromlastFMAPI() as Artist.ArtistData
 
-                    (artistObj as Artist.ArtistData?).let {
-                        saveArtistInfo2(artistObj as Artist.ArtistData)
-                    }
+                    saveArtistInfo2(artistObj)
                 }
                 catch (e: Exception){
                     artistObj= null
