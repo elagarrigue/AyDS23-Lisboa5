@@ -30,7 +30,6 @@ private const val HTML_CLOSING_TAG = "</font></div></html>"
 class OtherInfoWindow : AppCompatActivity() {
     private lateinit var artistTextView: TextView
     private lateinit var dataBase: DataBase
-    private lateinit var retrofit: Retrofit
     private lateinit var lastFMAPI: LastFMAPI
     private lateinit var artistName: String
     private lateinit var imageView: ImageView
@@ -59,7 +58,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun initAPI() {
-        retrofit = createRetrofit()
+        val retrofit = createRetrofit()
         lastFMAPI = retrofit.create(LastFMAPI::class.java)
     }
 
