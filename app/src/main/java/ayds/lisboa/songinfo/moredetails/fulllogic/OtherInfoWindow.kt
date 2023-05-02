@@ -162,9 +162,9 @@ class OtherInfoWindow : AppCompatActivity() {
 
             else -> {
                 try {
-                    artistObj = getArtistFromlastFMAPI() as Artist.ArtistData
+                    artistObj = getArtistFromLastFMAPI() as Artist.ArtistData
 
-                    saveArtistInfo2(artistObj)
+                    saveArtistInfo(artistObj)
                 }
                 catch (e: Exception){
                     artistObj= null
@@ -174,12 +174,12 @@ class OtherInfoWindow : AppCompatActivity() {
         return artistObj ?: Artist.EmptyArtist
     }
 
-    private fun getArtistFromlastFMAPI(): Artist {
+    private fun getArtistFromLastFMAPI(): Artist {
         val artistJsonObj=getArtistAsJsonObject()
         val artistInfo=artistJsonObj.getArtistBioContent()
         val artistURL=artistJsonObj.getArtistUrl()
         return Artist.ArtistData(artistName,artistInfo.asString,artistURL.asString)
     }
 
-    private fun saveArtistInfo2(artistObj: Artist.ArtistData) = dataBase.saveArtist(artistName, artistObj.artistBioContent,artistObj.artistURL)
+    private fun saveArtistInfo(artistObj: Artist.ArtistData) = dataBase.saveArtist(artistName, artistObj.artistBioContent,artistObj.artistURL)
 }
