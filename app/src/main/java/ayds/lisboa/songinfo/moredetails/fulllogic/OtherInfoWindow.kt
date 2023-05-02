@@ -144,13 +144,13 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun updateArtistInfo() {
-        val artist = algorithmRepository() as Artist.ArtistData
+        val artist = searchArtist() as Artist.ArtistData
         val artistInfoHTML = artistBioAsHTML(artist.artistBioContent)
         setTextPane(artistInfoHTML)
         setURLButton()
     }
 
-    private fun algorithmRepository(): Artist {
+    private fun searchArtist(): Artist {
         var artistObj = dataBase.getArtist(artistName) as Artist.ArtistData?
         when {
             artistObj!!.artistBioContent != "" -> {
