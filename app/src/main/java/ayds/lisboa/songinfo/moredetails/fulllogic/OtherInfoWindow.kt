@@ -22,6 +22,7 @@ import java.util.*
 private const val IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
 private const val RETROFIT_URL = "https://ws.audioscrobbler.com/2.0/"
 private const val ARTIST = "artist"
+private const val ARTIST_NAME = "artistName"
 private const val BIO = "bio"
 private const val CONTENT = "content"
 private const val URL = "url"
@@ -56,7 +57,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun initIntentData(){
-        artistName = intent.getStringExtra("artistName") ?: ""
+        artistName = intent.getStringExtra(ARTIST_NAME) ?: ""
     }
 
     private fun initAPI() {
