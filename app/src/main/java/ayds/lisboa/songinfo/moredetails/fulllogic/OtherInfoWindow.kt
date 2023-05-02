@@ -67,7 +67,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun updateArtistInfoAsync() {
-        Thread { updateArtistInfo2() }.start()
+        Thread { updateArtistInfo() }.start()
     }
 
     private fun createRetrofit(): Retrofit {
@@ -143,7 +143,7 @@ class OtherInfoWindow : AppCompatActivity() {
         const val ARTIST_NAME_EXTRA = "artistName"
     }
 
-    private fun updateArtistInfo2() {
+    private fun updateArtistInfo() {
         val artist = algorithmRepository() as Artist.ArtistData
         val artistInfoHTML = artistBioAsHTML(artist.artistBioContent)
         setTextPane(artistInfoHTML)
