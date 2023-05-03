@@ -71,6 +71,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) 
             artistURL = cursor.getString(numberColumURL)
         }
         cursor.close()
-        return Artist.ArtistData(artistName,artistInfo,artistURL)
+        return if (artistInfo == "") Artist.EmptyArtist
+        else Artist.ArtistData(artistName,artistInfo,artistURL)
     }
 }
