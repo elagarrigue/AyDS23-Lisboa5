@@ -81,7 +81,7 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     @Suppress("DEPRECATION")
-    private fun setTextPane(artistInfoText: String) {
+    private fun updateView(artistInfoText: String) {
         runOnUiThread {
             Picasso.get().load(IMAGE_URL).into(imageView)
             artistTextView.text = Html.fromHtml(artistInfoText)
@@ -151,10 +151,10 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun updateArtistInfo() {
-        val artist = searchArtist()
+        val artist = getArtist()
         val bioContent = obtainBioContent(artist)
         val artistInfoHTML = artistBioAsHTML(bioContent)
-        setTextPane(artistInfoHTML)
+        updateView(artistInfoHTML)
         setURLButton()
     }
 
@@ -167,7 +167,7 @@ class OtherInfoWindow : AppCompatActivity() {
         return "No Results"
     }
 
-    private fun searchArtist(): Artist {
+    private fun getArtist(): Artist {
         var artist: Artist?
         artist = dataBase.getArtist(artistName)
         if (artist is Artist.EmptyArtist) {
