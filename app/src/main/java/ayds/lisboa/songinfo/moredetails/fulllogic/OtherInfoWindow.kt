@@ -151,41 +151,49 @@ class OtherInfoWindow : AppCompatActivity() {
     }
 
     private fun updateArtistInfo() {
-        val artist = searchArtist() as Artist.ArtistData
-        val artistInfoHTML = artistBioAsHTML(artist.artistBioContent)
+        val artist = searchArtist()
+        val bioContent = obtainBioContent(artist)
+        val artistInfoHTML = artistBioAsHTML(bioContent)
         setTextPane(artistInfoHTML)
         setURLButton()
     }
 
-    private fun searchArtist(): Artist {
-        var artistObj: Artist?
-        artistObj = dataBase.getArtist(artistName) as Artist.ArtistData
-        when {
-            artistObj.artistBioContent != "" -> {
-                val artistInfo = "$PREFIX${artistObj.artistBioContent}"
-                artistObj = Artist.ArtistData(artistObj.artistName,artistInfo,artistObj.artistURL)
-            }
-
-            else -> {
-                try {
-                    artistObj = getArtistFromLastFMAPI() as Artist.ArtistData
-
-                    saveArtistInfo(artistObj)
-                }
-                catch (e: Exception){
-                    artistObj= null
-                }
-            }
+    private fun obtainBioContent(artist: Artist): String {
+        if (artist is Artist.ArtistData){
+            return if (artist.isLocallyStored) {
+                "$PREFIX${artist.artistBioContent}"
+            } else artist.artistBioContent
         }
-        return artistObj ?: Artist.EmptyArtist
+        return "No Results"
     }
 
-    private fun getArtistFromLastFMAPI(): Artist {
+    private fun searchArtist(): Artist {
+        var artist: Artist?
+        artist = dataBase.getArtist(artistName)
+        if (artist is Artist.EmptyArtist) {
+            try {
+                artist = getArtistFromLastFMAPI()
+                saveArtistInfo(artist)
+            } catch (e: Exception) {
+                artist = null
+            }
+        }
+        else {
+            markArtistAsLocal(artist as Artist.ArtistData)
+        }
+        return artist ?: Artist.EmptyArtist
+    }
+
+    private fun getArtistFromLastFMAPI(): Artist.ArtistData {
         val artistJsonObj=getArtistAsJsonObject()
         val artistInfo=artistJsonObj.getArtistBioContent()
         val artistURL=artistJsonObj.getArtistUrl()
         return Artist.ArtistData(artistName,artistInfo.asString,artistURL.asString)
     }
 
-    private fun saveArtistInfo(artistObj: Artist.ArtistData) = dataBase.saveArtist(artistName, artistObj.artistBioContent,artistObj.artistURL)
+    private fun saveArtistInfo(artist: Artist.ArtistData) = dataBase.saveArtist(artistName, artist.artistBioContent,artist.artistURL)
+
+    private fun markArtistAsLocal(artist: Artist.ArtistData) {
+        artist.isLocallyStored = true
+    }
 }
