@@ -170,16 +170,14 @@ class OtherInfoWindow : AppCompatActivity() {
     private fun getArtist(): Artist {
         var artist: Artist?
         artist = dataBase.getArtist(artistName)
-        if (artist is Artist.EmptyArtist) {
-            try {
+        when (artist) {
+            Artist.EmptyArtist -> try {
                 artist = getArtistFromLastFMAPI()
                 saveArtistInfo(artist)
             } catch (e: Exception) {
                 artist = null
             }
-        }
-        else {
-            markArtistAsLocal(artist as Artist.ArtistData)
+            is  Artist.ArtistData -> markArtistAsLocal(artist)
         }
         return artist ?: Artist.EmptyArtist
     }
