@@ -80,12 +80,21 @@ class OtherInfoWindow : AppCompatActivity() {
             .build()
     }
 
-    @Suppress("DEPRECATION")
+
     private fun updateView(artistInfoText: String) {
         runOnUiThread {
-            Picasso.get().load(IMAGE_URL).into(imageView)
-            artistTextView.text = Html.fromHtml(artistInfoText)
+            loadImageIntoView()
+            setArtistViewText(artistInfoText)
         }
+    }
+
+    private fun loadImageIntoView(){
+        Picasso.get().load(IMAGE_URL).into(imageView)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setArtistViewText(artistInfoText: String){
+        artistTextView.text = Html.fromHtml(artistInfoText)
     }
 
     private fun setURLButton() {
