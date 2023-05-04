@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
 
 private const val ARTIST_NAME = "artist"
 private const val ARTISTS_TABLE = "artists"
@@ -32,7 +33,7 @@ class DataBase(context: Context?) : SQLiteOpenHelper(context, DB_NAME, null, 1) 
         writableDatabase.insert(ARTISTS_TABLE, null, values)
     }
 
-    fun getArtist(artistName: String): Artist{
+    fun getArtist(artistName: String): Artist {
         val cursor = createCursorArtist(artistName)
         return searchArtist(cursor)
     }

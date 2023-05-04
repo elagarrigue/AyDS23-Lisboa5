@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
+import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
