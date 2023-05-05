@@ -1,6 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository
 
 import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.externalArtist.ArtistExternalService
 import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.localArtist.ArtistLocalStorage
 
 interface ArtistRepository{
