@@ -10,7 +10,7 @@ interface ArtistRepository{
 
 internal class ArtistRepositoryImpl(
     private val artistLocalStorage: ArtistLocalStorage,
-    private val lastFMAPIService: LastFMAPIService,
+    private val artistExternalService: ArtistExternalService,
 ): ArtistRepository {
 
     override fun getArtist(artistName: String): Artist {
@@ -18,7 +18,7 @@ internal class ArtistRepositoryImpl(
         artist = artistLocalStorage.getArtist(artistName)
         when (artist) {
             Artist.EmptyArtist -> try {
-                artist = lastFMAPIService.getArtistFromLastFMAPI(artistName)
+                artist = artistExternalService.getArtistFromLastFMAPI(artistName)
                 artistLocalStorage.saveArtistInfo(artist)
             } catch (e: Exception) {
                 artist = null
