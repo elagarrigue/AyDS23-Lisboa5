@@ -1,5 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.externalArtist.artists
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.externalArtist.ArtistExternalService
+package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolver
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolverImpl
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 

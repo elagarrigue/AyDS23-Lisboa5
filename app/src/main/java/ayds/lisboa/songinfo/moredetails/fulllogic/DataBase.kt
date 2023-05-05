@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 
 private const val ARTIST_NAME = "artist"
 private const val ARTISTS_TABLE = "artists"

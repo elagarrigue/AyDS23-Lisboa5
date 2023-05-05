@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities
+package ayds.lisboa.songinfo.moredetails.fulllogic.domain
 
 sealed class Artist {
     data class ArtistData(

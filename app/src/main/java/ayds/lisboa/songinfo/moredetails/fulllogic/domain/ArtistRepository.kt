@@ -1,11 +1,11 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.externalArtist.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.localArtist.ArtistLocalStorage
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalService
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.artist.ArtistLocalStorage
 
 interface ArtistRepository{
-    fun getArtist(artistName: String):Artist
+    fun getArtist(artistName: String): Artist
 
 }
 

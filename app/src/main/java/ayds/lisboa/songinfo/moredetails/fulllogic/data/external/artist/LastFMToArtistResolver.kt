@@ -1,6 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.externalArtist.artists
+package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 
