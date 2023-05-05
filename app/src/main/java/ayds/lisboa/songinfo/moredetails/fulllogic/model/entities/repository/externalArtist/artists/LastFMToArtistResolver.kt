@@ -11,12 +11,12 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 interface LastFMToArtistResolver {
-    fun getArtistFromExternalData(serviceData: String) : Artist.ArtistData?  //Este va a ser el equivalente a getArtistFromLastFMAPI de otherinfowindows
+    fun getArtistFromExternalData(serviceData: String?) : Artist.ArtistData?  //Este va a ser el equivalente a getArtistFromLastFMAPI de otherinfowindows
 }
 
 internal class JsonArtistResolver: LastFMToArtistResolver {
 
-    override fun getArtistFromExternalData(serviceData: String): Artist.ArtistData? =
+    override fun getArtistFromExternalData(serviceData: String?): Artist.ArtistData? =
         try {
             serviceData.getArtistFromCallResponse().let { item ->
                 Artist.ArtistData(
