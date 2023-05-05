@@ -18,7 +18,7 @@ object ArtistExternalInjector {
             .build()
     }
 
-    private val lastFMtoArtistResolver: LastFMToArtistResolver = JsonArtistResolver()
+    private val lastFMtoArtistResolver: LastFMToArtistResolver = LastFMToArtistResolverImpl()
      val artistExternalService : ArtistExternalService = ArtistExternalServiceImpl(lastFMAPI,
          lastFMtoArtistResolver)
 

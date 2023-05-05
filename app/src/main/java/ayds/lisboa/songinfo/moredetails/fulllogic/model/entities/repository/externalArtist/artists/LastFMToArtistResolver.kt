@@ -14,7 +14,7 @@ interface LastFMToArtistResolver {
     fun getArtistFromExternalData(serviceData: String?) : Artist.ArtistData?  //Este va a ser el equivalente a getArtistFromLastFMAPI de otherinfowindows
 }
 
-internal class JsonArtistResolver: LastFMToArtistResolver {
+internal class LastFMToArtistResolverImpl: LastFMToArtistResolver {
 
     override fun getArtistFromExternalData(serviceData: String?): Artist.ArtistData? =
         try {
