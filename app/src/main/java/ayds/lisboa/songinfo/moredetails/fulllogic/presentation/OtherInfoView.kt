@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.view
+package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
 
 import android.content.Intent
 import android.net.Uri
