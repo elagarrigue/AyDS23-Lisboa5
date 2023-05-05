@@ -1,5 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.view
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Html
 import android.view.View
@@ -7,8 +9,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
-import ayds.lisboa.songinfo.moredetails.fulllogic.DataBase
-import ayds.lisboa.songinfo.moredetails.fulllogic.LastFMAPI
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 import com.google.gson.Gson
 import com.google.gson.JsonElement
@@ -18,8 +18,6 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.*
-import android.content.Intent
-import android.net.Uri
 
 
 private const val IMAGE_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Lastfm_logo.svg/320px-Lastfm_logo.svg.png"
@@ -33,8 +31,7 @@ private const val HTML_OPENING_TAG = "<html><div width=400><font face=\"arial\">
 private const val HTML_CLOSING_TAG = "</font></div></html>"
 private const val PREFIX = "[*]"
 
-class OtherInfoView:AppCompatActivity() {
-
+class OtherInfoWindow : AppCompatActivity() {
     private lateinit var artistTextView: TextView
     private lateinit var dataBase: DataBase
     private lateinit var lastFMAPI: LastFMAPI
@@ -112,7 +109,7 @@ class OtherInfoView:AppCompatActivity() {
         return getArtistFromCallResponse(callResponse)
     }
 
-    private fun getArtistFromCallResponse(callResponse: Response<String>): JsonObject {
+    private fun getArtistFromCallResponse(callResponse: Response<String>): JsonObject{
         val gsonObject = Gson()
         val jObjFromGson = gsonObject.fromJson(callResponse.body(), JsonObject::class.java)
         return jObjFromGson[ARTIST].asJsonObject
@@ -207,5 +204,4 @@ class OtherInfoView:AppCompatActivity() {
     private fun markArtistAsLocal(artist: Artist.ArtistData) {
         artist.isLocallyStored = true
     }
-
 }
