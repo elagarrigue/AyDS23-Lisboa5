@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.presentation;
+package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist;
 
 
 import retrofit2.Call;

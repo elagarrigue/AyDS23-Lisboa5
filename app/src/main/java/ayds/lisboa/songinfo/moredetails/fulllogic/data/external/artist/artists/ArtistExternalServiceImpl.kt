@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.LastFMAPI
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMAPI
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolver
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 
