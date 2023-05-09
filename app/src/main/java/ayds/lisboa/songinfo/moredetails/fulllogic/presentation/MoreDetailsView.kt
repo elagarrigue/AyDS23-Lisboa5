@@ -11,23 +11,27 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.MoreDetailsModel
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.MoreDetailsModelInjector
 import ayds.observer.Observable
 import ayds.observer.Subject
 import com.squareup.picasso.Picasso
-
+import java.util.*
 
 interface MoreDetailsView {
     val uiEventObservable: Observable<MoreDetailsUiEvent>
     val uiState: MoreDetailsUiState
 
     fun openUrl(artistUrl: String)
-
 }
 
-internal class MoreDetailsViewImpl: MoreDetailsView, AppCompatActivity(){
+internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
 
+    private val artistDescriptionHelper: ArtistDescriptionHelper = MoreDetailsViewInjector.artistDescriptionHelper
     private val onActionSubject = Subject<MoreDetailsUiEvent>()
 
+    private lateinit var moreDetailsModel: MoreDetailsModel
     private lateinit var viewFullArticleButton: Button
     private lateinit var artistTextView: TextView
     private lateinit var imageView: ImageView
@@ -37,6 +41,12 @@ internal class MoreDetailsViewImpl: MoreDetailsView, AppCompatActivity(){
     override var uiState: MoreDetailsUiState = MoreDetailsUiState()
 
 
+    override fun openUrl(artistUrl: String) {
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(artistUrl)
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
@@ -44,67 +54,66 @@ internal class MoreDetailsViewImpl: MoreDetailsView, AppCompatActivity(){
         initModule()
         initProperties()
         initListeners()
+        initUiState()
         initObservers()
-        initIntentData()
-
-        updateArtistInfoAsync()
     }
 
     private fun initModule() {
         MoreDetailsViewInjector.init(this)
-        moreDetailsModel = MoreDetailsInjector.getMoreDetailsModel()
+        moreDetailsModel = MoreDetailsModelInjector.getMoreDetailsModel()
     }
 
-    private fun initProperties(){
+    private fun initProperties() {
         artistTextView = findViewById(R.id.artistInfoTextView)
         imageView = findViewById(R.id.imageView)
         openUrlButton = findViewById(R.id.openUrlButton)
+
     }
 
     private fun initListeners() {
-        viewFullArticleButton.setOnClickListener { //Esto es para cuando se aprieta OpenURl button
+        viewFullArticleButton.setOnClickListener {
             searchAction()
         }
     }
 
-
-    private fun searchAction() {
-        //updateArtistNameState()
-        //updateArtistUrlState()
-        notifyMoreDetailsAction()
+    private fun initUiState(){
+        uiState=uiState.copy( artistName = intent.getStringExtra(ARTIST_NAME_EXTRA) ?: "")
     }
 
-    /*
-    private fun updateArtistNameState() {
-        uiState = uiState.copy(artistName = termEditText.text.toString())
-    }
-*/
-    private fun notifyMoreDetailsAction() {
-        onActionSubject.notify(MoreDetailsUiEvent.OpenArtistUrl)
-    }
-
-    private fun initIntentData(){
-        artistName = intent.getStringExtra(ARTIST_NAME) ?: ""
+    private fun initObservers() {
+        moreDetailsModel.artistObservable
+            .subscribe { value -> updateArtistInfo(value) }
     }
 
 
-    override fun openUrl(artistUrl: String){
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(artistUrl)
-        startActivity(intent)
+    private fun updateArtistInfo(artist: Artist){
+        updateArtistUiState(artist)
+        updateView(artistDescriptionHelper.getArtistDescription(artist))
+        setURLButton()
     }
 
-
-    /*
     private fun updateView(artistInfoText: String) {
         runOnUiThread {
             loadImageIntoView()
             setArtistViewText(artistInfoText)
         }
     }
-    */
+
+    private fun setURLButton() {
+        val artistUrl = uiState.artistURL
+        artistUrl.setOpenUrlButton()
+    }
+
+    private fun String.setOpenUrlButton() {
+        openUrlButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(this)
+            startActivity(intent)
+        }
+    }
+
     private fun loadImageIntoView(){
-        Picasso.get().load(IMAGE_URL).into(imageView)
+        Picasso.get().load(uiState.songImageUrl).into(imageView)
     }
 
     @Suppress("DEPRECATION")
@@ -112,14 +121,38 @@ internal class MoreDetailsViewImpl: MoreDetailsView, AppCompatActivity(){
         artistTextView.text = Html.fromHtml(artistInfoText)
     }
 
-/*
-    private fun JsonElement.setOpenUrlButton() {
-        val urlString = this.asString
-        openUrlButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(urlString)
-            startActivity(intent)
+    private fun updateArtistUiState(artist: Artist){
+        when (artist) {
+            is Artist.ArtistData -> updateUiState(artist)
+            Artist.EmptyArtist -> updateNoResultsUiState()
         }
     }
-    */
+
+    private fun updateUiState(artist: Artist.ArtistData){
+        uiState = uiState.copy(
+            artistName = artist.artistName,
+            artistBioContent= artist.artistBioContent,
+            artistURL= artist.artistURL,
+        )
+    }
+
+    private fun updateNoResultsUiState(){
+        uiState = uiState.copy(
+            artistName = "",
+            artistBioContent= "No Results",
+            artistURL= "",
+        )
+    }
+
+    private fun searchAction() {
+        notifyMoreDetailsAction()
+    }
+
+    private fun notifyMoreDetailsAction() {
+        onActionSubject.notify(MoreDetailsUiEvent.OpenArtistUrl)
+    }
+
+    companion object {
+        const val ARTIST_NAME_EXTRA = "artistName"
+    }
 }
