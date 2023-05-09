@@ -3,12 +3,12 @@ package ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb
 import android.database.Cursor
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 
-interface CursorDataBase {
+interface CursorToArtistLocal {
 
     fun cursorArtist(cursor: Cursor): Artist
 }
 
-internal class CursorDataBaseImpl : CursorDataBase {
+internal class CursorToArtistLocalImpl : CursorToArtistLocal {
 
     override fun cursorArtist(cursor: Cursor): Artist {
         var artistName = ""
