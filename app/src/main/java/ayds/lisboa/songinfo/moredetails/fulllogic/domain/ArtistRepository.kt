@@ -1,16 +1,14 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository
+package ayds.lisboa.songinfo.moredetails.fulllogic.domain
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.artist.ArtistLocalStorage
-
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorage
 interface ArtistRepository{
     fun getArtist(artistName: String): Artist
 
 }
 
 internal class ArtistRepositoryImpl(
-    private val artistLocalStorage: ArtistLocalStorage,
+    private val artistLocalStorage: ArtistLocalStorage ,
     private val artistExternalService: ArtistExternalService,
 ): ArtistRepository {
 
@@ -20,7 +18,7 @@ internal class ArtistRepositoryImpl(
         when (artist) {
             Artist.EmptyArtist -> try {
                 artist = artistExternalService.getArtistFromLastFMAPI(artistName)
-                artistLocalStorage.saveArtistInfo(artist)
+                artist?.let { saveArtistInfo(it) }
             } catch (e: Exception) {
                 artist = null
             }
@@ -33,4 +31,7 @@ internal class ArtistRepositoryImpl(
         artist.isLocallyStored = true
     }
 
+    private fun saveArtistInfo(artist: Artist.ArtistData){
+        artistLocalStorage.saveArtist(artist.artistName,artist.artistBioContent,artist.artistURL)
+    }
 }
