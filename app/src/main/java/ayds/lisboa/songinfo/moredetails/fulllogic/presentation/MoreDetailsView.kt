@@ -5,7 +5,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -32,10 +31,9 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
     private val onActionSubject = Subject<MoreDetailsUiEvent>()
 
     private lateinit var moreDetailsModel: MoreDetailsModel
-    private lateinit var viewFullArticleButton: Button
     private lateinit var artistTextView: TextView
     private lateinit var imageView: ImageView
-    private lateinit var openUrlButton: View
+    private lateinit var openUrlButton: Button
 
     override val uiEventObservable: Observable<MoreDetailsUiEvent> = onActionSubject
     override var uiState: MoreDetailsUiState = MoreDetailsUiState()
@@ -56,6 +54,7 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
         initListeners()
         initUiState()
         initObservers()
+        initMoreDetails()
     }
 
     private fun initModule() {
@@ -67,11 +66,10 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
         artistTextView = findViewById(R.id.artistInfoTextView)
         imageView = findViewById(R.id.imageView)
         openUrlButton = findViewById(R.id.openUrlButton)
-
     }
 
     private fun initListeners() {
-        viewFullArticleButton.setOnClickListener {
+        openUrlButton.setOnClickListener {
             searchAction()
         }
     }
@@ -85,6 +83,9 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
             .subscribe { value -> updateArtistInfo(value) }
     }
 
+    private fun initMoreDetails(){
+        onActionSubject.notify(MoreDetailsUiEvent.MoreDetails)
+    }
 
     private fun updateArtistInfo(artist: Artist){
         updateArtistUiState(artist)
@@ -101,13 +102,13 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
 
     private fun setURLButton() {
         val artistUrl = uiState.artistURL
-        artistUrl.setOpenUrlButton()
+        setOpenUrlButton(artistUrl)
     }
 
-    private fun String.setOpenUrlButton() {
+    private fun setOpenUrlButton(artistUrl: String) {
         openUrlButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(this)
+            intent.data = Uri.parse(artistUrl)
             startActivity(intent)
         }
     }
