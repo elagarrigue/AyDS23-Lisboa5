@@ -9,7 +9,7 @@ interface MoreDetailsPresenter{
     fun setMoreDetailsView(moreDetailsView: MoreDetailsView)
 }
 
-internal class OtherInfoPresenterImpl(
+internal class MoreDetailsPresenterImpl(
     private val moreDetailsModel: MoreDetailsModel
 ): MoreDetailsPresenter{
 
