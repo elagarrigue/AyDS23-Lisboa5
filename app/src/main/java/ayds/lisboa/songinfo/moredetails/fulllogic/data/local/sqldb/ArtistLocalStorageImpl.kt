@@ -10,11 +10,11 @@ import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 private const val DATABASE_VERSION = 1
 private const val DB_NAME = "dictionary.db"
 
-internal class DataBaseImp(
+internal class ArtistLocalStorageImpl(
     context:Context?,
-    private val cursorDataBase: CursorDataBase,
+    private val cursorDataBase: CursorToArtistLocal,
     ) : SQLiteOpenHelper(context, DB_NAME, null, DATABASE_VERSION),
-    DataBase {
+    ArtistLocalStorage {
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(createDataBaseTableQuery)
