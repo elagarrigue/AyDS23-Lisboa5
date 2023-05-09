@@ -1,6 +1,5 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.domain
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.model.entities.repository.ArtistRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
 
