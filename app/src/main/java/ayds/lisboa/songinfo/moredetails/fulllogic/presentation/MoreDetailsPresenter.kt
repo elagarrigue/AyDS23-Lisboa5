@@ -1,12 +1,13 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
 
 
+
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.MoreDetailsModel
 import ayds.observer.Observer
 
-
 interface MoreDetailsPresenter{
     fun setMoreDetailsView(moreDetailsView: MoreDetailsView)
+    fun moreDetails()
 }
 
 internal class MoreDetailsPresenterImpl(
@@ -20,11 +21,11 @@ internal class MoreDetailsPresenterImpl(
         moreDetailsView.uiEventObservable.subscribe(observer)
     }
 
-    //Va a tener otro para iniciarlizar el panel, ya que esta va a ser llamado de homeview(para detectar la actividad esa)?
     private val observer: Observer<MoreDetailsUiEvent> =
         Observer { value ->
             when(value){
-               MoreDetailsUiEvent.OpenArtistUrl -> openUrl()
+                MoreDetailsUiEvent.OpenArtistUrl -> openUrl()
+                MoreDetailsUiEvent.MoreDetails -> moreDetails()
             }
         }
 
@@ -33,8 +34,9 @@ internal class MoreDetailsPresenterImpl(
         moreDetailsView.openUrl(artistUrl)
     }
 
-
-
-
-
+    override fun moreDetails(){
+        Thread {
+            moreDetailsModel.getArtist(moreDetailsView.uiState.artistName)
+        }.start()
+    }
 }
