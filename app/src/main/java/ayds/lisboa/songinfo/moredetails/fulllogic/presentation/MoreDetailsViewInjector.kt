@@ -7,6 +7,6 @@ object MoreDetailsViewInjector {
 
     fun init(moreDetailsView: MoreDetailsView){
         MoreDetailsModelInjector.initMoreDetailsModel(moreDetailsView)
-        //Falta inicializar el Presenter
+        MoreDetailsPresenterInjector.onViewStarted(moreDetailsView)
     }
 }
