@@ -6,6 +6,7 @@ import com.google.gson.JsonObject
 
 
 private const val ARTIST = "artist"
+private const val ARTIST_NAME = "name"
 private const val BIO = "bio"
 private const val CONTENT = "content"
 private const val URL = "url"
@@ -18,7 +19,7 @@ internal class LastFMToArtistResolverImpl: LastFMToArtistResolver {
 
     override fun getArtistFromExternalData(serviceData: String?): Artist.ArtistData? =
         try {
-            serviceData.getArtistFromCallResponse().let { item ->
+            serviceData?.getArtistFromCallResponse()?.let { item ->
                 Artist.ArtistData(
                     item.getArtistName(), item.getArtistBioContent(), item.getArtistUrl()
                 )
@@ -34,7 +35,7 @@ internal class LastFMToArtistResolverImpl: LastFMToArtistResolver {
         return jObjFromGson[ARTIST].asJsonObject
     }
 
-    private fun JsonObject.getArtistName() = this[ARTIST].asString
+    private fun JsonObject.getArtistName() = this[ARTIST_NAME].asString
 
     private fun JsonObject.getArtistBioContent() = this[BIO].asJsonObject[CONTENT].asString
 
