@@ -5,7 +5,7 @@ data class MoreDetailsUiState (
     val artistName: String = "",
     val artistBioContent: String = "",
     val artistURL: String = "",
-    val songImageUrl: String = DEFAULT_IMAGE,
+    val lastFMImageUrl: String = DEFAULT_IMAGE,
 ) {
     companion object {
         const val DEFAULT_IMAGE =
