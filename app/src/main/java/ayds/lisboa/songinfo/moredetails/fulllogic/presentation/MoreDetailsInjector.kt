@@ -29,8 +29,9 @@ object MoreDetailsInjector {
 
     fun init(moreDetailsView: MoreDetailsView){
         val repository = initMoreDetailsRepository(moreDetailsView)
-        moreDetailsPresenter = MoreDetailsPresenterImpl(repository).apply {
+        moreDetailsPresenter = MoreDetailsPresenterImpl().apply {
             setMoreDetailsView(moreDetailsView)
+            setRepository(repository)
         }
     }
 
