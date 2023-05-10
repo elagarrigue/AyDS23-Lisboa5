@@ -9,7 +9,7 @@ const val ARTIST_URL = "artist_url"
 
 const val createDataBaseTableQuery : String =
     "create table $ARTISTS_TABLE (" +
-            "$ID string PRIMARY KEY AUTOINCREMENT " +
+            "$ID integer PRIMARY KEY AUTOINCREMENT, " +
             "$ARTIST_NAME string, " +
             "$INFO string, " +
             "$SOURCE integer, " +
