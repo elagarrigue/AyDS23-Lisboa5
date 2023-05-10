@@ -12,12 +12,14 @@ interface ArtistDescriptionHelper{
 
 }
 
-internal class ArtistDescriptionHelperImpl(): ArtistDescriptionHelper{
+internal class ArtistDescriptionHelperImpl: ArtistDescriptionHelper{
 
     override fun getArtistDescription (artist: Artist): String {
         val artistDesc = getArtistDescriptionContent(artist)
-        val artistDescAsHTML = artistDescAsHTML(artistDesc)
-        return textToHtml(artistDescAsHTML, artist as Artist.ArtistData)
+        return if (artist is Artist.ArtistData) {
+            val artistDescAsHTML = artistDescAsHTML(artistDesc)
+            textToHtml(artistDescAsHTML, artist)
+        } else artistDesc
     }
 
     private fun getArtistDescriptionContent (artist: Artist): String {
