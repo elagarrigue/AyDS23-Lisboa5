@@ -14,10 +14,7 @@ import ayds.lisboa.songinfo.moredetails.fulllogic.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
 
-interface MoreDetailsView {
-
-    fun openUrl(artistUrl: String)
-}
+interface MoreDetailsView
 
 internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
 
@@ -26,19 +23,12 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
     private lateinit var imageView: ImageView
     private lateinit var openUrlButton: Button
 
-    override fun openUrl(artistUrl: String) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(artistUrl)
-        startActivity(intent)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_other_info)
 
         initModule()
         initProperties()
-        initListeners()
         initObservers()
         initMoreDetails()
     }
@@ -52,12 +42,6 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
         artistTextView = findViewById(R.id.artistInfoTextView)
         imageView = findViewById(R.id.imageView)
         openUrlButton = findViewById(R.id.openUrlButton)
-    }
-
-    private fun initListeners() {
-        openUrlButton.setOnClickListener {
-            notifyMoreDetailsAction()
-        }
     }
 
     private fun initObservers() {
@@ -102,10 +86,6 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
     @Suppress("DEPRECATION")
     private fun setArtistViewText(artistInfoText: String){
         artistTextView.text = Html.fromHtml(artistInfoText)
-    }
-
-    private fun notifyMoreDetailsAction() {
-        moreDetailsPresenter.openUrl()
     }
 
     companion object {

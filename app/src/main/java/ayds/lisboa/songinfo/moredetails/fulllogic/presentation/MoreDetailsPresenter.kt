@@ -10,33 +10,21 @@ interface MoreDetailsPresenter{
     val artistObservable: Observable<MoreDetailsUiState>
     var uiState: MoreDetailsUiState
 
-    fun setMoreDetailsView(moreDetailsView: MoreDetailsView)
     fun setRepository(repository: ArtistRepository)
     fun moreDetails(artistName: String)
-    fun openUrl()
 }
 
 internal class MoreDetailsPresenterImpl: MoreDetailsPresenter{
 
     private val artistDescriptionHelper: ArtistDescriptionHelper = MoreDetailsInjector.artistDescriptionHelper
 
-    private lateinit var moreDetailsView: MoreDetailsView
     private lateinit var repository: ArtistRepository
 
     override val artistObservable = Subject<MoreDetailsUiState>()
     override var uiState: MoreDetailsUiState = MoreDetailsUiState()
 
-    override fun setMoreDetailsView(moreDetailsView: MoreDetailsView) {
-        this.moreDetailsView = moreDetailsView
-    }
-
     override fun setRepository(repository: ArtistRepository) {
         this.repository=repository
-    }
-
-    override fun openUrl(){
-        val artistUrl = uiState.artistURL
-        moreDetailsView.openUrl(artistUrl)
     }
 
     override fun moreDetails(artistName: String){
