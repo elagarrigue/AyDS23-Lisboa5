@@ -23,7 +23,7 @@ internal class ArtistDescriptionHelperImpl: ArtistDescriptionHelper{
     }
 
     private fun getArtistDescriptionContent (artist: Artist): String {
-        if (artist is Artist.ArtistData){
+        if (artist is Artist.ArtistData && artist.artistBioContent != ""){
             return if (artist.isLocallyStored) {
                 "$PREFIX${artist.artistBioContent}"
             } else artist.artistBioContent
