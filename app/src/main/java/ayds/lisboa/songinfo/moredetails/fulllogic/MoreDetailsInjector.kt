@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
+package ayds.lisboa.songinfo.moredetails.fulllogic
 
 import android.content.Context
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMAPI
@@ -11,6 +11,9 @@ import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalSt
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.CursorToArtistLocalImpl
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.*
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.ArtistRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.*
+import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.ArtistDescriptionHelperImpl
+import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.MoreDetailsPresenterImpl
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -21,7 +24,10 @@ object MoreDetailsInjector {
     private val retrofit = createRetrofit()
     private val lastFMAPI = retrofit.create(LastFMAPI::class.java)
     private val lastFMtoArtistResolver: LastFMToArtistResolver = LastFMToArtistResolverImpl()
-    private val artistExternalService : ArtistExternalService = ArtistExternalServiceImpl(lastFMAPI,lastFMtoArtistResolver)
+    private val artistExternalService : ArtistExternalService = ArtistExternalServiceImpl(
+        lastFMAPI,
+        lastFMtoArtistResolver
+    )
 
     val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
 

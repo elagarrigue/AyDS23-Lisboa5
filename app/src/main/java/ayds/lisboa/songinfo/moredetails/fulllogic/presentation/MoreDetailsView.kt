@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
+import ayds.lisboa.songinfo.moredetails.fulllogic.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
 

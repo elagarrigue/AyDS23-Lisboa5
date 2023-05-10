@@ -1,5 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
 
+import ayds.lisboa.songinfo.moredetails.fulllogic.MoreDetailsInjector
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.ArtistRepository
 import ayds.observer.Observable
