@@ -12,7 +12,7 @@ private const val CONTENT = "content"
 private const val URL = "url"
 
 interface LastFMToArtistResolver {
-    fun getArtistFromExternalData(serviceData: String?) : Artist.ArtistData?  //Este va a ser el equivalente a getArtistFromLastFMAPI de otherinfowindows
+    fun getArtistFromExternalData(serviceData: String?) : Artist.ArtistData?
 }
 
 internal class LastFMToArtistResolverImpl: LastFMToArtistResolver {
