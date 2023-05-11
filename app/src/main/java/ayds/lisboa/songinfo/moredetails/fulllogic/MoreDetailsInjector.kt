@@ -9,8 +9,8 @@ import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.A
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorage
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorageImpl
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.CursorToArtistLocalImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.*
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.ArtistRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.fulllogic.data.ArtistRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.repository.ArtistRepository
 import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.*
 import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.ArtistDescriptionHelperImpl
 import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.MoreDetailsPresenterImpl
