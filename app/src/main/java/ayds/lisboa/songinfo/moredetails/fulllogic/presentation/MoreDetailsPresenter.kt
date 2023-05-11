@@ -7,7 +7,6 @@ import ayds.observer.Subject
 
 interface MoreDetailsPresenter{
     val artistObservable: Observable<MoreDetailsUiState>
-    var uiState: MoreDetailsUiState
 
     fun setRepository(repository: ArtistRepository)
     fun moreDetails(artistName: String)
@@ -18,7 +17,6 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
     private lateinit var repository: ArtistRepository
 
     override val artistObservable = Subject<MoreDetailsUiState>()
-    override var uiState: MoreDetailsUiState = MoreDetailsUiState()
 
     override fun setRepository(repository: ArtistRepository) {
         this.repository=repository
@@ -28,30 +26,30 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
         Thread {
             val artist=repository.getArtist(artistName)
             val reformattedText = artistDescriptionHelper.getArtistDescription(artist)
-            updateArtistUiState(artist,reformattedText)
+            val uiState = updateArtistUiState(artist,reformattedText)
             uiState.let {
                 artistObservable.notify(it)
             }
         }.start()
     }
 
-    private fun updateArtistUiState(artist: Artist,reformattedText: String){
-        when (artist) {
+    private fun updateArtistUiState(artist: Artist,reformattedText: String): MoreDetailsUiState {
+        return when (artist) {
             is Artist.ArtistData -> updateUiState(artist,reformattedText)
             Artist.EmptyArtist -> updateNoResultsUiState()
         }
     }
 
-    private fun updateUiState(artist: Artist.ArtistData,reformattedText: String){
-        uiState = uiState.copy(
+    private fun updateUiState(artist: Artist.ArtistData,reformattedText: String): MoreDetailsUiState{
+        return MoreDetailsUiState(
             artistName = artist.artistName,
             artistBioContent= reformattedText,
             artistURL= artist.artistURL,
         )
     }
 
-    private fun updateNoResultsUiState(){
-        uiState = uiState.copy(
+    private fun updateNoResultsUiState(): MoreDetailsUiState{
+        return MoreDetailsUiState(
             artistName = "",
             artistBioContent= "No Results",
             artistURL= "",

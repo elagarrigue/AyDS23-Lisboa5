@@ -29,7 +29,7 @@ object MoreDetailsInjector {
         lastFMtoArtistResolver
     )
 
-    val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
+    private val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
 
     lateinit var moreDetailsPresenter: MoreDetailsPresenter
 
