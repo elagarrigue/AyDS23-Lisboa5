@@ -6,6 +6,8 @@ const val INFO = "info"
 const val ID = "id"
 const val SOURCE = "source"
 const val ARTIST_URL = "artist_url"
+const val DATABASE_VERSION = 1
+const val DB_NAME = "dictionary.db"
 
 const val createDataBaseTableQuery : String =
     "create table $ARTISTS_TABLE (" +

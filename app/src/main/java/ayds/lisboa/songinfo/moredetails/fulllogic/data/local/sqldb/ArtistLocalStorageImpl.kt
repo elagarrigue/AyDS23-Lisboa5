@@ -7,9 +7,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
 
 
-private const val DATABASE_VERSION = 1
-private const val DB_NAME = "dictionary.db"
-
 internal class ArtistLocalStorageImpl(
     context:Context?,
     private val cursorDataBase: CursorToArtistLocal,
