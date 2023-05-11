@@ -1,9 +1,9 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.data
+package ayds.lisboa.songinfo.moredetails.data
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.repository.ArtistRepository
+import ayds.lisboa.songinfo.moredetails.data.external.artist.artists.ArtistExternalService
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
+import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 
 class ArtistRepositoryImpl(
     private val artistLocalStorage: ArtistLocalStorage,

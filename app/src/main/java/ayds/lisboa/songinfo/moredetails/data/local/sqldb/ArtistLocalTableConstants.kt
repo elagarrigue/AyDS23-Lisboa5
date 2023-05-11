@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb
+package ayds.lisboa.songinfo.moredetails.data.local.sqldb
 
 const val ARTIST_NAME = "artist"
 const val ARTISTS_TABLE = "artists"

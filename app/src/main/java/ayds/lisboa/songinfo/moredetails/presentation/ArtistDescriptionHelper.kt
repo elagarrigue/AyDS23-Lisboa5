@@ -1,6 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
+package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
+import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 import java.util.*
 
 private const val PREFIX = "[*]"
@@ -12,7 +12,7 @@ interface ArtistDescriptionHelper{
 
 }
 
-internal class ArtistDescriptionHelperImpl: ArtistDescriptionHelper{
+internal class ArtistDescriptionHelperImpl: ArtistDescriptionHelper {
 
     override fun getArtistDescription (artist: Artist): String {
         val artistDesc = getArtistDescriptionContent(artist)

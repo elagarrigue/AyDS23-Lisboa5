@@ -1,10 +1,10 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb
+package ayds.lisboa.songinfo.moredetails.data.local.sqldb
 
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
+import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 
 
 internal class ArtistLocalStorageImpl(

@@ -1,19 +1,19 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic
+package ayds.lisboa.songinfo.moredetails.injector
 
 import android.content.Context
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMAPI
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolver
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolverImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalServiceImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorageImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.CursorToArtistLocalImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.ArtistRepositoryImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.repository.ArtistRepository
-import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.*
-import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.ArtistDescriptionHelperImpl
-import ayds.lisboa.songinfo.moredetails.fulllogic.presentation.MoreDetailsPresenterImpl
+import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMAPI
+import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolver
+import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolverImpl
+import ayds.lisboa.songinfo.moredetails.data.external.artist.artists.ArtistExternalService
+import ayds.lisboa.songinfo.moredetails.data.external.artist.artists.ArtistExternalServiceImpl
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorageImpl
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CursorToArtistLocalImpl
+import ayds.lisboa.songinfo.moredetails.data.ArtistRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
+import ayds.lisboa.songinfo.moredetails.presentation.*
+import ayds.lisboa.songinfo.moredetails.presentation.ArtistDescriptionHelperImpl
+import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
 

@@ -1,8 +1,8 @@
-package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists
+package ayds.lisboa.songinfo.moredetails.data.external.artist.artists
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMAPI
-import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.LastFMToArtistResolver
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
+import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMAPI
+import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolver
+import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 
 
 internal class ArtistExternalServiceImpl (
