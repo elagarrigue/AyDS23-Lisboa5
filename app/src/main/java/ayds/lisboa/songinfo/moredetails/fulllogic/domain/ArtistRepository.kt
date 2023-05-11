@@ -2,6 +2,8 @@ package ayds.lisboa.songinfo.moredetails.fulllogic.domain
 
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists.ArtistExternalService
 import ayds.lisboa.songinfo.moredetails.fulllogic.data.local.sqldb.ArtistLocalStorage
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
+
 interface ArtistRepository{
     fun getArtist(artistName: String): Artist
 

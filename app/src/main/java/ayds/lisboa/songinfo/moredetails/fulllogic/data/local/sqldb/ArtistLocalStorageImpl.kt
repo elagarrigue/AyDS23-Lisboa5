@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
 
 
 private const val DATABASE_VERSION = 1

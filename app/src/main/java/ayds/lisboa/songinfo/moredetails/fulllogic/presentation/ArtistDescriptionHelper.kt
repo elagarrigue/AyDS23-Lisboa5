@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
 import java.util.*
 
 private const val PREFIX = "[*]"

@@ -1,7 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.data.external.artist.artists
 
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
+import ayds.lisboa.songinfo.moredetails.fulllogic.domain.entities.Artist
 
 interface ArtistExternalService {
 
