@@ -1,6 +1,5 @@
 package ayds.lisboa.songinfo.moredetails.fulllogic.presentation
 
-import ayds.lisboa.songinfo.moredetails.fulllogic.MoreDetailsInjector
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.Artist
 import ayds.lisboa.songinfo.moredetails.fulllogic.domain.ArtistRepository
 import ayds.observer.Observable
@@ -14,9 +13,7 @@ interface MoreDetailsPresenter{
     fun moreDetails(artistName: String)
 }
 
-internal class MoreDetailsPresenterImpl: MoreDetailsPresenter{
-
-    private val artistDescriptionHelper: ArtistDescriptionHelper = MoreDetailsInjector.artistDescriptionHelper
+internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: ArtistDescriptionHelper): MoreDetailsPresenter{
 
     private lateinit var repository: ArtistRepository
 
