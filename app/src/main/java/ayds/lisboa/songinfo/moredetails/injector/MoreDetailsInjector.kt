@@ -4,8 +4,8 @@ import android.content.Context
 import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMAPI
 import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolver
 import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolverImpl
-import ayds.lisboa.songinfo.moredetails.data.external.artist.artists.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.data.external.artist.artists.ArtistExternalServiceImpl
+import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalService
+import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalServiceImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorageImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CursorToArtistLocalImpl

@@ -1,7 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.data.external.artist.artists
+package ayds.lisboa.songinfo.moredetails.data.external.artist
 
-import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMAPI
-import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolver
+
 import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 
 
