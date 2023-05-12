@@ -1,7 +1,6 @@
 package ayds.lisboa.songinfo.home.model.repository
 
-import ayds.lisboa.songinfo.home.model.entities.SpotifySong
-import ayds.lisboa.songinfo.home.model.entities.EmptySong
+import ayds.lisboa.songinfo.home.model.entities.Song
 import ayds.lisboa.songinfo.home.model.repository.external.spotify.SpotifyTrackService
 import ayds.lisboa.songinfo.home.model.repository.local.spotify.SpotifyLocalStorage
 import io.mockk.every
@@ -26,12 +25,12 @@ class SongRepositoryTest {
 
         val result = songRepository.getSongById("id")
 
-        assertEquals(EmptySong, result)
+        assertEquals(Song.EmptySong, result)
     }
 
     @Test
     fun `given existing song by id should return song`() {
-        val song: SpotifySong = mockk()
+        val song: Song.SpotifySong = mockk()
         every { spotifyLocalStorage.getSongById("id") } returns song
 
         val result = songRepository.getSongById("id")
@@ -41,7 +40,7 @@ class SongRepositoryTest {
 
     @Test
     fun `given existing song by term should return song and mark it as local`() {
-        val song = SpotifySong("id", "name", "artist", "album", "date", "url", "image", false)
+        val song = Song.SpotifySong("id", "name", "artist", "album", "date", "releaseDate","url", "image", false)
         every { spotifyLocalStorage.getSongByTerm("term") } returns song
 
         val result = songRepository.getSongByTerm("term")
@@ -52,7 +51,7 @@ class SongRepositoryTest {
 
     @Test
     fun `given non existing song by term should get the song and store it`() {
-        val song = SpotifySong("id", "name", "artist", "album", "date", "url", "image", false)
+        val song = Song.SpotifySong("id", "name", "artist", "album", "date","releaseDate", "url", "image", false)
         every { spotifyLocalStorage.getSongByTerm("term") } returns null
         every { spotifyTrackService.getSong("term") } returns song
         every { spotifyLocalStorage.getSongById("id") } returns null
@@ -66,7 +65,7 @@ class SongRepositoryTest {
 
     @Test
     fun `given existing song by different term should get the song and update it`() {
-        val song = SpotifySong("id", "name", "artist", "album", "date", "url", "image", false)
+        val song = Song.SpotifySong("id", "name", "artist", "album", "date", "releaseDate","url", "image", false)
         every { spotifyLocalStorage.getSongByTerm("term") } returns null
         every { spotifyTrackService.getSong("term") } returns song
         every { spotifyLocalStorage.getSongById("id") } returns song
@@ -85,7 +84,7 @@ class SongRepositoryTest {
 
         val result = songRepository.getSongByTerm("term")
 
-        assertEquals(EmptySong, result)
+        assertEquals(Song.EmptySong, result)
     }
 
     @Test
@@ -95,6 +94,6 @@ class SongRepositoryTest {
 
         val result = songRepository.getSongByTerm("term")
 
-        assertEquals(EmptySong, result)
+        assertEquals(Song.EmptySong, result)
     }
 }
