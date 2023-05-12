@@ -25,13 +25,17 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
 
     override fun moreDetails(artistName: String) {
         Thread {
-            val artist = repository.getArtist(artistName)
-            val reformattedText = artistDescriptionHelper.getArtistDescription(artist)
-            val uiState = updateArtistUiState(artist, reformattedText)
-            uiState.let {
-                artistObservable.notify(it)
-            }
+            notifyObservable(artistName)
         }.start()
+    }
+
+    private fun notifyObservable(artistName: String){
+        artistObservable.notify(getMoreDetailsUiState(artistName))
+    }
+    private fun getMoreDetailsUiState(artistName: String): MoreDetailsUiState {
+        val artist = repository.getArtist(artistName)
+        val reformattedText = artistDescriptionHelper.getArtistDescription(artist)
+        return updateArtistUiState(artist, reformattedText)
     }
 
     private fun updateArtistUiState(artist: Artist, reformattedText: String): MoreDetailsUiState {
