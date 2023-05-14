@@ -25,11 +25,11 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
 
     override fun moreDetails(artistName: String) {
         Thread {
-            notifyObservable(artistName)
+            fetchMoreDetails(artistName)
         }.start()
     }
 
-    private fun notifyObservable(artistName: String){
+    private fun fetchMoreDetails(artistName: String){
         artistObservable.notify(getMoreDetailsUiState(artistName))
     }
     private fun getMoreDetailsUiState(artistName: String): MoreDetailsUiState {
