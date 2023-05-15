@@ -1,8 +1,5 @@
 package ayds.lisboa.songinfo.moredetails.data.external.artist
 
-import ayds.lisboa.songinfo.home.model.repository.SongRepository
-import ayds.lisboa.songinfo.home.model.repository.SongRepositoryImpl
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
 import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 import io.mockk.every
 import io.mockk.mockk
