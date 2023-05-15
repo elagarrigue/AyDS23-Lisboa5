@@ -8,9 +8,9 @@ import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 
 
 internal class ArtistLocalStorageImpl(
-    context:Context?,
+    context: Context?,
     private val cursorDataBase: CursorToArtistLocal,
-    ) : SQLiteOpenHelper(context, DB_NAME, null, DATABASE_VERSION),
+) : SQLiteOpenHelper(context, DB_NAME, null, DATABASE_VERSION),
     ArtistLocalStorage {
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -21,10 +21,10 @@ internal class ArtistLocalStorageImpl(
 
     override fun saveArtist(artist: String?, info: String?, url: String) {
         val values = ContentValues()
-        values.put(ARTIST_NAME,artist)
+        values.put(ARTIST_NAME, artist)
         values.put(INFO, info)
         values.put(SOURCE, 1)
-        values.put(ARTIST_URL,url)
+        values.put(ARTIST_URL, url)
 
         writableDatabase.insert(ARTISTS_TABLE, null, values)
     }
