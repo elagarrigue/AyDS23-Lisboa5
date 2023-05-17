@@ -1,5 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
+import ayds.lisboa.songinfo.home.view.HomeUiEvent
 import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import io.mockk.every
@@ -20,16 +21,23 @@ class MoreDetailsPresenterTest {
 
     @Test
     fun `when more details of an Artist are fetched should notify`() {
-        val artist : Artist = Artist.ArtistData(
-            "Artista","descripcion del artista","url",false
+        val artist : Artist.ArtistData = Artist.ArtistData(
+            "Artista",
+            "Descripcion del artista",
+            "url"
         )
         every { repository.getArtist("artistName") } returns artist
         val artistTester: (MoreDetailsUiState) -> Unit = mockk(relaxed = true)
         moreDetailsPresenter.artistObservable.subscribe {
             artistTester(it)
         }
+        val moreDetailsUiStateExpected = MoreDetailsUiState(
+            "Artista",
+            "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>",
+            "url"
+        )
         moreDetailsPresenter.moreDetails("artistName")
-        verify { artistTester(any()) }
+        verify { artistTester(moreDetailsUiStateExpected) }
 
     }
 
@@ -41,7 +49,24 @@ class MoreDetailsPresenterTest {
         moreDetailsPresenter.artistObservable.subscribe {
             artistTester(it)
         }
+        val moreDetailsUiStateExpected = MoreDetailsUiState(
+            "",
+            "No Results",
+            ""
+        )
         moreDetailsPresenter.moreDetails("artistName")
-        verify { artistTester(any()) }
+        verify { artistTester(moreDetailsUiStateExpected) }
+    }
+    @Test
+    fun `when more details of an empty Artist are fetched should notify`() {
+        val artist : Artist = Artist.EmptyArtist
+        every { repository.getArtist("artistName") } returns artist
+        val artistTester: (MoreDetailsUiState) -> Unit = mockk(relaxed = true)
+        moreDetailsPresenter.artistObservable.subscribe {
+            artistTester(it)
+        }
+        moreDetailsPresenter.moreDetails("artistName")
+        verify {  artistTester(any())}
+
     }
 }
