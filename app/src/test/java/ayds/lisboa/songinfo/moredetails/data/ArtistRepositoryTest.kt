@@ -6,11 +6,9 @@ import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.Assert
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import io.mockk.verify
+import org.junit.Assert.*
 import org.junit.Test
-import java.lang.Exception
 
 class ArtistRepositoryTest {
 
@@ -30,8 +28,8 @@ class ArtistRepositoryTest {
         val artist = Artist.ArtistData("artistName","artistBioContent","artistURL",false)
         every{ artistLocalStorage.getArtist("artistName")} returns artist
 
-        val resultado = artistRepository.getArtist("artistName")
-        assertEquals(artist, resultado)
+        val result = artistRepository.getArtist("artistName")
+        assertEquals(artist, result)
         assertTrue(artist.isLocallyStored)
     }
 
@@ -45,8 +43,8 @@ class ArtistRepositoryTest {
         val result = artistRepository.getArtist("artistName")
 
         assertEquals(artist, result)
-        Assert.assertFalse(artist.isLocallyStored)
-       // verify { ArtistRepositoryImpl.saveArtistInfo(artist) }
+        assertFalse(artist.isLocallyStored)
+        verify{artistLocalStorage.saveArtist("artistName","artistBioContent", "artistURL")}
     }
 
     @Test
