@@ -29,7 +29,19 @@ class MoreDetailsPresenterTest {
             artistTester(it)
         }
         moreDetailsPresenter.moreDetails("artistName")
-        verify {  artistTester(any())}
+        verify { artistTester(any()) }
 
+    }
+
+    @Test
+    fun `when more details of an EmptyArtist are fetched should notify`() {
+        val artist : Artist = Artist.EmptyArtist
+        every { repository.getArtist("artistName") } returns artist
+        val artistTester: (MoreDetailsUiState) -> Unit = mockk(relaxed = true)
+        moreDetailsPresenter.artistObservable.subscribe {
+            artistTester(it)
+        }
+        moreDetailsPresenter.moreDetails("artistName")
+        verify { artistTester(any()) }
     }
 }
