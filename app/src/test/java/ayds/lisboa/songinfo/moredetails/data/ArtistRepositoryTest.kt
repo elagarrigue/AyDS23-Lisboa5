@@ -29,6 +29,7 @@ class ArtistRepositoryTest {
         every{ artistLocalStorage.getArtist("artistName")} returns artist
 
         val result = artistRepository.getArtist("artistName")
+
         assertEquals(artist, result)
         assertTrue(artist.isLocallyStored)
     }
@@ -38,7 +39,6 @@ class ArtistRepositoryTest {
         val artist = Artist.ArtistData("artistName","artistBioContent","artistURL",false)
         every { artistLocalStorage.getArtist("artistName") } returns Artist.EmptyArtist
         every {artistExternalService.getArtistFromLastFMAPI("artistName") } returns artist
-
 
         val result = artistRepository.getArtist("artistName")
 
@@ -62,6 +62,7 @@ class ArtistRepositoryTest {
     fun `given service exception should return empty artist`(){
         every { artistLocalStorage.getArtist("artistName") } returns Artist.EmptyArtist
         every {artistExternalService.getArtistFromLastFMAPI("artistName")} throws mockk<Exception>()
+
         val result = artistRepository.getArtist("artistName")
 
         assertEquals(Artist.EmptyArtist, result)
