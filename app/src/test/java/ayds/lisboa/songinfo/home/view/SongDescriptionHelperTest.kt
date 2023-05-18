@@ -1,16 +1,17 @@
 package ayds.lisboa.songinfo.home.view
 
+import DateCreator
 import DateFormatFactory
-import DateFormatFactoryImpl
 import ayds.lisboa.songinfo.home.model.entities.Song
-import io.mockk.impl.annotations.RelaxedMockK
+import io.mockk.every
 import io.mockk.mockk
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SongDescriptionHelperTest {
 
-    private val dateFormatFactory :DateFormatFactory= DateFormatFactoryImpl
+    private val dateFormatFactory :DateFormatFactory= mockk()
+    private val dateCreator : DateCreator = mockk()
     private val songDescriptionHelper by lazy { SongDescriptionHelperImpl(dateFormatFactory) }
 
     @Test
@@ -26,6 +27,8 @@ class SongDescriptionHelperTest {
             "url",
             true,
         )
+        every { dateFormatFactory.get("day","1992-01-01") } returns dateCreator
+        every { dateCreator.createDate() } returns "01/01/1992"
 
         val result = songDescriptionHelper.getSongDescriptionText(song)
 
@@ -51,6 +54,8 @@ class SongDescriptionHelperTest {
             "url",
             false,
         )
+        every { dateFormatFactory.get("day","1992-01-01") } returns dateCreator
+        every { dateCreator.createDate() } returns "01/01/1992"
 
         val result = songDescriptionHelper.getSongDescriptionText(song)
 
