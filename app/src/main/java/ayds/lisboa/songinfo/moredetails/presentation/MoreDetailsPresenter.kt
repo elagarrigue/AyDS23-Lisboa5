@@ -8,20 +8,13 @@ import ayds.observer.Subject
 interface MoreDetailsPresenter {
     val artistObservable: Observable<MoreDetailsUiState>
 
-    fun setRepository(repository: ArtistRepository)
     fun moreDetails(artistName: String)
 }
 
-internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: ArtistDescriptionHelper) :
+internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: ArtistDescriptionHelper, private val repository: ArtistRepository) :
     MoreDetailsPresenter {
 
-    private lateinit var repository: ArtistRepository
-
     override val artistObservable = Subject<MoreDetailsUiState>()
-
-    override fun setRepository(repository: ArtistRepository) {
-        this.repository = repository
-    }
 
     override fun moreDetails(artistName: String) {
         Thread {

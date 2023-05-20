@@ -35,9 +35,7 @@ object MoreDetailsInjector {
 
     fun init(moreDetailsView: MoreDetailsView){
         val repository = initMoreDetailsRepository(moreDetailsView)
-        moreDetailsPresenter = MoreDetailsPresenterImpl(artistDescriptionHelper).apply {
-            setRepository(repository)
-        }
+        moreDetailsPresenter = MoreDetailsPresenterImpl(artistDescriptionHelper,repository)
     }
 
     private fun initMoreDetailsRepository(moreDetailsView: MoreDetailsView): ArtistRepository {
