@@ -1,0 +1,3 @@
+[submodule "libs/SpotifyData"]
+	path = libs/SpotifyData
+	url = https://github.com/MartinVerniere/Lisboa5
