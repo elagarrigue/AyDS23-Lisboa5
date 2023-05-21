@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.home.model
 
-import ayds.lisboa.songinfo.home.model.entities.Song
+import ayds.lisboa.songinfo.spotify.Song
 import ayds.lisboa.songinfo.home.model.repository.SongRepository
 import ayds.observer.Observable
 import ayds.observer.Subject

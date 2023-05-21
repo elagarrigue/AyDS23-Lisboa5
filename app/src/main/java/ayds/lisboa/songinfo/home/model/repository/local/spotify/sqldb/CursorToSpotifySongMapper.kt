@@ -2,20 +2,21 @@ package ayds.lisboa.songinfo.home.model.repository.local.spotify.sqldb
 
 import android.database.Cursor
 import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
+import ayds.lisboa.songinfo.spotify.Song
 import java.sql.SQLException
 
 interface CursorToSpotifySongMapper {
 
-    fun map(cursor: Cursor): SpotifySong?
+    fun map(cursor: Cursor): Song.SpotifySong?
 }
 
 internal class CursorToSpotifySongMapperImpl : CursorToSpotifySongMapper {
 
-    override fun map(cursor: Cursor): SpotifySong? =
+    override fun map(cursor: Cursor): Song.SpotifySong? =
         try {
             with(cursor) {
                 if (moveToNext()) {
-                    SpotifySong(
+                    Song.SpotifySong(
                       id = getString(getColumnIndexOrThrow(ID_COLUMN)),
                       songName = getString(getColumnIndexOrThrow(NAME_COLUMN)),
                       artistName = getString(getColumnIndexOrThrow(ARTIST_COLUMN)),

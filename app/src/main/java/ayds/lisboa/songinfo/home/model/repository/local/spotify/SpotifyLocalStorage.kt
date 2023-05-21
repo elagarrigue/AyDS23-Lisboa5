@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.home.model.repository.local.spotify
 
-import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
+import ayds.lisboa.songinfo.spotify.Song.SpotifySong
 
 interface SpotifyLocalStorage {
 

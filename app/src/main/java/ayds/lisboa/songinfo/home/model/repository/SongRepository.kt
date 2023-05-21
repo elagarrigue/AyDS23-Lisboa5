@@ -1,9 +1,9 @@
 package ayds.lisboa.songinfo.home.model.repository
 
-import ayds.lisboa.songinfo.home.model.entities.Song.EmptySong
-import ayds.lisboa.songinfo.home.model.entities.Song
-import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
-import ayds.lisboa.songinfo.home.model.repository.external.spotify.SpotifyTrackService
+import ayds.lisboa.songinfo.spotify.Song.EmptySong
+import ayds.lisboa.songinfo.spotify.Song
+import ayds.lisboa.songinfo.spotify.Song.SpotifySong
+import ayds.lisboa.songinfo.spotify.SpotifyTrackService
 import ayds.lisboa.songinfo.home.model.repository.local.spotify.SpotifyLocalStorage
 
 interface SongRepository {
@@ -25,7 +25,7 @@ internal class SongRepositoryImpl(
                 try {
                     spotifySong = spotifyTrackService.getSong(term)
 
-                    (spotifySong as? SpotifySong)?.let {
+                    spotifySong?.let {
                         when {
                             it.isSavedSong() -> spotifyLocalStorage.updateSongTerm(term, it.id)
                             else -> spotifyLocalStorage.insertSong(term, it)
@@ -46,7 +46,7 @@ internal class SongRepositoryImpl(
 
     private fun SpotifySong.isSavedSong() = spotifyLocalStorage.getSongById(id) != null
 
-    private fun markSongAsLocal(song: SpotifySong) {
+    private fun markSongAsLocal(song: Song.SpotifySong) {
         song.isLocallyStored = true
     }
 }

@@ -12,9 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
 import ayds.lisboa.songinfo.home.model.HomeModel
 import ayds.lisboa.songinfo.home.model.HomeModelInjector
-import ayds.lisboa.songinfo.home.model.entities.Song.EmptySong
-import ayds.lisboa.songinfo.home.model.entities.Song
-import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
+import ayds.lisboa.songinfo.spotify.Song.EmptySong
+import ayds.lisboa.songinfo.spotify.Song
+import ayds.lisboa.songinfo.spotify.Song.SpotifySong
 import ayds.lisboa.songinfo.home.view.HomeUiState.Companion.DEFAULT_IMAGE
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsViewActivity
 import ayds.lisboa.songinfo.utils.UtilsInjector

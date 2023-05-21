@@ -4,8 +4,9 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ayds.lisboa.songinfo.home.model.entities.Song.SpotifySong
+import ayds.lisboa.songinfo.spotify.Song.SpotifySong
 import ayds.lisboa.songinfo.home.model.repository.local.spotify.SpotifyLocalStorage
+import ayds.lisboa.songinfo.spotify.Song
 
 private const val DATABASE_VERSION = 1
 private const val DATABASE_NAME = "songs.db"
@@ -62,7 +63,7 @@ internal class SpotifyLocalStorageImpl(
         writableDatabase?.insert(SONGS_TABLE, null, values)
     }
 
-    override fun getSongByTerm(term: String): SpotifySong? {
+    override fun getSongByTerm(term: String): Song.SpotifySong? {
         val cursor = readableDatabase.query(
             SONGS_TABLE,
             projection,

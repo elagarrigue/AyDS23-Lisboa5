@@ -42,7 +42,7 @@ internal class HomeControllerImpl(
     private fun moreDetails() {
         val song = homeModel.getSongById(homeView.uiState.songId)
 
-        (song as? Song.SpotifySong)?.let {
+        (song as? ayds.lisboa.songinfo.spotify.Song.SpotifySong)?.let {
             homeView.navigateToOtherDetails(song.artistName)
         }
 
