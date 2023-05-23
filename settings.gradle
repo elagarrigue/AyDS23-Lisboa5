@@ -1,3 +1,5 @@
 include ':app'
 include 'observer'
 rootProject.name = "AK Lisboa"
+include ':Lisboa5LastFM'
+project(':Lisboa5LastFM').projectDir = new File('libs/Lisboa5LastFM')

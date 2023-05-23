@@ -1,0 +1,3 @@
+[submodule "libs/Lisboa5LastFM"]
+	path = libs/Lisboa5LastFM
+	url = https://github.com/AxelFontana/Lisboa5
