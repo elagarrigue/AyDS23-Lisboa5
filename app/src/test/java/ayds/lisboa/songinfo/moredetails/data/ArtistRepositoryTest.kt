@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.data
 
-import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalService
+import com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalService
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
 import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
 import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
@@ -17,7 +17,7 @@ class ArtistRepositoryTest {
     }
 
     private val artistLocalStorage: ArtistLocalStorage = mockk(relaxUnitFun = true)
-    private val artistExternalService: ArtistExternalService = mockk(relaxUnitFun = true)
+    private val artistExternalService: com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalService = mockk(relaxUnitFun = true)
 
     private val artistRepository: ArtistRepository by lazy {
         ArtistRepositoryImpl(artistLocalStorage, artistExternalService)

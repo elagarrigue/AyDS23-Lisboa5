@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.domain.repository
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+import com.example.lisboa5lastfm.lastfm.external.Artist
 
 interface ArtistRepository {
     fun getArtist(artistName: String): Artist

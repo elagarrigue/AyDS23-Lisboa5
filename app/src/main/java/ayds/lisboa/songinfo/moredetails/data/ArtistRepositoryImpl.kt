@@ -1,9 +1,10 @@
 package ayds.lisboa.songinfo.moredetails.data
 
-import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalService
+
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+import com.example.lisboa5lastfm.lastfm.external.Artist
 import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
+import com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalService
 
 class ArtistRepositoryImpl(
     private val artistLocalStorage: ArtistLocalStorage,
