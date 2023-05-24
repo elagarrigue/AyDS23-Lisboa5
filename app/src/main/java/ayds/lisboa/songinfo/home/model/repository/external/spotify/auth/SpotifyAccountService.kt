@@ -3,7 +3,7 @@ package ayds.lisboa.songinfo.home.model.repository.external.spotify.auth
 import android.util.Base64
 import okhttp3.MediaType
 import okhttp3.RequestBody
-import okhttp3.Response
+import retrofit2.Response
 
 
 private const val clientId = "7db5d794e42845028ccabd50009e631f"

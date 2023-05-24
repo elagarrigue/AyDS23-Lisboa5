@@ -1,7 +1,8 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+
 import io.mockk.mockk
+import lisboa5lastfm.Artist
 import org.junit.Assert.*
 
 import org.junit.Test

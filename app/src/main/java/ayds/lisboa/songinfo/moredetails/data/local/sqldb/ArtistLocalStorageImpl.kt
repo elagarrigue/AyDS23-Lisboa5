@@ -4,7 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+import lisboa5lastfm.Artist
 
 
 internal class ArtistLocalStorageImpl(

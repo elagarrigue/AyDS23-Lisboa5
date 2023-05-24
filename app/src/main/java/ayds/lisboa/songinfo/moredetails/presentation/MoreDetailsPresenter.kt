@@ -1,9 +1,10 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+
 import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
+import lisboa5lastfm.Artist
 
 interface MoreDetailsPresenter {
     val artistObservable: Observable<MoreDetailsUiState>

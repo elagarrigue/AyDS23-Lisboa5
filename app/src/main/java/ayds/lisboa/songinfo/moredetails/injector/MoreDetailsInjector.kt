@@ -1,11 +1,8 @@
 package ayds.lisboa.songinfo.moredetails.injector
 
 import android.content.Context
-import com.example.lisboa5lastfm.lastfm.external.artist.LastFMAPI
-import com.example.lisboa5lastfm.lastfm.external.artist.LastFMToArtistResolver
-import com.example.lisboa5lastfm.lastfm.external.artist.LastFMToArtistResolverImpl
-import com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalService
-import com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalServiceImpl
+
+import lisboa5lastfm.artist.ArtistExternalService
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorageImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CursorToArtistLocalImpl
@@ -14,22 +11,12 @@ import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.ArtistDescriptionHelperImpl
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import lisboa5lastfm.ExternalServiceInjector
 
 object MoreDetailsInjector {
 
-    private const val RETROFIT_URL = "https://ws.audioscrobbler.com/2.0/"
-
-    private val retrofit = createRetrofit()
-    private val lastFMAPI = retrofit.create(com.example.lisboa5lastfm.lastfm.external.artist.LastFMAPI::class.java)
-    private val lastFMtoArtistResolver: com.example.lisboa5lastfm.lastfm.external.artist.LastFMToArtistResolver =
-        com.example.lisboa5lastfm.lastfm.external.artist.LastFMToArtistResolverImpl()
-    private val artistExternalService : com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalService =
-        com.example.lisboa5lastfm.lastfm.external.artist.ArtistExternalServiceImpl(
-            lastFMAPI,
-            lastFMtoArtistResolver
-        )
+    private val artistExternalService : ArtistExternalService =
+        ExternalServiceInjector.getLastFMService()
 
     private val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
 
@@ -48,10 +35,4 @@ object MoreDetailsInjector {
         return ArtistRepositoryImpl(artistLocalStorage, artistExternalService)
     }
 
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(RETROFIT_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-    }
 }

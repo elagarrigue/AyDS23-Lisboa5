@@ -1,6 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
+
+import lisboa5lastfm.Artist
 import java.util.*
 
 private const val PREFIX = "[*]"

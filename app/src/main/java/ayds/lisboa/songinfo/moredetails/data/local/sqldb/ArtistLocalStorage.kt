@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.data.local.sqldb
 
-import com.example.lisboa5lastfm.lastfm.external.Artist
+import lisboa5lastfm.Artist
 
 interface ArtistLocalStorage {
     fun saveArtist(artist: String?, info: String?,url: String)
