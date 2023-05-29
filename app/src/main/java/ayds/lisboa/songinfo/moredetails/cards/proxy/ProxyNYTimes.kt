@@ -1,21 +1,23 @@
 package ayds.lisboa.songinfo.moredetails.cards.proxy
 
+import ayds.aknewyork.external.service.data.NYTimesService
+import ayds.aknewyork.external.service.data.entities.ArtistDataExternal
+import ayds.aknewyork.external.service.data.entities.NYT_LOGO_URL
 import ayds.lisboa.songinfo.moredetails.cards.Card
-
 class ProxyNYTimes(
-    private val NYTimesAPI: ArtistExternalService //Importar de la libreria New York Times
+    private val nyTimesService: NYTimesService  //Importar de la libreria New York Times
 ) {
 
     fun getCard(artistName: String): Card {
-        var artistAPIInfo = NYTimesAPI.getArtistFrom3API(artistName)
+        val artistAPIInfo = nyTimesService.getArtistInfo(artistName)
         return when {
-            (artistAPIInfo == null) -> Card.EmptyCard
-            else -> Card.CardData(
+            (artistAPIInfo is ArtistDataExternal.ArtistWithDataExternal) -> Card.CardData(
                 "New York Times",
-                artistAPIInfo.getInfo(),
-                artistAPIInfo.getURL(),
-                artistAPIInfo.getImageURL()
+                artistAPIInfo.info!!,
+                artistAPIInfo.url,
+                NYT_LOGO_URL
             )
+            else -> Card.EmptyCard
         }
     }
 }
