@@ -3,7 +3,7 @@
 	url = https://github.com/AxelFontana/Lisboa5
 [submodule "libs/Lisboa5NYTimes"]
 	path = libs/Lisboa5NYTimes
-	url = https://github.com/JCRossi/AyDSNewYork2-NYTimes.git
+	url = https://github.com/JCRossi/AyDSNewYork2-NYTimes
 [submodule "libs/Lisboa5Wikipedia"]
 	path = libs/Lisboa5Wikipedia
 	url = https://github.com/JanoALockhart/AyDS-Wikipedia
