@@ -16,7 +16,7 @@ class ProxyLastFM(
                 "LastFM",
                 artistLastFMInfo.artistBioContent,
                 artistLastFMInfo.artistURL,
-                LASTFM_LOGO_URL, //Como obtener ImageURL???
+                LASTFM_LOGO_URL,
             )
         }
     }
