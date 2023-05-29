@@ -5,3 +5,5 @@ include ':Lisboa5LastFM'
 project(':Lisboa5LastFM').projectDir = new File('libs/Lisboa5LastFM')
 include ':Lisboa5NYTimes'
 project(':Lisboa5NYTimes').projectDir = new File('libs/Lisboa5NYTimes')
+include ':Lisboa5Wikipedia'
+project(':Lisboa5Wikipedia').projectDir = new File('libs/Lisboa5Wikipedia')
