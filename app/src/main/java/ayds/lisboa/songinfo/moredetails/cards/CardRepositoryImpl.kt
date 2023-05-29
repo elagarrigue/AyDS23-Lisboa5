@@ -27,4 +27,12 @@ class CardRepositoryImpl(
     private fun saveCardInfo(cards: List<Card>) {
         cardLocalStorage.saveCardList(cards)
     }
+
+    private fun markCardsAsLocal(cards: List<Card>){
+        for (card in cards){
+            if (card is Card.CardData)
+                card.isLocallyStored = true
+        }
+    }
+
 }

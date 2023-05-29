@@ -5,7 +5,8 @@ sealed class Card {
         val source: String,
         val description: String,
         val infoURL: String,
-        var sourceLogoURL: String
+        var sourceLogoURL: String,
+        var isLocallyStored: Boolean
     ) : Card()
     object EmptyCard : Card()
 }
