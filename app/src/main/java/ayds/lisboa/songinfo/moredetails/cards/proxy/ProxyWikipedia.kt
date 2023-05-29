@@ -1,20 +1,21 @@
 package ayds.lisboa.songinfo.moredetails.cards.proxy
 
 import ayds.lisboa.songinfo.moredetails.cards.Card
+import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
 
 class ProxyWikipedia(
-    private val wikipediaAPI: ArtistExternalService //De libreria Wikipedia
+    private val wikipediaAPI: WikipediaService
 ) {
 
     fun getCard(artistName: String): Card {
-        var artistWikiInfo = wikipediaAPI.getArtistFromWikipediaAPI(artistName)
+        var artistWikiInfo = wikipediaAPI.getArtist(artistName)
         return when {
             (artistWikiInfo == null) -> Card.EmptyCard
             else -> Card.CardData(
                 "Wikipedia",
-                artistWikiInfo.getInfo(),
-                artistWikiInfo.getURL(),
-                artistWikiInfo.getImageURL()
+                artistWikiInfo.description,
+                artistWikiInfo.wikipediaURL,
+                artistWikiInfo.getImageURL() //No esta el logo de la URL en el repo
             )
         }
     }

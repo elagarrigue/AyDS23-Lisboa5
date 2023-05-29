@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.sqlite:sqlite-ktx:2.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation project(path: ':Lisboa5NYTimes')
+    implementation project(path: ':Lisboa5Wikipedia')
 
     testImplementation 'junit:junit:4.13.2'
     testImplementation "io.mockk:mockk:1.12.3"
