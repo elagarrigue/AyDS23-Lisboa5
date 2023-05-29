@@ -8,14 +8,14 @@ class ProxyWikipedia(
 ) {
 
     fun getCard(artistName: String): Card {
-        var artistWikiInfo = wikipediaAPI.getArtist(artistName)
+        val artistWikiInfo = wikipediaAPI.getArtist(artistName)
         return when {
             (artistWikiInfo == null) -> Card.EmptyCard
             else -> Card.CardData(
                 "Wikipedia",
                 artistWikiInfo.description,
                 artistWikiInfo.wikipediaURL,
-                artistWikiInfo.getImageURL() //No esta el logo de la URL en el repo
+                "artistWikiInfo.getImageURL()" //No esta el logo de la URL en el repo
             )
         }
     }
