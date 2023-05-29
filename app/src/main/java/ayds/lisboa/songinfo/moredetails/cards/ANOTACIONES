@@ -1,0 +1,11 @@
+Anotaciones que hice escuchando consultas en clase:
+    Cambios se hacen en AK_Lisboa --> songinfo/moredetails
+    En BD guardar todo
+    Enumerado -> Tipos servicio (Wikipedia, etc) -> Para Cards -> Source?
+    Algoritmo Repository
+        -> getCards() -> Puede ser 0 a 3
+        -> CardRepositoryImpl(Broker....){}
+        -> LocalStorage guarda Cards
+        -> Pregunto al Broker.getCards()
+        -> Tal vez usar EmptyCard
+    Broker pide cards al Proxy (c/u pide a submodulo y transforma a Card)
