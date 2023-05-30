@@ -22,7 +22,7 @@ import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
 import lisboa5lastfm.ExternalServiceInjector
 
 object MoreDetailsInjector {
-    private val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
+    private val cardDescriptionHelper: CardDescriptionHelper =CardDescriptionHelperImpl()
 
     private val wikipediaService : WikipediaService =
         WikipediaInjector.wikipediaService
@@ -43,7 +43,7 @@ object MoreDetailsInjector {
 
     fun init(moreDetailsView: MoreDetailsView){
         val repository = initMoreDetailsRepository(moreDetailsView)
-        moreDetailsPresenter = MoreDetailsPresenterImpl(artistDescriptionHelper,repository)
+        moreDetailsPresenter = MoreDetailsPresenterImpl(cardDescriptionHelper,repository)
     }
 
     private fun initMoreDetailsRepository(moreDetailsView: MoreDetailsView): CardRepository {
