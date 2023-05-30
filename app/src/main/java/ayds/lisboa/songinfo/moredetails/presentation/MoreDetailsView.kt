@@ -61,13 +61,13 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
 
     private fun updateView(artistUiState: MoreDetailsUiState) {
         runOnUiThread {
-            loadImageIntoView(artistUiState.lastFMImageUrl)
+            loadImageIntoView(artistUiState.logoUrl)
             setArtistViewText(artistUiState.artistBioContent)
         }
     }
 
     private fun setURLButton(artistUiState: MoreDetailsUiState) {
-        val artistUrl = artistUiState.artistURL
+        val artistUrl = artistUiState.infoURL
         setOpenUrlButton(artistUrl)
     }
 

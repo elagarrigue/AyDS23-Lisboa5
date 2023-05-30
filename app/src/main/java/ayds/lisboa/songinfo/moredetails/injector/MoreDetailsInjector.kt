@@ -15,14 +15,13 @@ import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyNYTimes
 import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyWikipedia
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.lisboa.songinfo.moredetails.presentation.*
-import ayds.lisboa.songinfo.moredetails.presentation.ArtistDescriptionHelperImpl
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaInjector
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
 import lisboa5lastfm.ExternalServiceInjector
 
 object MoreDetailsInjector {
-    private val cardDescriptionHelper: CardDescriptionHelper =CardDescriptionHelperImpl()
+    private val cardDescriptionHelper: CardDescriptionHelper = CardDescriptionHelperImpl()
 
     private val wikipediaService : WikipediaService =
         WikipediaInjector.wikipediaService
