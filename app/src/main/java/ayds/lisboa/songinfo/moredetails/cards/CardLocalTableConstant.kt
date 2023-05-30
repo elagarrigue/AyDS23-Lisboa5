@@ -2,6 +2,7 @@ package ayds.lisboa.songinfo.moredetails.cards
 
 
 const val CARD_NAME = "card"
+const val ARTIST_NAME = "artistName"
 const val CARDS_TABLE = "cards"
 const val ID = "id"
 const val SOURCE = "source"
@@ -14,6 +15,7 @@ const val DB_NAME = "dictionary.db"
 const val createDataBaseTableQuery : String =
     "create table $CARDS_TABLE (" +
             "$ID integer PRIMARY KEY AUTOINCREMENT, " +
+            "$ARTIST_NAME string," +
             "$SOURCE integer, " +
             "$CARD_NAME string, " +
             "$DESCRIPTION string, " +
