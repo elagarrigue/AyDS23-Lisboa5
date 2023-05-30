@@ -79,8 +79,8 @@ internal class MoreDetailsViewActivity: MoreDetailsView, AppCompatActivity() {
         }
     }
 
-    private fun loadImageIntoView(lastFMImageUrl: String){
-        Picasso.get().load(lastFMImageUrl).into(imageView)
+    private fun loadImageIntoView(logoUrl: String){
+        Picasso.get().load(logoUrl).into(imageView)
     }
 
     @Suppress("DEPRECATION")
