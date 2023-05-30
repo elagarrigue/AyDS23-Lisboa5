@@ -8,7 +8,7 @@ interface CursorToCardLocal {
     fun cursorArtist(cursor: Cursor):  List<Card>
 }
 
-internal class CursorToArtistLocalImpl : CursorToCardLocal {
+internal class CursorToCardLocalImpl : CursorToCardLocal {
 
     override fun cursorArtist(cursor: Cursor): MutableList<Card> {
         val cards = mutableListOf<Card>()
