@@ -1,8 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.data
 
 import lisboa5lastfm.artist.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

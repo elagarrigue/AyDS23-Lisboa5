@@ -3,11 +3,7 @@ package ayds.lisboa.songinfo.moredetails.injector
 import android.content.Context
 
 import lisboa5lastfm.artist.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorageImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CursorToArtistLocalImpl
-import ayds.lisboa.songinfo.moredetails.data.ArtistRepositoryImpl
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.ArtistDescriptionHelperImpl
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl

@@ -1,7 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
 
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
