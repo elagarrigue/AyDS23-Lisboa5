@@ -35,7 +35,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_other_info)
+        setContentView(R.layout.activity_more_details)
 
         initModule()
         initProperties()
