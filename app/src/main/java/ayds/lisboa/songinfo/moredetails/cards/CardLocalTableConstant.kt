@@ -1,6 +1,5 @@
 package ayds.lisboa.songinfo.moredetails.cards
 
-
 const val CARD_NAME = "card"
 const val ARTIST_NAME = "artistName"
 const val CARDS_TABLE = "cards"
