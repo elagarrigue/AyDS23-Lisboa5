@@ -1,9 +1,10 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
 
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
-import lisboa5lastfm.Artist
 
 interface MoreDetailsPresenter {
     val artistObservable: Observable<MoreDetailsUiState>
@@ -11,7 +12,7 @@ interface MoreDetailsPresenter {
     fun moreDetails(artistName: String)
 }
 
-internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: ArtistDescriptionHelper, private val repository: ArtistRepository) :
+internal class MoreDetailsPresenterImpl(private val cardDescriptionHelper: CardDescriptionHelper, private val repository: CardRepository) :
     MoreDetailsPresenter {
 
     override val artistObservable = Subject<MoreDetailsUiState>()
@@ -23,37 +24,44 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
     }
 
     private fun fetchMoreDetails(artistName: String){
-        artistObservable.notify(getMoreDetailsUiState(artistName))
+        val moreDetailsUiStates = getMoreDetailsUiState(artistName);
+        for (moreDetailsUiState in moreDetailsUiStates)
+            artistObservable.notify(moreDetailsUiState)
     }
-    private fun getMoreDetailsUiState(artistName: String): MoreDetailsUiState {
-        val artist = repository.getArtist(artistName)
-        val reformattedText = artistDescriptionHelper.getArtistDescription(artist)
-        return updateArtistUiState(artist, reformattedText)
+    private fun getMoreDetailsUiState(artistName: String): List<MoreDetailsUiState> {
+        val cards = repository.getCards(artistName)
+        var moreDetailsUiStates : MutableList<MoreDetailsUiState> = ArrayList()
+        for (card in cards){
+            val reformattedText = cardDescriptionHelper.getCardInfo(card)
+            moreDetailsUiStates.add(updateCardUiState(card, reformattedText))
+        }
+
+        return moreDetailsUiStates
     }
 
-    private fun updateArtistUiState(artist: Artist, reformattedText: String): MoreDetailsUiState {
-        return when (artist) {
-            is Artist.ArtistData -> updateUiState(artist, reformattedText)
-            Artist.EmptyArtist -> updateNoResultsUiState()
+    private fun updateCardUiState(card: Card, reformattedText: String):MoreDetailsUiState{
+        return when (card) {
+            is Card.CardData -> updateUiState(card, reformattedText)
+            Card.EmptyCard -> updateCardNoResultsUiState()
         }
     }
 
-    private fun updateUiState(
-        artist: Artist.ArtistData,
-        reformattedText: String
-    ): MoreDetailsUiState {
+    private fun updateCardNoResultsUiState(): MoreDetailsUiState {
         return MoreDetailsUiState(
-            artistName = artist.artistName,
-            artistBioContent = reformattedText,
-            artistURL = artist.artistURL,
+            "",
+            "No results",
+            "",
+            ""
         )
     }
 
-    private fun updateNoResultsUiState(): MoreDetailsUiState {
+    private fun updateUiState(card: Card.CardData, reformattedText: String): MoreDetailsUiState {
         return MoreDetailsUiState(
-            artistName = "",
-            artistBioContent = "No Results",
-            artistURL = "",
+            card.source,
+            reformattedText,
+            card.infoURL,
+            card.sourceLogoURL
         )
     }
+
 }
