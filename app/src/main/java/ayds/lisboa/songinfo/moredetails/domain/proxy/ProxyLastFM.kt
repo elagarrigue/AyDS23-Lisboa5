@@ -1,6 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.cards.proxy
+package ayds.lisboa.songinfo.moredetails.domain.proxy
 
-import ayds.lisboa.songinfo.moredetails.cards.Card
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 import lisboa5lastfm.LASTFM_LOGO_URL
 import lisboa5lastfm.artist.ArtistExternalService
 

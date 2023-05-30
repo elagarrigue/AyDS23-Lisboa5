@@ -1,8 +1,9 @@
-package ayds.lisboa.songinfo.moredetails.cards
+package ayds.lisboa.songinfo.moredetails.domain
 
-import ayds.lisboa.songinfo.moredetails.cards.proxy.ProxyNYTimes
-import ayds.lisboa.songinfo.moredetails.cards.proxy.ProxyLastFM
-import ayds.lisboa.songinfo.moredetails.cards.proxy.ProxyWikipedia
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyNYTimes
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyLastFM
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyWikipedia
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
 class Broker(
     private val proxyWiki: ProxyWikipedia,

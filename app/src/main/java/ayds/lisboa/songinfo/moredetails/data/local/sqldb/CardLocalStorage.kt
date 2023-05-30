@@ -1,4 +1,6 @@
-package ayds.lisboa.songinfo.moredetails.cards
+package ayds.lisboa.songinfo.moredetails.data.local.sqldb
+
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
 interface CardLocalStorage {
 

@@ -1,6 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.cards
 
 import android.database.Cursor
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
 interface CursorToCardLocal {
 

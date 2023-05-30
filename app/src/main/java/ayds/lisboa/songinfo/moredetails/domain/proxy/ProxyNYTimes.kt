@@ -1,9 +1,9 @@
-package ayds.lisboa.songinfo.moredetails.cards.proxy
+package ayds.lisboa.songinfo.moredetails.domain.proxy
 
 import ayds.aknewyork.external.service.data.NYTimesService
 import ayds.aknewyork.external.service.data.entities.ArtistDataExternal
 import ayds.aknewyork.external.service.data.entities.NYT_LOGO_URL
-import ayds.lisboa.songinfo.moredetails.cards.Card
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 class ProxyNYTimes(
     private val nyTimesService: NYTimesService  //Importar de la libreria New York Times
 ) {

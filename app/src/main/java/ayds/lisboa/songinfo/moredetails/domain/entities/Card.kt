@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.cards
+package ayds.lisboa.songinfo.moredetails.domain.entities
 
 sealed class Card {
     data class CardData(
