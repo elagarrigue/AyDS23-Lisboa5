@@ -2,10 +2,10 @@ package ayds.lisboa.songinfo.moredetails.presentation
 
 
 data class MoreDetailsUiState (
-    val artistName: String = "",
+    val source: String = "",
     val artistBioContent: String = "",
-    val artistURL: String = "",
-    val lastFMImageUrl: String = DEFAULT_IMAGE,
+    val infoURL: String = "",
+    val logoUrl: String = "",
 ) {
     companion object {
         const val DEFAULT_IMAGE =
