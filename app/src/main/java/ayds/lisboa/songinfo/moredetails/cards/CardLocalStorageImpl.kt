@@ -4,9 +4,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ARTISTS_TABLE
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ARTIST_NAME
 
 class CardLocalStorageImpl (
     context: Context?,
+    private val cursorDataBase: CursorToCardLocal,
     ) : SQLiteOpenHelper(context, DB_NAME, null, DATABASE_VERSION),
     CardLocalStorage {
 
@@ -30,8 +33,29 @@ class CardLocalStorageImpl (
         }
 
 
-        override fun getCardList(artistName: String): List<Card> {
-            val returnList = ArrayList<Card>()
-            return returnList
+        override fun getCardList(artistName: String):List<Card> {
+
+            val columnsToSelect = arrayOf(
+                ID,
+                ARTIST_NAME,
+                SOURCE,
+                DESCRIPTION,
+                INFO_URL,
+                SOURCE_LOGO_URL
+            )
+            val selectionArgs = arrayOf(artistName)
+            val sortOrder = "$ARTIST_NAME DESC"
+            val selection = "$ARTIST_NAME = ?"
+
+            val cursor = readableDatabase.query(
+                ARTISTS_TABLE,
+                columnsToSelect,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder
+            )
+            return cursorDataBase.cursorArtist(cursor).toList()
         }
 }
