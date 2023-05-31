@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
@@ -14,21 +16,28 @@ import ayds.lisboa.songinfo.moredetails.injector.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
 
+private const val SOURCE = "Source: "
 interface MoreDetailsView
 
 internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
 
     private lateinit var moreDetailsPresenter: MoreDetailsPresenter
 
+    private lateinit var noResultsTextView: TextView
+    private lateinit var scrollView: ScrollView
+
     private lateinit var card1TextView: TextView
+    private lateinit var card1SourceTextView: TextView
     private lateinit var card1ImageView: ImageView
     private lateinit var card1OpenUrlButton: Button
 
     private lateinit var card2TextView: TextView
+    private lateinit var card2SourceTextView: TextView
     private lateinit var card2ImageView: ImageView
     private lateinit var card2OpenUrlButton: Button
 
     private lateinit var card3TextView: TextView
+    private lateinit var card3SourceTextView: TextView
     private lateinit var card3ImageView: ImageView
     private lateinit var card3OpenUrlButton: Button
 
@@ -49,17 +58,24 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun initProperties() {
+        scrollView = findViewById(R.id.scrollView)
+
         card1ImageView = findViewById(R.id.card1ImageView)
+        card1SourceTextView = findViewById(R.id.card1SourceTextView)
         card1TextView = findViewById(R.id.card1TextView)
         card1OpenUrlButton = findViewById(R.id.card1OpenUrlButton)
 
         card2ImageView = findViewById(R.id.card2ImageView)
+        card2SourceTextView = findViewById(R.id.card2SourceTextView)
         card2TextView = findViewById(R.id.card2TextView)
         card2OpenUrlButton = findViewById(R.id.card2OpenUrlButton)
 
         card3ImageView = findViewById(R.id.card3ImageView)
+        card3SourceTextView = findViewById(R.id.card3SourceTextView)
         card3TextView = findViewById(R.id.card3TextView)
         card3OpenUrlButton = findViewById(R.id.card3OpenUrlButton)
+
+        noResultsTextView = findViewById(R.id.noResultsTextView)
     }
 
     private fun initObservers() {
@@ -73,25 +89,38 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun updateArtistInfo(artistUiState: MoreDetailsUiState) {
+        updateNotEmptyUI()
         when (artistUiState.source) {
             "Wikipedia" -> updateUICard1(artistUiState)
             "Last FM" -> updateUICard2(artistUiState)
             "New York Times" -> updateUICard3(artistUiState)
+            "" -> updateEmptyUI()
         }
     }
+    private fun updateNotEmptyUI(){
+        noResultsTextView.visibility = View.INVISIBLE
+        scrollView.visibility = View.VISIBLE
+    }
+    private fun updateEmptyUI(){
+        noResultsTextView.visibility = View.VISIBLE
+        scrollView.visibility = View.INVISIBLE
 
+    }
     private fun updateUICard1(artistUiState: MoreDetailsUiState) {
         updateViewCard1(artistUiState)
+        updateSourceViewCard1(artistUiState)
         setURLButtonCard1(artistUiState)
     }
 
     private fun updateUICard2(artistUiState: MoreDetailsUiState) {
         updateViewCard2(artistUiState)
+        updateSourceViewCard2(artistUiState)
         setURLButtonCard2(artistUiState)
     }
 
     private fun updateUICard3(artistUiState: MoreDetailsUiState) {
         updateViewCard3(artistUiState)
+        updateSourceViewCard3(artistUiState)
         setURLButtonCard3(artistUiState)
     }
 
@@ -102,6 +131,12 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         }
     }
 
+    private fun updateSourceViewCard1(artistUiState: MoreDetailsUiState){
+        val source = "$SOURCE${artistUiState.source}"
+        runOnUiThread {
+            setSourceViewTextCard1(source)
+        }
+    }
     private fun setURLButtonCard1(artistUiState: MoreDetailsUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard1(artistUrl)
@@ -118,6 +153,9 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun loadImageIntoViewCard1(logoUrl: String) {
         Picasso.get().load(logoUrl).into(card1ImageView)
     }
+    private fun setSourceViewTextCard1(sourceText: String) {
+        card1SourceTextView.text = Html.fromHtml(sourceText)
+    }
 
     @Suppress("DEPRECATION")
     private fun setArtistViewTextCard1(artistInfoText: String) {
@@ -130,7 +168,12 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
             setArtistViewTextCard2(artistUiState.artistBioContent)
         }
     }
-
+    private fun updateSourceViewCard2(artistUiState: MoreDetailsUiState){
+        val source = "$SOURCE${artistUiState.source}"
+        runOnUiThread {
+            setSourceViewTextCard2(source)
+        }
+    }
     private fun setURLButtonCard2(artistUiState: MoreDetailsUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard2(artistUrl)
@@ -152,14 +195,21 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun setArtistViewTextCard2(artistInfoText: String) {
         card2TextView.text = Html.fromHtml(artistInfoText)
     }
-
+    private fun setSourceViewTextCard2(sourceText: String) {
+        card2SourceTextView.text = Html.fromHtml(sourceText)
+    }
     private fun updateViewCard3(artistUiState: MoreDetailsUiState) {
         runOnUiThread {
             loadImageIntoViewCard3(artistUiState.logoUrl)
             setArtistViewTextCard3(artistUiState.artistBioContent)
         }
     }
-
+    private fun updateSourceViewCard3(artistUiState: MoreDetailsUiState){
+        val source = "$SOURCE${artistUiState.source}"
+        runOnUiThread {
+            setSourceViewTextCard3(source)
+        }
+    }
     private fun setURLButtonCard3(artistUiState: MoreDetailsUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard3(artistUrl)
@@ -181,7 +231,9 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun setArtistViewTextCard3(artistInfoText: String) {
         card3TextView.text = Html.fromHtml(artistInfoText)
     }
-
+    private fun setSourceViewTextCard3(sourceText: String) {
+        card3SourceTextView.text = Html.fromHtml(sourceText)
+    }
 
     companion object {
         const val ARTIST_NAME_EXTRA = "artistName"
