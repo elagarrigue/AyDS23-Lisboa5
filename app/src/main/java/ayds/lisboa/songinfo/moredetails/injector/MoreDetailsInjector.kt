@@ -10,9 +10,10 @@ import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorageImpl
 
 import lisboa5lastfm.artist.ArtistExternalService
 import ayds.lisboa.songinfo.moredetails.domain.Broker
-import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyLastFM
-import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyNYTimes
-import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyWikipedia
+import ayds.lisboa.songinfo.moredetails.domain.BrokerImpl
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard3
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard1
+import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard2
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
@@ -25,17 +26,17 @@ object MoreDetailsInjector {
     private val cardSourceHelper: CardSourceHelper = CardSourceHelperImpl()
     private val wikipediaService : WikipediaService =
         WikipediaInjector.wikipediaService
-    private val proxyWikipedia : ProxyWikipedia = ProxyWikipedia(wikipediaService)
+    private val proxyCard1 : ProxyCard1 = ProxyCard1(wikipediaService)
 
     private val lastFMService : ArtistExternalService =
         ExternalServiceInjector.getLastFMService()
-    private val proxyLastFM : ProxyLastFM = ProxyLastFM(lastFMService)
+    private val proxyCard2 : ProxyCard2 = ProxyCard2(lastFMService)
 
     private val nyTimesService : NYTimesService = NYTimesInjector.nyTimesService
-    private val proxyNYTimes : ProxyNYTimes = ProxyNYTimes(nyTimesService)
+    private val proxyCard3 : ProxyCard3 = ProxyCard3(nyTimesService)
 
-    private val broker: Broker = Broker(
-        proxyWikipedia, proxyLastFM, proxyNYTimes
+    private val broker: Broker = BrokerImpl(
+        proxyCard1, proxyCard2, proxyCard3
     )
 
     lateinit var moreDetailsPresenter: MoreDetailsPresenter
