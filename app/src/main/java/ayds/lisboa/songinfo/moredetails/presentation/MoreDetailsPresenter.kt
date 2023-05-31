@@ -12,7 +12,11 @@ interface MoreDetailsPresenter {
     fun moreDetails(artistName: String)
 }
 
-internal class MoreDetailsPresenterImpl(private val cardDescriptionHelper: CardDescriptionHelper, private val repository: CardRepository) :
+internal class MoreDetailsPresenterImpl(
+    private val cardDescriptionHelper: CardDescriptionHelper,
+    private val repository: CardRepository,
+    private val cardSourceHelper: CardSourceHelper
+    ) :
     MoreDetailsPresenter {
 
     override val artistObservable = Subject<MoreDetailsUiState>()
@@ -55,9 +59,13 @@ internal class MoreDetailsPresenterImpl(private val cardDescriptionHelper: CardD
         )
     }
 
+    private fun getCardSource(card : Card.CardData): String {
+        return cardSourceHelper.getSource(card.source).createSource()
+    }
+
     private fun updateUiState(card: Card.CardData, reformattedText: String): MoreDetailsUiState {
         return MoreDetailsUiState(
-            card.source,
+            getCardSource(card),
             reformattedText,
             card.infoURL,
             card.sourceLogoURL
