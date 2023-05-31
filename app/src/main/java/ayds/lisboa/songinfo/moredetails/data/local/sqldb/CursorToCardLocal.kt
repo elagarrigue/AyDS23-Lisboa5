@@ -42,8 +42,8 @@ internal class CursorToCardLocalImpl : CursorToCardLocal {
 
     private fun ordinalToSource(ordinal: Int): Source {
         return when (ordinal) {
-            (1) -> Source.CARD1
-            (2) -> Source.CARD2
+            (0) -> Source.CARD1
+            (1) -> Source.CARD2
             else -> Source.CARD3
         }
     }
