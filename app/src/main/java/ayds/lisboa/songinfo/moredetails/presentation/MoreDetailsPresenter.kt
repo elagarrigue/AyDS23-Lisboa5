@@ -29,8 +29,13 @@ internal class MoreDetailsPresenterImpl(
 
     private fun fetchMoreDetails(artistName: String){
         val moreDetailsUiStates = getMoreDetailsUiState(artistName)
-        for (moreDetailsUiState in moreDetailsUiStates)
-            artistObservable.notify(moreDetailsUiState)
+        if(moreDetailsUiStates.isEmpty()){
+            artistObservable.notify(updateCardNoResultsUiState())
+        }
+        else{
+            for (moreDetailsUiState in moreDetailsUiStates)
+                artistObservable.notify(moreDetailsUiState)
+        }
     }
     private fun getMoreDetailsUiState(artistName: String): List<MoreDetailsUiState> {
         val cards = repository.getCards(artistName)
