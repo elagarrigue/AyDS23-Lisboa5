@@ -16,7 +16,7 @@ class ProxyWikipedia(
                 "Wikipedia",
                 artistWikiInfo.description,
                 artistWikiInfo.wikipediaURL,
-                WIKIPEDIA_LOGO_URL //No esta el logo de la URL en el repo
+                WIKIPEDIA_LOGO_URL
             )
         }
     }
