@@ -28,13 +28,13 @@ internal class MoreDetailsPresenterImpl(
     }
 
     private fun fetchMoreDetails(artistName: String){
-        val moreDetailsUiStates = getMoreDetailsUiState(artistName);
+        val moreDetailsUiStates = getMoreDetailsUiState(artistName)
         for (moreDetailsUiState in moreDetailsUiStates)
             artistObservable.notify(moreDetailsUiState)
     }
     private fun getMoreDetailsUiState(artistName: String): List<MoreDetailsUiState> {
         val cards = repository.getCards(artistName)
-        var moreDetailsUiStates : MutableList<MoreDetailsUiState> = ArrayList()
+        val moreDetailsUiStates : MutableList<MoreDetailsUiState> = ArrayList()
         for (card in cards){
             val reformattedText = cardDescriptionHelper.getCardInfo(card)
             moreDetailsUiStates.add(updateCardUiState(card, reformattedText))
