@@ -20,17 +20,17 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
 
     private lateinit var moreDetailsPresenter: MoreDetailsPresenter
 
-    private lateinit var lastFMArtistTextView: TextView
-    private lateinit var lastFMImageView: ImageView
-    private lateinit var lastFMOpenUrlButton: Button
+    private lateinit var card1TextView: TextView
+    private lateinit var card1ImageView: ImageView
+    private lateinit var card1OpenUrlButton: Button
 
-    private lateinit var wikipediaArtistTextView: TextView
-    private lateinit var wikipediaImageView: ImageView
-    private lateinit var wikipediaOpenUrlButton: Button
+    private lateinit var card2TextView: TextView
+    private lateinit var card2ImageView: ImageView
+    private lateinit var card2OpenUrlButton: Button
 
-    private lateinit var newYorkTimesArtistTextView: TextView
-    private lateinit var newYorkTimesImageView: ImageView
-    private lateinit var newYorkTimesOpenUrlButton: Button
+    private lateinit var card3TextView: TextView
+    private lateinit var card3ImageView: ImageView
+    private lateinit var card3OpenUrlButton: Button
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,17 +49,17 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun initProperties() {
-        lastFMImageView = findViewById(R.id.lastFMImageView)
-        lastFMArtistTextView = findViewById(R.id.lastFMArtistTextView)
-        lastFMOpenUrlButton = findViewById(R.id.lastFMOpenUrlButton)
+        card1ImageView = findViewById(R.id.card1ImageView)
+        card1TextView = findViewById(R.id.card1TextView)
+        card1OpenUrlButton = findViewById(R.id.card1OpenUrlButton)
 
-        wikipediaImageView = findViewById(R.id.wikipediaImageView)
-        wikipediaArtistTextView = findViewById(R.id.wikipediaArtistTextView)
-        wikipediaOpenUrlButton = findViewById(R.id.wikipediaOpenUrlButton)
+        card2ImageView = findViewById(R.id.card2ImageView)
+        card2TextView = findViewById(R.id.card2TextView)
+        card2OpenUrlButton = findViewById(R.id.card2OpenUrlButton)
 
-        newYorkTimesImageView = findViewById(R.id.newYorkTimesImageView)
-        newYorkTimesArtistTextView = findViewById(R.id.newYorkTimesArtistTextView)
-        newYorkTimesOpenUrlButton = findViewById(R.id.newYorkTimesOpenUrlButton)
+        card3ImageView = findViewById(R.id.card3ImageView)
+        card3TextView = findViewById(R.id.card3TextView)
+        card3OpenUrlButton = findViewById(R.id.card3OpenUrlButton)
     }
 
     private fun initObservers() {
@@ -137,7 +137,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun setOpenUrlButtonLastFM(artistUrl: String) {
-        lastFMOpenUrlButton.setOnClickListener {
+        card1OpenUrlButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(artistUrl)
             startActivity(intent)
@@ -145,7 +145,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun loadImageIntoViewLastFM(logoUrl: String) {
-        Picasso.get().load(logoUrl).into(lastFMImageView)
+        Picasso.get().load(logoUrl).into(card1ImageView)
     }
 
     @Suppress("DEPRECATION")
