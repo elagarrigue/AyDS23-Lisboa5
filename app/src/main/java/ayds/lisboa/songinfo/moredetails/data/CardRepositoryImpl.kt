@@ -17,14 +17,14 @@ class CardRepositoryImpl(
             (cards.isNotEmpty()) -> { markCardsAsLocal(cards) }
             else -> {
                 cards = getBrokerCards(artistName)
-                saveCardInfo(cards)
+                saveCardInfo(cards,artistName)
             }
         }
         return cards
     }
 
-    private fun saveCardInfo(cards: List<Card>) {
-        cardLocalStorage.saveCardList(cards)
+    private fun saveCardInfo(cards: List<Card>, artistName: String) {
+        cardLocalStorage.saveCardList(cards,artistName)
     }
 
     private fun getBrokerCards(artistName: String) =

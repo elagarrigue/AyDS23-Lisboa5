@@ -22,10 +22,11 @@ class CardLocalStorageImpl (
 
         override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {}
 
-        override fun saveCardList(cardList: List<Card>) {
+        override fun saveCardList(cardList: List<Card>,artistName: String) {
             for (card in cardList){
                 if(card is Card.CardData){
                     val values = ContentValues()
+                    values.put(ARTIST_NAME,artistName)
                     values.put(SOURCE, card.source.ordinal)
                     values.put(DESCRIPTION, card.description)
                     values.put(INFO_URL, card.infoURL)
