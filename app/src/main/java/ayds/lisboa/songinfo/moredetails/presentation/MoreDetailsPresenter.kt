@@ -7,7 +7,7 @@ import ayds.observer.Observable
 import ayds.observer.Subject
 
 interface MoreDetailsPresenter {
-    val artistObservable: Observable<MoreDetailsUiState>
+    val artistObservable: Observable<CardUiState>
 
     fun moreDetails(artistName: String)
 }
@@ -19,7 +19,7 @@ internal class MoreDetailsPresenterImpl(
     ) :
     MoreDetailsPresenter {
 
-    override val artistObservable = Subject<MoreDetailsUiState>()
+    override val artistObservable = Subject<CardUiState>()
 
     override fun moreDetails(artistName: String) {
         Thread {
@@ -37,26 +37,26 @@ internal class MoreDetailsPresenterImpl(
                 artistObservable.notify(moreDetailsUiState)
         }
     }
-    private fun getMoreDetailsUiState(artistName: String): List<MoreDetailsUiState> {
+    private fun getMoreDetailsUiState(artistName: String): List<CardUiState> {
         val cards = repository.getCards(artistName)
-        val moreDetailsUiStates : MutableList<MoreDetailsUiState> = ArrayList()
+        val cardUiStates : MutableList<CardUiState> = ArrayList()
         for (card in cards){
             val reformattedText = cardDescriptionHelper.getCardDescription(card,artistName)
-            moreDetailsUiStates.add(updateCardUiState(card, reformattedText))
+            cardUiStates.add(updateCardUiState(card, reformattedText))
         }
 
-        return moreDetailsUiStates
+        return cardUiStates
     }
 
-    private fun updateCardUiState(card: Card, reformattedText: String):MoreDetailsUiState{
+    private fun updateCardUiState(card: Card, reformattedText: String):CardUiState{
         return when (card) {
             is Card.CardData -> updateUiState(card, reformattedText)
             Card.EmptyCard -> updateCardNoResultsUiState()
         }
     }
 
-    private fun updateCardNoResultsUiState(): MoreDetailsUiState {
-        return MoreDetailsUiState(
+    private fun updateCardNoResultsUiState(): CardUiState {
+        return CardUiState(
             "",
             "No results",
             "",
@@ -68,8 +68,8 @@ internal class MoreDetailsPresenterImpl(
         return cardSourceHelper.getSource(card.source).createSource()
     }
 
-    private fun updateUiState(card: Card.CardData, reformattedText: String): MoreDetailsUiState {
-        return MoreDetailsUiState(
+    private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {
+        return CardUiState(
             getCardSource(card),
             reformattedText,
             card.infoURL,

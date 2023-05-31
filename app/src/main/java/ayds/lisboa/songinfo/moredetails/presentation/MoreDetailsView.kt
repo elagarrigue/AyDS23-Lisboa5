@@ -88,7 +88,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         moreDetailsPresenter.moreDetails(artistName)
     }
 
-    private fun updateArtistInfo(artistUiState: MoreDetailsUiState) {
+    private fun updateArtistInfo(artistUiState: CardUiState) {
         updateNotEmptyUI()
         when (artistUiState.source) {
             "Wikipedia" -> updateUICard1(artistUiState)
@@ -106,38 +106,38 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         scrollView.visibility = View.INVISIBLE
 
     }
-    private fun updateUICard1(artistUiState: MoreDetailsUiState) {
+    private fun updateUICard1(artistUiState: CardUiState) {
         updateViewCard1(artistUiState)
         updateSourceViewCard1(artistUiState)
         setURLButtonCard1(artistUiState)
     }
 
-    private fun updateUICard2(artistUiState: MoreDetailsUiState) {
+    private fun updateUICard2(artistUiState: CardUiState) {
         updateViewCard2(artistUiState)
         updateSourceViewCard2(artistUiState)
         setURLButtonCard2(artistUiState)
     }
 
-    private fun updateUICard3(artistUiState: MoreDetailsUiState) {
+    private fun updateUICard3(artistUiState: CardUiState) {
         updateViewCard3(artistUiState)
         updateSourceViewCard3(artistUiState)
         setURLButtonCard3(artistUiState)
     }
 
-    private fun updateViewCard1(artistUiState: MoreDetailsUiState) {
+    private fun updateViewCard1(artistUiState: CardUiState) {
         runOnUiThread {
             loadImageIntoViewCard1(artistUiState.logoUrl)
             setArtistViewTextCard1(artistUiState.artistBioContent)
         }
     }
 
-    private fun updateSourceViewCard1(artistUiState: MoreDetailsUiState){
+    private fun updateSourceViewCard1(artistUiState: CardUiState){
         val source = "$SOURCE${artistUiState.source}"
         runOnUiThread {
             setSourceViewTextCard1(source)
         }
     }
-    private fun setURLButtonCard1(artistUiState: MoreDetailsUiState) {
+    private fun setURLButtonCard1(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard1(artistUrl)
     }
@@ -162,19 +162,19 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         card1TextView.text = Html.fromHtml(artistInfoText)
     }
 
-    private fun updateViewCard2(artistUiState: MoreDetailsUiState) {
+    private fun updateViewCard2(artistUiState: CardUiState) {
         runOnUiThread {
             loadImageIntoViewCard2(artistUiState.logoUrl)
             setArtistViewTextCard2(artistUiState.artistBioContent)
         }
     }
-    private fun updateSourceViewCard2(artistUiState: MoreDetailsUiState){
+    private fun updateSourceViewCard2(artistUiState: CardUiState){
         val source = "$SOURCE${artistUiState.source}"
         runOnUiThread {
             setSourceViewTextCard2(source)
         }
     }
-    private fun setURLButtonCard2(artistUiState: MoreDetailsUiState) {
+    private fun setURLButtonCard2(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard2(artistUrl)
     }
@@ -198,19 +198,19 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun setSourceViewTextCard2(sourceText: String) {
         card2SourceTextView.text = Html.fromHtml(sourceText)
     }
-    private fun updateViewCard3(artistUiState: MoreDetailsUiState) {
+    private fun updateViewCard3(artistUiState: CardUiState) {
         runOnUiThread {
             loadImageIntoViewCard3(artistUiState.logoUrl)
             setArtistViewTextCard3(artistUiState.artistBioContent)
         }
     }
-    private fun updateSourceViewCard3(artistUiState: MoreDetailsUiState){
+    private fun updateSourceViewCard3(artistUiState: CardUiState){
         val source = "$SOURCE${artistUiState.source}"
         runOnUiThread {
             setSourceViewTextCard3(source)
         }
     }
-    private fun setURLButtonCard3(artistUiState: MoreDetailsUiState) {
+    private fun setURLButtonCard3(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard3(artistUrl)
     }
