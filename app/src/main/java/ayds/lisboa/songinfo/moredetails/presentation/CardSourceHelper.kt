@@ -35,12 +35,7 @@ private class Card2Factory : SourceCreator() {
 }
 private class Card3Factory() : SourceCreator() {
     override fun createSource(): String {
-        return "NY Times"
+        return "New York Times"
     }
 
-}
-private class DefaultCardFactory : SourceCreator(){
-    override fun createSource(): String {
-        return "Default Source"
-    }
 }

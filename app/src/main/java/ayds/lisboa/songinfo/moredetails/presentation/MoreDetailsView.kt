@@ -74,69 +74,40 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
 
     private fun updateArtistInfo(artistUiState: MoreDetailsUiState) {
         when (artistUiState.source) {
-            "Wikipedia" -> updateUIWikipedia(artistUiState)
-            "LastFM" -> updateUILastFM(artistUiState)
-            "New York Times" -> updateUINYTimes(artistUiState)
+            "Wikipedia" -> updateUICard1(artistUiState)
+            "Last FM" -> updateUICard2(artistUiState)
+            "New York Times" -> updateUICard3(artistUiState)
         }
     }
 
-    private fun updateUIWikipedia(artistUiState: MoreDetailsUiState) {
-        updateViewWikipedia(artistUiState)
-        setURLButtonWikipedia(artistUiState)
+    private fun updateUICard1(artistUiState: MoreDetailsUiState) {
+        updateViewCard1(artistUiState)
+        setURLButtonCard1(artistUiState)
     }
 
-    private fun updateUILastFM(artistUiState: MoreDetailsUiState) {
-        updateViewLastFM(artistUiState)
-        setURLButtonLastFM(artistUiState)
+    private fun updateUICard2(artistUiState: MoreDetailsUiState) {
+        updateViewCard2(artistUiState)
+        setURLButtonCard2(artistUiState)
     }
 
-    private fun updateUINYTimes(artistUiState: MoreDetailsUiState) {
-        updateViewNYTimes(artistUiState)
-        setURLButtonNYTimes(artistUiState)
+    private fun updateUICard3(artistUiState: MoreDetailsUiState) {
+        updateViewCard3(artistUiState)
+        setURLButtonCard3(artistUiState)
     }
 
-    private fun updateViewWikipedia(artistUiState: MoreDetailsUiState) {
+    private fun updateViewCard1(artistUiState: MoreDetailsUiState) {
         runOnUiThread {
-            loadImageIntoViewWikipedia(artistUiState.logoUrl)
-            setArtistViewTextWikipedia(artistUiState.artistBioContent)
+            loadImageIntoViewCard1(artistUiState.logoUrl)
+            setArtistViewTextCard1(artistUiState.artistBioContent)
         }
     }
 
-    private fun setURLButtonWikipedia(artistUiState: MoreDetailsUiState) {
+    private fun setURLButtonCard1(artistUiState: MoreDetailsUiState) {
         val artistUrl = artistUiState.infoURL
-        setOpenUrlButtonWikipedia(artistUrl)
+        setOpenUrlButtonCard1(artistUrl)
     }
 
-    private fun setOpenUrlButtonWikipedia(artistUrl: String) {
-        wikipediaOpenUrlButton.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW)
-            intent.data = Uri.parse(artistUrl)
-            startActivity(intent)
-        }
-    }
-
-    private fun loadImageIntoViewWikipedia(logoUrl: String) {
-        Picasso.get().load(logoUrl).into(wikipediaImageView)
-    }
-
-    @Suppress("DEPRECATION")
-    private fun setArtistViewTextWikipedia(artistInfoText: String) {
-        wikipediaArtistTextView.text = Html.fromHtml(artistInfoText)
-    }
-
-    private fun updateViewLastFM(artistUiState: MoreDetailsUiState) {
-        runOnUiThread {
-            loadImageIntoViewLastFM(artistUiState.logoUrl)
-            setArtistViewTextLastFM(artistUiState.artistBioContent)
-        }
-    }
-
-    private fun setURLButtonLastFM(artistUiState: MoreDetailsUiState) {
-        val artistUrl = artistUiState.infoURL
-        setOpenUrlButtonLastFM(artistUrl)
-    }
-
-    private fun setOpenUrlButtonLastFM(artistUrl: String) {
+    private fun setOpenUrlButtonCard1(artistUrl: String) {
         card1OpenUrlButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(artistUrl)
@@ -144,42 +115,71 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         }
     }
 
-    private fun loadImageIntoViewLastFM(logoUrl: String) {
+    private fun loadImageIntoViewCard1(logoUrl: String) {
         Picasso.get().load(logoUrl).into(card1ImageView)
     }
 
     @Suppress("DEPRECATION")
-    private fun setArtistViewTextLastFM(artistInfoText: String) {
-        lastFMArtistTextView.text = Html.fromHtml(artistInfoText)
+    private fun setArtistViewTextCard1(artistInfoText: String) {
+        card1TextView.text = Html.fromHtml(artistInfoText)
     }
 
-    private fun updateViewNYTimes(artistUiState: MoreDetailsUiState) {
+    private fun updateViewCard2(artistUiState: MoreDetailsUiState) {
         runOnUiThread {
-            loadImageIntoViewNYTimes(artistUiState.logoUrl)
-            setArtistViewTextNYTimes(artistUiState.artistBioContent)
+            loadImageIntoViewCard2(artistUiState.logoUrl)
+            setArtistViewTextCard2(artistUiState.artistBioContent)
         }
     }
 
-    private fun setURLButtonNYTimes(artistUiState: MoreDetailsUiState) {
+    private fun setURLButtonCard2(artistUiState: MoreDetailsUiState) {
         val artistUrl = artistUiState.infoURL
-        setOpenUrlButtonNYTimes(artistUrl)
+        setOpenUrlButtonCard2(artistUrl)
     }
 
-    private fun setOpenUrlButtonNYTimes(artistUrl: String) {
-        newYorkTimesOpenUrlButton.setOnClickListener {
+    private fun setOpenUrlButtonCard2(artistUrl: String) {
+        card2OpenUrlButton.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(artistUrl)
             startActivity(intent)
         }
     }
 
-    private fun loadImageIntoViewNYTimes(logoUrl: String) {
-        Picasso.get().load(logoUrl).into(newYorkTimesImageView)
+    private fun loadImageIntoViewCard2(logoUrl: String) {
+        Picasso.get().load(logoUrl).into(card2ImageView)
     }
 
     @Suppress("DEPRECATION")
-    private fun setArtistViewTextNYTimes(artistInfoText: String) {
-        newYorkTimesArtistTextView.text = Html.fromHtml(artistInfoText)
+    private fun setArtistViewTextCard2(artistInfoText: String) {
+        card2TextView.text = Html.fromHtml(artistInfoText)
+    }
+
+    private fun updateViewCard3(artistUiState: MoreDetailsUiState) {
+        runOnUiThread {
+            loadImageIntoViewCard3(artistUiState.logoUrl)
+            setArtistViewTextCard3(artistUiState.artistBioContent)
+        }
+    }
+
+    private fun setURLButtonCard3(artistUiState: MoreDetailsUiState) {
+        val artistUrl = artistUiState.infoURL
+        setOpenUrlButtonCard3(artistUrl)
+    }
+
+    private fun setOpenUrlButtonCard3(artistUrl: String) {
+        card3OpenUrlButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(artistUrl)
+            startActivity(intent)
+        }
+    }
+
+    private fun loadImageIntoViewCard3(logoUrl: String) {
+        Picasso.get().load(logoUrl).into(card3ImageView)
+    }
+
+    @Suppress("DEPRECATION")
+    private fun setArtistViewTextCard3(artistInfoText: String) {
+        card3TextView.text = Html.fromHtml(artistInfoText)
     }
 
 
