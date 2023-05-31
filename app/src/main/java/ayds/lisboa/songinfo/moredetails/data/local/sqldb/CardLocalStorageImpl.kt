@@ -26,7 +26,7 @@ class CardLocalStorageImpl (
             for (card in cardList){
                 if(card is Card.CardData){
                     val values = ContentValues()
-                    values.put(SOURCE, card.source)
+                    values.put(SOURCE, card.source.ordinal)
                     values.put(DESCRIPTION, card.description)
                     values.put(INFO_URL, card.infoURL)
                     values.put(SOURCE_LOGO_URL, card.sourceLogoURL)
