@@ -36,7 +36,7 @@ internal class MoreDetailsPresenterImpl(
         val cards = repository.getCards(artistName)
         val moreDetailsUiStates : MutableList<MoreDetailsUiState> = ArrayList()
         for (card in cards){
-            val reformattedText = cardDescriptionHelper.getCardInfo(card)
+            val reformattedText = cardDescriptionHelper.getCardDescription(card,artistName)
             moreDetailsUiStates.add(updateCardUiState(card, reformattedText))
         }
 
