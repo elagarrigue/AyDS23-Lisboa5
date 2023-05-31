@@ -2,10 +2,11 @@ package ayds.lisboa.songinfo.moredetails.cards
 
 import android.database.Cursor
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 
 interface CursorToCardLocal {
 
-    fun cursorArtist(cursor: Cursor):  List<Card>
+    fun cursorArtist(cursor: Cursor): List<Card>
 }
 
 internal class CursorToCardLocalImpl : CursorToCardLocal {
@@ -20,17 +21,30 @@ internal class CursorToCardLocalImpl : CursorToCardLocal {
             val columnIndexSourceLogoURL = getColumnIndexOrThrow(SOURCE_LOGO_URL)
 
             while (moveToNext()) {
-                val artistSource = getString(columnIndexSource)
+                val artistSource = getInt(columnIndexSource)
                 val artistDescription = getString(columnIndexDescription)
                 val artistInfoURL = getString(columnIndexInfoURL)
                 val artistLogoURL = getString(columnIndexSourceLogoURL)
 
-                val card = Card.CardData(artistSource, artistDescription, artistInfoURL, artistLogoURL)
+                val card = Card.CardData(
+                    ordinalToSource(artistSource),
+                    artistDescription,
+                    artistInfoURL,
+                    artistLogoURL
+                )
                 cards.add(card)
             }
         }
 
         cursor.close()
         return cards
+    }
+
+    private fun ordinalToSource(ordinal: Int): Source {
+        return when (ordinal) {
+            (1) -> Source.CARD1
+            (2) -> Source.CARD2
+            else -> Source.CARD3
+        }
     }
 }
