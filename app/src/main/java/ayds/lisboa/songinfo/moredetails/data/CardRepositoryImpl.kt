@@ -13,14 +13,8 @@ class CardRepositoryImpl(
     override fun getCards(artistName: String): List<Card> {
         var cards: List<Card>
         cards = cardLocalStorage.getCardList(artistName)
-        var someCardData = false
-        for (c in cards) {
-            if (c is Card.CardData) {
-                someCardData = true
-            }
-        }
         when {
-            (someCardData) -> { markCardsAsLocal(cards) } //Hay que hacer esto??
+            (cards.isNotEmpty()) -> { markCardsAsLocal(cards) }
             else -> {
                 cards = broker.getCards(artistName)
                 saveCardInfo(cards)
