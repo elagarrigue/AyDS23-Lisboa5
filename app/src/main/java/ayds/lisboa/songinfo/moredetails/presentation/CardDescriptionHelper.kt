@@ -7,13 +7,17 @@ private const val HTML_OPENING_TAG = "<html><div width=400><font face=\"arial\">
 private const val HTML_CLOSING_TAG = "</font></div></html>"
 
 interface CardDescriptionHelper {
-    fun getCardInfo(card:Card):String
+    fun getCardInfo(card: Card): String
 }
-internal class CardDescriptionHelperImpl : CardDescriptionHelper{
+
+internal class CardDescriptionHelperImpl : CardDescriptionHelper {
     override fun getCardInfo(card: Card): String {
-        return if (card is Card.CardData)
+        return if (card is Card.CardData) {
+            if (card.isLocallyStored) {
+                card.description = PREFIX + card.description
+            }
             card.description
-        else
+        } else
             "No results"
     }
 
