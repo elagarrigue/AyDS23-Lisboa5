@@ -18,6 +18,6 @@ class Broker(
         cardList.add(proxyLastFM.getCard(artistName))
         cardList.add(proxyNYTimes.getCard(artistName))
 
-        return cardList
+        return cardList.filterIsInstance<Card.CardData>()
     }
 }
