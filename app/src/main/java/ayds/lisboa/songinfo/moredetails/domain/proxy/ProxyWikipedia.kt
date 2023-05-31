@@ -1,6 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.domain.proxy
 
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.winchester3.wikiartist.artist.externalWikipedia.WIKIPEDIA_LOGO_URL
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
 
 class ProxyWikipedia(
@@ -15,7 +16,7 @@ class ProxyWikipedia(
                 "Wikipedia",
                 artistWikiInfo.description,
                 artistWikiInfo.wikipediaURL,
-                "artistWikiInfo.getImageURL()" //No esta el logo de la URL en el repo
+                WIKIPEDIA_LOGO_URL //No esta el logo de la URL en el repo
             )
         }
     }
