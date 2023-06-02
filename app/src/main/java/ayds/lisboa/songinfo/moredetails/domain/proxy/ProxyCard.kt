@@ -68,7 +68,7 @@ internal class NYTimesProxy(
 
             when {
                 (artistAPIInfo is ArtistDataExternal.ArtistWithDataExternal) -> Card.CardData(
-                    Source.NYTIMES,
+                    Source.NY_TIMES,
                     artistAPIInfo.info!!,
                     artistAPIInfo.url,
                     NYT_LOGO_URL

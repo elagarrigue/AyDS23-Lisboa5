@@ -11,7 +11,7 @@ internal class CardSourceFactoryImpl : CardSourceFactory {
         return when (source) {
             Source.WIKIPEDIA -> "Wikipedia"
             Source.LASTFM -> "Last FM"
-            Source.NYTIMES -> "New York Times"
+            Source.NY_TIMES -> "New York Times"
         }
     }
 }
