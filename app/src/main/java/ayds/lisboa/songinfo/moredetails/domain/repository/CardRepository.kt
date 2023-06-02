@@ -11,7 +11,7 @@ interface CardRepository {
 
 internal class CardRepositoryImpl(
     private val cardLocalStorage: CardLocalStorage,
-    private val broker: Broker
+    private val cardBroker: Broker
 ) : CardRepository {
 
     override fun getCards(artistName: String): List<Card> {
@@ -34,7 +34,7 @@ internal class CardRepositoryImpl(
     }
 
     private fun getBrokerCards(artistName: String) =
-        broker.getCards(artistName)
+        cardBroker.getCards(artistName)
 
 
     private fun markCardsAsLocal(cards: List<Card.CardData>) {
