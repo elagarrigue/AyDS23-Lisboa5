@@ -4,7 +4,6 @@ import android.content.Context
 import ayds.aknewyork.external.service.data.NYTimesService
 import ayds.aknewyork.external.service.injector.NYTimesInjector
 import ayds.lisboa.songinfo.moredetails.cards.CursorToCardLocalImpl
-import ayds.lisboa.songinfo.moredetails.data.CardRepositoryImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorage
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorageImpl
 
@@ -15,6 +14,7 @@ import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard3
 import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard1
 import ayds.lisboa.songinfo.moredetails.domain.proxy.ProxyCard2
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
+import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepositoryImpl
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaInjector
