@@ -27,7 +27,7 @@ internal class CursorToCardLocalImpl : CursorToCardLocal {
                 val cardLogoURL = getString(columnIndexSourceLogoURL)
 
                 val card = Card.CardData(
-                    ordinalToSource(cardSource),
+                    Source.values()[cardSource],
                     cardDescription,
                     cardInfoURL,
                     cardLogoURL
@@ -38,13 +38,5 @@ internal class CursorToCardLocalImpl : CursorToCardLocal {
 
         cursor.close()
         return cards
-    }
-
-    private fun ordinalToSource(ordinal: Int): Source {
-        return when (ordinal) {
-            (0) -> Source.CARD1
-            (1) -> Source.CARD2
-            else -> Source.CARD3
-        }
     }
 }
