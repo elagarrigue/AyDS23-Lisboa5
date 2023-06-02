@@ -65,7 +65,7 @@ internal class MoreDetailsPresenterImpl(
     }
 
     private fun getCardSource(card : Card.CardData): String {
-        return cardSourceHelper.getSource(card.source).createSource()
+        return cardSourceHelper.getSource(card.source)
     }
 
     private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {
