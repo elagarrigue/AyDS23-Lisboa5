@@ -6,12 +6,12 @@ import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 
 interface CursorToCardLocal {
 
-    fun cursorArtist(cursor: Cursor): List<Card>
+    fun cursorCard(cursor: Cursor): List<Card>
 }
 
 internal class CursorToCardLocalImpl : CursorToCardLocal {
 
-    override fun cursorArtist(cursor: Cursor): MutableList<Card> {
+    override fun cursorCard(cursor: Cursor): MutableList<Card> {
         val cards = mutableListOf<Card>()
 
         with(cursor) {
@@ -21,16 +21,16 @@ internal class CursorToCardLocalImpl : CursorToCardLocal {
             val columnIndexSourceLogoURL = getColumnIndexOrThrow(SOURCE_LOGO_URL)
 
             while (moveToNext()) {
-                val artistSource = getInt(columnIndexSource)
-                val artistDescription = getString(columnIndexDescription)
-                val artistInfoURL = getString(columnIndexInfoURL)
-                val artistLogoURL = getString(columnIndexSourceLogoURL)
+                val cardSource = getInt(columnIndexSource)
+                val cardDescription = getString(columnIndexDescription)
+                val cardInfoURL = getString(columnIndexInfoURL)
+                val cardLogoURL = getString(columnIndexSourceLogoURL)
 
                 val card = Card.CardData(
-                    ordinalToSource(artistSource),
-                    artistDescription,
-                    artistInfoURL,
-                    artistLogoURL
+                    ordinalToSource(cardSource),
+                    cardDescription,
+                    cardInfoURL,
+                    cardLogoURL
                 )
                 cards.add(card)
             }
