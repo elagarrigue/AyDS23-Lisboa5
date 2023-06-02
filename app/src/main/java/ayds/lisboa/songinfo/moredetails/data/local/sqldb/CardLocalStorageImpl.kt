@@ -60,6 +60,6 @@ class CardLocalStorageImpl (
                 null,
                 sortOrder
             )
-            return cursorDataBase.cursorArtist(cursor).toList()
+            return cursorDataBase.cursorCard(cursor).toList()
         }
 }
