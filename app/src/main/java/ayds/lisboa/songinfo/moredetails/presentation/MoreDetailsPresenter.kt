@@ -15,7 +15,7 @@ interface MoreDetailsPresenter {
 internal class MoreDetailsPresenterImpl(
     private val cardDescriptionHelper: CardDescriptionHelper,
     private val repository: CardRepository,
-    private val cardSourceHelper: CardSourceHelper
+    private val cardSourceFactory: CardSourceFactory
     ) :
     MoreDetailsPresenter {
 
@@ -65,7 +65,7 @@ internal class MoreDetailsPresenterImpl(
     }
 
     private fun getCardSource(card : Card.CardData): String {
-        return cardSourceHelper.getSource(card.source)
+        return cardSourceFactory.getSource(card.source)
     }
 
     private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {

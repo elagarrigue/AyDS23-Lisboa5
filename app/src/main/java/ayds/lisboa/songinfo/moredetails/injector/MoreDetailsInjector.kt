@@ -21,7 +21,7 @@ import lisboa5lastfm.ExternalServiceInjector
 
 object MoreDetailsInjector {
     private val cardDescriptionHelper: CardDescriptionHelper = CardDescriptionHelperImpl()
-    private val cardSourceHelper: CardSourceHelper = CardSourceHelperImpl()
+    private val cardSourceFactory: CardSourceFactory = CardSourceFactoryImpl()
     private val wikipediaService : WikipediaService =
         WikipediaInjector.wikipediaService
     private val proxyCard1 : ProxyCard = WikipediaProxy(wikipediaService)
@@ -41,7 +41,7 @@ object MoreDetailsInjector {
 
     fun init(moreDetailsView: MoreDetailsView){
         val repository = initMoreDetailsRepository(moreDetailsView)
-        moreDetailsPresenter = MoreDetailsPresenterImpl(cardDescriptionHelper,repository,cardSourceHelper)
+        moreDetailsPresenter = MoreDetailsPresenterImpl(cardDescriptionHelper,repository,cardSourceFactory)
     }
 
     private fun initMoreDetailsRepository(moreDetailsView: MoreDetailsView): CardRepository {
