@@ -12,7 +12,7 @@ sealed class Card {
 }
 
 enum class Source {
-    CARD1,
-    CARD2,
-    CARD3
+    WIKIPEDIA,
+    LASTFM,
+    NYTIMES
 }

@@ -9,9 +9,9 @@ interface CardSourceHelper{
 internal class CardSourceHelperImpl:CardSourceHelper {
     override fun getSource(source: Source):SourceCreator {
         return when (source){
-            Source.CARD1 -> Card1Factory()
-            Source.CARD2 -> Card2Factory()
-            Source.CARD3 -> Card3Factory()
+            Source.WIKIPEDIA -> Card1Factory()
+            Source.LASTFM -> Card2Factory()
+            Source.NYTIMES -> Card3Factory()
         }
     }
 

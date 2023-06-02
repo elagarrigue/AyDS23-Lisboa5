@@ -25,7 +25,7 @@ internal class WikipediaProxy(
             when {
                 (artistWikiInfo == null) -> Card.EmptyCard
                 else -> Card.CardData(
-                    Source.CARD1,
+                    Source.WIKIPEDIA,
                     artistWikiInfo.description,
                     artistWikiInfo.wikipediaURL,
                     WIKIPEDIA_LOGO_URL
@@ -46,7 +46,7 @@ internal class LastFMProxy(
             when {
                 (artistLastFMInfo == null) -> Card.EmptyCard
                 else -> Card.CardData(
-                    Source.CARD2,
+                    Source.LASTFM,
                     artistLastFMInfo.artistBioContent,
                     artistLastFMInfo.artistURL,
                     LASTFM_LOGO_URL,
@@ -68,7 +68,7 @@ internal class NYTimesProxy(
 
             when {
                 (artistAPIInfo is ArtistDataExternal.ArtistWithDataExternal) -> Card.CardData(
-                    Source.CARD3,
+                    Source.NYTIMES,
                     artistAPIInfo.info!!,
                     artistAPIInfo.url,
                     NYT_LOGO_URL
