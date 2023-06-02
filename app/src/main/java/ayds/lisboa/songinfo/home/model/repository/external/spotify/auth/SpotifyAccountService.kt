@@ -5,7 +5,6 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import retrofit2.Response
 
-
 private const val clientId = "7db5d794e42845028ccabd50009e631f"
 private const val clientSecret = "dc3db8626d86471b92662b72f5eff8ad"
 
