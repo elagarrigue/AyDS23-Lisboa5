@@ -1,7 +1,7 @@
 package ayds.lisboa.songinfo.moredetails.domain.repository
 
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorage
-import ayds.lisboa.songinfo.moredetails.domain.Broker
+import ayds.lisboa.songinfo.moredetails.data.Broker
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
 interface CardRepository {

@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.domain.proxy
+package ayds.lisboa.songinfo.moredetails.data.proxy
 
 import ayds.aknewyork.external.service.data.NYTimesService
 import ayds.aknewyork.external.service.data.entities.ArtistDataExternal
@@ -60,7 +60,7 @@ internal class LastFMProxy(
 
 internal class NYTimesProxy(
     private val nyTimesService: NYTimesService
-) : ProxyCard{
+) : ProxyCard {
 
     override fun getCard(artistName: String): Card {
         return try {
