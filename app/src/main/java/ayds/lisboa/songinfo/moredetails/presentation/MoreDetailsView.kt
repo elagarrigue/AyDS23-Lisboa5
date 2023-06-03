@@ -12,6 +12,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
+import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 import ayds.lisboa.songinfo.moredetails.injector.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -91,10 +92,10 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun updateArtistInfo(artistUiState: CardUiState) {
         updateNotEmptyUI()
         when (artistUiState.source) {
-            "Wikipedia" -> updateUICard1(artistUiState)
-            "Last FM" -> updateUICard2(artistUiState)
-            "New York Times" -> updateUICard3(artistUiState)
-            "" -> updateEmptyUI()
+            Source.WIKIPEDIA-> updateUICard1(artistUiState)
+            Source.LASTFM -> updateUICard2(artistUiState)
+            Source.NY_TIMES -> updateUICard3(artistUiState)
+            Source.EMPTY_SOURCE -> updateEmptyUI()
         }
     }
     private fun updateNotEmptyUI(){

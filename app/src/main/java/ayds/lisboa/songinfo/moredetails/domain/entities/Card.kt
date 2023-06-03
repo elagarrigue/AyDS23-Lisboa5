@@ -11,8 +11,3 @@ sealed class Card {
     object EmptyCard : Card()
 }
 
-enum class Source {
-    WIKIPEDIA,
-    LASTFM,
-    NY_TIMES
-}

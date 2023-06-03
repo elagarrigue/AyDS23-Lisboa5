@@ -12,6 +12,7 @@ internal class CardSourceFactoryImpl : CardSourceFactory {
             Source.WIKIPEDIA -> "Wikipedia"
             Source.LASTFM -> "Last FM"
             Source.NY_TIMES -> "New York Times"
+            Source.EMPTY_SOURCE -> ""
         }
     }
 }

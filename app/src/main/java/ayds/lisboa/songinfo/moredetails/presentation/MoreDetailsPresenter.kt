@@ -2,6 +2,7 @@ package ayds.lisboa.songinfo.moredetails.presentation
 
 
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
@@ -57,7 +58,7 @@ internal class MoreDetailsPresenterImpl(
 
     private fun updateCardNoResultsUiState(): CardUiState {
         return CardUiState(
-            "",
+            Source.EMPTY_SOURCE,
             "No results",
             "",
             ""
@@ -70,7 +71,7 @@ internal class MoreDetailsPresenterImpl(
 
     private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {
         return CardUiState(
-            getCardSource(card),
+            card.source,
             reformattedText,
             card.infoURL,
             card.sourceLogoURL
