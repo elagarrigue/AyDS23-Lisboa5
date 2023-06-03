@@ -7,6 +7,7 @@ import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
 
+private const val SOURCE = "Source: "
 interface MoreDetailsPresenter {
     val artistObservable: Observable<CardUiState>
 
@@ -61,6 +62,7 @@ internal class MoreDetailsPresenterImpl(
             Source.EMPTY_SOURCE,
             "No results",
             "",
+            "",
             ""
         )
     }
@@ -68,13 +70,17 @@ internal class MoreDetailsPresenterImpl(
     private fun getCardSource(card : Card.CardData): String {
         return cardSourceFactory.getSource(card.source)
     }
+    private fun getSourceDescription(card: Card.CardData)
+       = "$SOURCE${getCardSource(card)}"
+
 
     private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {
         return CardUiState(
             card.source,
             reformattedText,
             card.infoURL,
-            card.sourceLogoURL
+            card.sourceLogoURL,
+           getSourceDescription(card)
         )
     }
 

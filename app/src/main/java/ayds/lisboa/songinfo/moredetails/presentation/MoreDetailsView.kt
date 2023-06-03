@@ -17,7 +17,7 @@ import ayds.lisboa.songinfo.moredetails.injector.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
 
-private const val SOURCE = "Source: "
+
 interface MoreDetailsView
 
 internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
@@ -133,9 +133,8 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     }
 
     private fun updateSourceViewCard1(artistUiState: CardUiState){
-        val source = "$SOURCE${artistUiState.source}"
         runOnUiThread {
-            setSourceViewTextCard1(source)
+            setSourceViewTextCard1(artistUiState.sourceDescription)
         }
     }
     private fun setURLButtonCard1(artistUiState: CardUiState) {
@@ -170,9 +169,9 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         }
     }
     private fun updateSourceViewCard2(artistUiState: CardUiState){
-        val source = "$SOURCE${artistUiState.source}"
+
         runOnUiThread {
-            setSourceViewTextCard2(source)
+            setSourceViewTextCard2(artistUiState.sourceDescription)
         }
     }
     private fun setURLButtonCard2(artistUiState: CardUiState) {
@@ -206,9 +205,8 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         }
     }
     private fun updateSourceViewCard3(artistUiState: CardUiState){
-        val source = "$SOURCE${artistUiState.source}"
         runOnUiThread {
-            setSourceViewTextCard3(source)
+            setSourceViewTextCard3(artistUiState.sourceDescription)
         }
     }
     private fun setURLButtonCard3(artistUiState: CardUiState) {
