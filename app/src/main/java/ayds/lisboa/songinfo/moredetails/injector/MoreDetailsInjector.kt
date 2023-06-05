@@ -10,13 +10,13 @@ import ayds.lisboa.songinfo.moredetails.data.proxy.LastFMProxy
 import ayds.lisboa.songinfo.moredetails.data.proxy.NYTimesProxy
 import ayds.lisboa.songinfo.moredetails.data.proxy.ProxyCard
 import ayds.lisboa.songinfo.moredetails.data.proxy.WikipediaProxy
-import ayds.lisboa.songinfo.moredetails.data.Broker
-import ayds.lisboa.songinfo.moredetails.data.BrokerImpl
 
 import lisboa5lastfm.artist.ArtistExternalService
 
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.lisboa.songinfo.moredetails.data.CardRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.data.CardsBroker
+import ayds.lisboa.songinfo.moredetails.data.CardsBrokerImpl
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaInjector
@@ -37,7 +37,7 @@ object MoreDetailsInjector {
     private val nyTimesService : NYTimesService = NYTimesInjector.nyTimesService
     private val proxyCard3 : ProxyCard = NYTimesProxy(nyTimesService)
 
-    private val broker: Broker = BrokerImpl(
+    private val broker: CardsBroker = CardsBrokerImpl(
         proxyCard1, proxyCard2, proxyCard3
     )
 
