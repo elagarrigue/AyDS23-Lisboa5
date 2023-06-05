@@ -9,7 +9,7 @@ import ayds.observer.Subject
 
 private const val SOURCE = "Source: "
 interface MoreDetailsPresenter {
-    val artistObservable: Observable<CardUiState>
+    val artistObservable: Observable<List<CardUiState>>
 
     fun moreDetails(artistName: String)
 }
@@ -21,7 +21,7 @@ internal class MoreDetailsPresenterImpl(
     ) :
     MoreDetailsPresenter {
 
-    override val artistObservable = Subject<CardUiState>()
+    override val artistObservable = Subject<List<CardUiState>>()
 
     override fun moreDetails(artistName: String) {
         Thread {
@@ -31,22 +31,20 @@ internal class MoreDetailsPresenterImpl(
 
     private fun fetchMoreDetails(artistName: String){
         val moreDetailsUiStates = getMoreDetailsUiState(artistName)
-        if(moreDetailsUiStates.isEmpty()){
-            artistObservable.notify(updateCardNoResultsUiState())
-        }
-        else{
-            for (moreDetailsUiState in moreDetailsUiStates)
-                artistObservable.notify(moreDetailsUiState)
-        }
+        artistObservable.notify(moreDetailsUiStates)
     }
     private fun getMoreDetailsUiState(artistName: String): List<CardUiState> {
         val cards = repository.getCards(artistName)
         val cardUiStates : MutableList<CardUiState> = ArrayList()
-        for (card in cards){
-            val reformattedText = cardDescriptionHelper.getCardDescription(card,artistName)
-            cardUiStates.add(updateCardUiState(card, reformattedText))
-        }
 
+        if (cards.isEmpty()) {
+            cardUiStates.add(updateCardNoResultsUiState())
+        } else {
+            for (card in cards){
+                val reformattedText = cardDescriptionHelper.getCardDescription(card,artistName)
+                cardUiStates.add(updateCardUiState(card, reformattedText))
+            }
+        }
         return cardUiStates
     }
 
@@ -68,7 +66,7 @@ internal class MoreDetailsPresenterImpl(
     }
 
     private fun getCardSource(card : Card.CardData): String {
-        return cardSourceFactory.getSource(card.source)
+        return cardSourceFactory.getSourceTitle(card.source)
     }
     private fun getSourceDescription(card: Card.CardData)
        = "$SOURCE${getCardSource(card)}"
