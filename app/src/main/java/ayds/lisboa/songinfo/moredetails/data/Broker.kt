@@ -1,17 +1,17 @@
 package ayds.lisboa.songinfo.moredetails.data
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 import ayds.lisboa.songinfo.moredetails.data.proxy.ProxyCard
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
-interface Broker {
+interface CardsBroker {
     fun getCards(artistName: String): List<Card>
 }
 
-class BrokerImpl(
+internal class CardsBrokerImpl(
     private val proxyCard1: ProxyCard,
     private val proxyCard2: ProxyCard,
     private val proxyCard3: ProxyCard
-) : Broker {
+) :CardsBroker {
 
     override fun getCards(artistName: String): List<Card> {
         val cardList = ArrayList<Card>()
