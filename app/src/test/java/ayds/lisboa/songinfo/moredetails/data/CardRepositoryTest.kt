@@ -1,5 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.data
 
+import ayds.lisboa.songinfo.moredetails.data.external.CardsBroker
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorage
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 import ayds.lisboa.songinfo.moredetails.domain.entities.Source

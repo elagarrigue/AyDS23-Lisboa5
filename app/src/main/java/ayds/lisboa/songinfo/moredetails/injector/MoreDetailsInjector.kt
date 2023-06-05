@@ -15,8 +15,8 @@ import lisboa5lastfm.artist.ArtistExternalService
 
 import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.lisboa.songinfo.moredetails.data.CardRepositoryImpl
-import ayds.lisboa.songinfo.moredetails.data.CardsBroker
-import ayds.lisboa.songinfo.moredetails.data.CardsBrokerImpl
+import ayds.lisboa.songinfo.moredetails.data.external.CardsBroker
+import ayds.lisboa.songinfo.moredetails.data.external.CardsBrokerImpl
 import ayds.lisboa.songinfo.moredetails.presentation.*
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaInjector
