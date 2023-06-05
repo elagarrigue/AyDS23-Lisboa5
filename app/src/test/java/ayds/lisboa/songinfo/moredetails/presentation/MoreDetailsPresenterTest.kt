@@ -46,10 +46,10 @@ class MoreDetailsPresenterTest {
             "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>",
             "infoUrl",
             "logoUrl",
-            "Last FM"
+            "Source: Last FM"
         )
         val cardUiStateListExpected = ArrayList<CardUiState>()
-        cardUiStateListExpected.add(cardUiStateExpected)
+        cardUiStateListExpected.add (cardUiStateExpected)
         cardUiStateListExpected.add(cardUiStateExpected)
         cardUiStateListExpected.add(cardUiStateExpected)
         verify { artistTester(cardUiStateListExpected) }
@@ -75,7 +75,7 @@ class MoreDetailsPresenterTest {
 
         val cardUiStateExpected = CardUiState(
             Source.EMPTY_SOURCE,
-            "No Results",
+            "No results",
             "",
             ""
         )
