@@ -6,13 +6,13 @@ import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 
 interface CursorToCardLocal {
 
-    fun cursorCard(cursor: Cursor): List<Card>
+    fun cursorCard(cursor: Cursor): List<Card.CardData>
 }
 
 internal class CursorToCardLocalImpl : CursorToCardLocal {
 
-    override fun cursorCard(cursor: Cursor): MutableList<Card> {
-        val cards = mutableListOf<Card>()
+    override fun cursorCard(cursor: Cursor): MutableList<Card.CardData> {
+        val cards = mutableListOf<Card.CardData>()
 
         with(cursor) {
             val columnIndexSource = getColumnIndexOrThrow(SOURCE)
