@@ -93,22 +93,25 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
 
         for ((index, artistUiState) in moreDetailsUiStates.withIndex()) {
             when (index) {
-                0-> updateEmptyUI()
-                1 -> updateUICard1(artistUiState)
-                2-> updateUICard2(artistUiState)
-                3 -> updateUICard3(artistUiState)
+                0 -> updateUICard1(artistUiState)
+                1 -> updateUICard2(artistUiState)
+                2 -> updateUICard3(artistUiState)
+                3 -> updateEmptyUI()
             }
         }
     }
-    private fun updateNotEmptyUI(){
+
+    private fun updateNotEmptyUI() {
         noResultsTextView.visibility = View.INVISIBLE
         scrollView.visibility = View.VISIBLE
     }
-    private fun updateEmptyUI(){
+
+    private fun updateEmptyUI() {
         noResultsTextView.visibility = View.VISIBLE
         scrollView.visibility = View.INVISIBLE
 
     }
+
     private fun updateUICard1(artistUiState: CardUiState) {
         updateViewCard1(artistUiState)
         updateSourceViewCard1(artistUiState)
@@ -134,11 +137,12 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         }
     }
 
-    private fun updateSourceViewCard1(artistUiState: CardUiState){
+    private fun updateSourceViewCard1(artistUiState: CardUiState) {
         runOnUiThread {
             setSourceViewTextCard1(artistUiState.sourceDescription)
         }
     }
+
     private fun setURLButtonCard1(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard1(artistUrl)
@@ -155,6 +159,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun loadImageIntoViewCard1(logoUrl: String) {
         Picasso.get().load(logoUrl).into(card1ImageView)
     }
+
     private fun setSourceViewTextCard1(sourceText: String) {
         card1SourceTextView.text = Html.fromHtml(sourceText)
     }
@@ -170,12 +175,14 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
             setArtistViewTextCard2(artistUiState.artistBioContent)
         }
     }
-    private fun updateSourceViewCard2(artistUiState: CardUiState){
+
+    private fun updateSourceViewCard2(artistUiState: CardUiState) {
 
         runOnUiThread {
             setSourceViewTextCard2(artistUiState.sourceDescription)
         }
     }
+
     private fun setURLButtonCard2(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard2(artistUrl)
@@ -197,20 +204,24 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun setArtistViewTextCard2(artistInfoText: String) {
         card2TextView.text = Html.fromHtml(artistInfoText)
     }
+
     private fun setSourceViewTextCard2(sourceText: String) {
         card2SourceTextView.text = Html.fromHtml(sourceText)
     }
+
     private fun updateViewCard3(artistUiState: CardUiState) {
         runOnUiThread {
             loadImageIntoViewCard3(artistUiState.logoUrl)
             setArtistViewTextCard3(artistUiState.artistBioContent)
         }
     }
-    private fun updateSourceViewCard3(artistUiState: CardUiState){
+
+    private fun updateSourceViewCard3(artistUiState: CardUiState) {
         runOnUiThread {
             setSourceViewTextCard3(artistUiState.sourceDescription)
         }
     }
+
     private fun setURLButtonCard3(artistUiState: CardUiState) {
         val artistUrl = artistUiState.infoURL
         setOpenUrlButtonCard3(artistUrl)
@@ -232,6 +243,7 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
     private fun setArtistViewTextCard3(artistInfoText: String) {
         card3TextView.text = Html.fromHtml(artistInfoText)
     }
+
     private fun setSourceViewTextCard3(sourceText: String) {
         card3SourceTextView.text = Html.fromHtml(sourceText)
     }
