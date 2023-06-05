@@ -12,7 +12,6 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import ayds.lisboa.songinfo.R
-import ayds.lisboa.songinfo.moredetails.domain.entities.Source
 import ayds.lisboa.songinfo.moredetails.injector.MoreDetailsInjector
 import com.squareup.picasso.Picasso
 import java.util.*
@@ -89,13 +88,16 @@ internal class MoreDetailsViewActivity : MoreDetailsView, AppCompatActivity() {
         moreDetailsPresenter.moreDetails(artistName)
     }
 
-    private fun updateArtistInfo(artistUiState: CardUiState) {
+    private fun updateArtistInfo(moreDetailsUiStates: List<CardUiState>) {
         updateNotEmptyUI()
-        when (artistUiState.source) {
-            Source.WIKIPEDIA-> updateUICard1(artistUiState)
-            Source.LASTFM -> updateUICard2(artistUiState)
-            Source.NY_TIMES -> updateUICard3(artistUiState)
-            Source.EMPTY_SOURCE -> updateEmptyUI()
+
+        for ((index, artistUiState) in moreDetailsUiStates.withIndex()) {
+            when (index) {
+                0-> updateEmptyUI()
+                1 -> updateUICard1(artistUiState)
+                2-> updateUICard2(artistUiState)
+                3 -> updateUICard3(artistUiState)
+            }
         }
     }
     private fun updateNotEmptyUI(){
