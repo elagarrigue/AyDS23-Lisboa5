@@ -37,7 +37,7 @@ class CardLocalStorageImpl (
         }
 
 
-        override fun getCardList(artistName: String):List<Card> {
+        override fun getCardList(artistName: String):List<Card.CardData> {
 
             val columnsToSelect = arrayOf(
                 ID,

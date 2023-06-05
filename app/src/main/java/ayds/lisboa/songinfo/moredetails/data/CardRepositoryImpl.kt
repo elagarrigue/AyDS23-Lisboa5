@@ -6,12 +6,12 @@ import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 
 class CardRepositoryImpl(
     private val cardLocalStorage: CardLocalStorage,
-    private val cardBroker: Broker
+    private val cardBroker: CardsBroker
 ) : CardRepository {
 
     override fun getCards(artistName: String): List<Card> {
         var cards: List<Card>
-        cards = cardLocalStorage.getCardList(artistName) as List<Card.CardData>
+        cards = cardLocalStorage.getCardList(artistName)
         when {
             (cards.isNotEmpty()) -> {
                 markCardsAsLocal(cards)
