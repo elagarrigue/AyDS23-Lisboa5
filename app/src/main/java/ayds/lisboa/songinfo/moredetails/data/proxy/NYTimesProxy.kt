@@ -1,8 +1,10 @@
 package ayds.lisboa.songinfo.moredetails.data.proxy
 
+import ayds.aknewyork.external.service.data.NYTimesService
+import ayds.aknewyork.external.service.data.entities.ArtistDataExternal
+import ayds.aknewyork.external.service.data.entities.NYT_LOGO_URL
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 import ayds.lisboa.songinfo.moredetails.domain.entities.Source
-import lisboa5lastfm.Artist
 
 class NYTimesProxy(
     private val nyTimesService: NYTimesService
@@ -17,7 +19,7 @@ class NYTimesProxy(
         }
     }
 
-    private fun createCardData(artistAPIInfo: Artist.ArtistData?): Card {
+    private fun createCardData(artistAPIInfo: ArtistDataExternal?): Card {
         if (artistAPIInfo is ArtistDataExternal.ArtistWithDataExternal) {
          return  Card.CardData(
             Source.NY_TIMES,

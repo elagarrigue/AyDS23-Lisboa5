@@ -2,6 +2,7 @@ package ayds.lisboa.songinfo.moredetails.data.proxy
 
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 import ayds.lisboa.songinfo.moredetails.domain.entities.Source
+import ayds.winchester3.wikiartist.artist.externalWikipedia.WIKIPEDIA_LOGO_URL
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaArtist
 import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
 
