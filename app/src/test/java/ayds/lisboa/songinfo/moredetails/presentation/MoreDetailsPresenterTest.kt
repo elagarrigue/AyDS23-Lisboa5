@@ -42,7 +42,6 @@ class MoreDetailsPresenterTest {
         moreDetailsPresenter.moreDetails("Artista")
 
         val cardUiStateExpected = CardUiState(
-            Source.LASTFM,
             "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>",
             "infoUrl",
             "logoUrl",
@@ -74,7 +73,6 @@ class MoreDetailsPresenterTest {
         moreDetailsPresenter.moreDetails("artistName")
 
         val cardUiStateExpected = CardUiState(
-            Source.EMPTY_SOURCE,
             "No results",
             "",
             ""
