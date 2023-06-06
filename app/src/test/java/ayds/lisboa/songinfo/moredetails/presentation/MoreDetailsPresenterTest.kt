@@ -1,7 +1,9 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
+
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.lisboa.songinfo.moredetails.domain.entities.Source
+import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -10,55 +12,75 @@ import org.junit.Test
 
 class MoreDetailsPresenterTest {
 
-    private val artistDescriptionHelper : ArtistDescriptionHelper = mockk(relaxUnitFun = true)
-
-    private val repository: ArtistRepository = mockk()
+    private val cardDescriptionHelper : CardDescriptionHelper = mockk(relaxUnitFun = true)
+    private val cardSourceFactory : CardSourceFactory = mockk()
+    private val repository: CardRepository = mockk()
     private val moreDetailsPresenter : MoreDetailsPresenter by lazy {
-        MoreDetailsPresenterImpl(artistDescriptionHelper,repository)
+        MoreDetailsPresenterImpl(cardDescriptionHelper,repository,cardSourceFactory)
     }
 
     @Test
     fun `when more details of an Artist are fetched should notify`() {
-        val artist : Artist.ArtistData = Artist.ArtistData(
-            "Artista",
+        val card = Card.CardData (
+            Source.LASTFM,
             "Descripcion del artista",
-            "url"
+            "infoUrl",
+            "logoUrl"
         )
-        every { repository.getArtist("Artista") } returns artist
-        every { artistDescriptionHelper.getArtistDescription(artist) } returns  "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>"
-        val artistTester: (MoreDetailsUiState) -> Unit = mockk(relaxed = true)
+        val cards = ArrayList<Card.CardData>()
+        cards.add(card)
+        cards.add(card)
+        cards.add(card)
+        every { repository.getCards("Artista") } returns cards
+        every { cardDescriptionHelper.getCardDescription(card,"Artista") } returns  "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>"
+        every { cardSourceFactory.getSourceTitle(Source.LASTFM) } returns "Last FM"
+        val artistTester: (List<CardUiState>) -> Unit = mockk(relaxed = true)
 
         moreDetailsPresenter.artistObservable.subscribe {
             artistTester(it)
         }
         moreDetailsPresenter.moreDetails("Artista")
 
-        val moreDetailsUiStateExpected = MoreDetailsUiState(
-            "Artista",
+        val cardUiStateExpected = CardUiState(
             "<html><div width=400><font face=\"arial\">Descripcion del <b>ARTISTA</b></font></div></html>",
-            "url"
+            "infoUrl",
+            "logoUrl",
+            "Source: Last FM"
         )
-        verify { artistTester(moreDetailsUiStateExpected) }
+        val cardUiStateListExpected = ArrayList<CardUiState>()
+        cardUiStateListExpected.add (cardUiStateExpected)
+        cardUiStateListExpected.add(cardUiStateExpected)
+        cardUiStateListExpected.add(cardUiStateExpected)
+        verify { artistTester(cardUiStateListExpected) }
 
     }
 
     @Test
     fun `when more details of an EmptyArtist are fetched should notify`() {
-        val artist : Artist = Artist.EmptyArtist
-        every { repository.getArtist("artistName") } returns artist
-        every { artistDescriptionHelper.getArtistDescription(artist) } returns ""
-        val artistTester: (MoreDetailsUiState) -> Unit = mockk(relaxed = true)
+        val card = Card.EmptyCard
+        val cards = ArrayList<Card.EmptyCard>()
+        cards.add(card)
+        cards.add(card)
+        cards.add(card)
+        every { repository.getCards("artistName") } returns cards
+        every { cardDescriptionHelper.getCardDescription(card, "artistName") } returns "No results"
+
+        val artistTester: (List<CardUiState>) -> Unit = mockk(relaxed = true)
 
         moreDetailsPresenter.artistObservable.subscribe {
             artistTester(it)
         }
         moreDetailsPresenter.moreDetails("artistName")
 
-        val moreDetailsUiStateExpected = MoreDetailsUiState(
+        val cardUiStateExpected = CardUiState(
+            "No results",
             "",
-            "No Results",
             ""
         )
-        verify { artistTester(moreDetailsUiStateExpected) }
+        val cardUiStateListExpected = ArrayList<CardUiState>()
+        cardUiStateListExpected.add(cardUiStateExpected)
+        cardUiStateListExpected.add(cardUiStateExpected)
+        cardUiStateListExpected.add(cardUiStateExpected)
+        verify { artistTester(cardUiStateListExpected) }
     }
 }

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/cardLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card1ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/card1ScrollView"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <TextView
+                    android:id="@+id/card1TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:padding="16dp" />
+
+                <TextView
+                    android:id="@+id/card1SourceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toTopOf="@id/card2Logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card1OpenUrlButton" />
+
+                <Button
+                    android:id="@+id/card1OpenUrlButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:text="View Full Article"
+                    app:layout_constraintBottom_toTopOf="@+id/card2Logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card1ScrollView" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card2ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/card2ScrollView"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card1OpenUrlButton"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <TextView
+                    android:id="@+id/card2TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:padding="16dp" />
+
+                <TextView
+                    android:id="@+id/card2SourceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toTopOf="@+id/card3ScrollView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card2OpenUrlButton" />
+
+                <Button
+                    android:id="@+id/card2OpenUrlButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:text="View Full Article"
+                    app:layout_constraintBottom_toTopOf="@+id/card3Logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card2ScrollView" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/cardLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/card3ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="61dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    app:layout_constraintBottom_toTopOf="@+id/card3ScrollView"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card2OpenUrlButton"
+                    app:layout_constraintVertical_chainStyle="spread_inside" />
+
+                <TextView
+                    android:id="@+id/card3TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:autoLink="web"
+                    android:linksClickable="true"
+                    android:padding="16dp" />
+
+                <TextView
+                    android:id="@+id/card3SourceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card3OpenUrlButton" />
+
+                <Button
+                    android:id="@+id/card3OpenUrlButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:text="View Full Article"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card3ScrollView" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/noResultsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"></TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

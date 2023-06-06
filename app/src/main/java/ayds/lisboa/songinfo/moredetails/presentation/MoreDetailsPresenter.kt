@@ -1,20 +1,27 @@
 package ayds.lisboa.songinfo.moredetails.presentation
 
-import ayds.lisboa.songinfo.moredetails.domain.entities.Artist
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
+
+import ayds.lisboa.songinfo.moredetails.domain.entities.Card
+import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
 import ayds.observer.Observable
 import ayds.observer.Subject
 
+private const val SOURCE = "Source: "
+private const val NO_RESULTS = "No results"
 interface MoreDetailsPresenter {
-    val artistObservable: Observable<MoreDetailsUiState>
+    val artistObservable: Observable<List<CardUiState>>
 
     fun moreDetails(artistName: String)
 }
 
-internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: ArtistDescriptionHelper, private val repository: ArtistRepository) :
+internal class MoreDetailsPresenterImpl(
+    private val cardDescriptionHelper: CardDescriptionHelper,
+    private val repository: CardRepository,
+    private val cardSourceFactory: CardSourceFactory
+) :
     MoreDetailsPresenter {
 
-    override val artistObservable = Subject<MoreDetailsUiState>()
+    override val artistObservable = Subject<List<CardUiState>>()
 
     override fun moreDetails(artistName: String) {
         Thread {
@@ -22,38 +29,56 @@ internal class MoreDetailsPresenterImpl(private val artistDescriptionHelper: Art
         }.start()
     }
 
-    private fun fetchMoreDetails(artistName: String){
-        artistObservable.notify(getMoreDetailsUiState(artistName))
-    }
-    private fun getMoreDetailsUiState(artistName: String): MoreDetailsUiState {
-        val artist = repository.getArtist(artistName)
-        val reformattedText = artistDescriptionHelper.getArtistDescription(artist)
-        return updateArtistUiState(artist, reformattedText)
+    private fun fetchMoreDetails(artistName: String) {
+        val moreDetailsUiStates = getMoreDetailsUiState(artistName)
+        artistObservable.notify(moreDetailsUiStates)
     }
 
-    private fun updateArtistUiState(artist: Artist, reformattedText: String): MoreDetailsUiState {
-        return when (artist) {
-            is Artist.ArtistData -> updateUiState(artist, reformattedText)
-            Artist.EmptyArtist -> updateNoResultsUiState()
+    private fun getMoreDetailsUiState(artistName: String): List<CardUiState> {
+        val cards = repository.getCards(artistName)
+        val cardUiStates: MutableList<CardUiState> = ArrayList()
+
+        if (cards.isEmpty()) {
+            cardUiStates.add(updateCardNoResultsUiState())
+        } else {
+            for (card in cards) {
+                val reformattedText = cardDescriptionHelper.getCardDescription(card, artistName)
+                cardUiStates.add(updateCardUiState(card, reformattedText))
+            }
+        }
+        return cardUiStates
+    }
+
+    private fun updateCardUiState(card: Card, reformattedText: String): CardUiState {
+        return when (card) {
+            is Card.CardData -> updateUiState(card, reformattedText)
+            Card.EmptyCard -> updateCardNoResultsUiState()
         }
     }
 
-    private fun updateUiState(
-        artist: Artist.ArtistData,
-        reformattedText: String
-    ): MoreDetailsUiState {
-        return MoreDetailsUiState(
-            artistName = artist.artistName,
-            artistBioContent = reformattedText,
-            artistURL = artist.artistURL,
+    private fun updateCardNoResultsUiState(): CardUiState {
+        return CardUiState(
+            NO_RESULTS,
+            "",
+            "",
+            ""
         )
     }
 
-    private fun updateNoResultsUiState(): MoreDetailsUiState {
-        return MoreDetailsUiState(
-            artistName = "",
-            artistBioContent = "No Results",
-            artistURL = "",
+    private fun getCardSource(card: Card.CardData): String {
+        return cardSourceFactory.getSourceTitle(card.source)
+    }
+
+    private fun getSourceDescription(card: Card.CardData) = "$SOURCE${getCardSource(card)}"
+
+
+    private fun updateUiState(card: Card.CardData, reformattedText: String): CardUiState {
+        return CardUiState(
+            reformattedText,
+            card.infoURL,
+            card.sourceLogoURL,
+            getSourceDescription(card)
         )
     }
+
 }

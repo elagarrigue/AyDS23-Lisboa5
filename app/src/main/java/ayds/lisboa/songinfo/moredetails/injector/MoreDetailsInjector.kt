@@ -1,55 +1,59 @@
 package ayds.lisboa.songinfo.moredetails.injector
 
 import android.content.Context
-import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMAPI
-import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolver
-import ayds.lisboa.songinfo.moredetails.data.external.artist.LastFMToArtistResolverImpl
-import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalService
-import ayds.lisboa.songinfo.moredetails.data.external.artist.ArtistExternalServiceImpl
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorage
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.ArtistLocalStorageImpl
-import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CursorToArtistLocalImpl
-import ayds.lisboa.songinfo.moredetails.data.ArtistRepositoryImpl
-import ayds.lisboa.songinfo.moredetails.domain.repository.ArtistRepository
+import ayds.aknewyork.external.service.data.NYTimesService
+import ayds.aknewyork.external.service.injector.NYTimesInjector
+import ayds.lisboa.songinfo.moredetails.cards.CursorToCardLocalImpl
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorage
+import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorageImpl
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.LastFMProxy
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.NYTimesProxy
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.ProxyCard
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.WikipediaProxy
+
+import lisboa5lastfm.artist.ArtistExternalService
+
+import ayds.lisboa.songinfo.moredetails.domain.repository.CardRepository
+import ayds.lisboa.songinfo.moredetails.data.CardRepositoryImpl
+import ayds.lisboa.songinfo.moredetails.data.external.CardsBroker
+import ayds.lisboa.songinfo.moredetails.data.external.CardsBrokerImpl
 import ayds.lisboa.songinfo.moredetails.presentation.*
-import ayds.lisboa.songinfo.moredetails.presentation.ArtistDescriptionHelperImpl
 import ayds.lisboa.songinfo.moredetails.presentation.MoreDetailsPresenterImpl
-import retrofit2.Retrofit
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaInjector
+import ayds.winchester3.wikiartist.artist.externalWikipedia.WikipediaService
+import lisboa5lastfm.ExternalServiceInjector
 
 object MoreDetailsInjector {
+    private val cardDescriptionHelper: CardDescriptionHelper = CardDescriptionHelperImpl()
+    private val cardSourceFactory: CardSourceFactory = CardSourceFactoryImpl()
+    private val wikipediaService : WikipediaService =
+        WikipediaInjector.wikipediaService
+    private val proxyCard1 : ProxyCard = WikipediaProxy(wikipediaService)
 
-    private const val RETROFIT_URL = "https://ws.audioscrobbler.com/2.0/"
+    private val lastFMService : ArtistExternalService =
+        ExternalServiceInjector.getLastFMService()
+    private val proxyCard2 : ProxyCard = LastFMProxy(lastFMService)
 
-    private val retrofit = createRetrofit()
-    private val lastFMAPI = retrofit.create(LastFMAPI::class.java)
-    private val lastFMtoArtistResolver: LastFMToArtistResolver = LastFMToArtistResolverImpl()
-    private val artistExternalService : ArtistExternalService = ArtistExternalServiceImpl(
-        lastFMAPI,
-        lastFMtoArtistResolver
+    private val nyTimesService : NYTimesService = NYTimesInjector.nyTimesService
+    private val proxyCard3 : ProxyCard = NYTimesProxy(nyTimesService)
+
+    private val broker: CardsBroker = CardsBrokerImpl(
+        proxyCard1, proxyCard2, proxyCard3
     )
-
-    private val artistDescriptionHelper: ArtistDescriptionHelper = ArtistDescriptionHelperImpl()
 
     lateinit var moreDetailsPresenter: MoreDetailsPresenter
 
     fun init(moreDetailsView: MoreDetailsView){
         val repository = initMoreDetailsRepository(moreDetailsView)
-        moreDetailsPresenter = MoreDetailsPresenterImpl(artistDescriptionHelper,repository)
+        moreDetailsPresenter = MoreDetailsPresenterImpl(cardDescriptionHelper,repository,cardSourceFactory)
     }
 
-    private fun initMoreDetailsRepository(moreDetailsView: MoreDetailsView): ArtistRepository {
-        val artistLocalStorage: ArtistLocalStorage = ArtistLocalStorageImpl(
-            moreDetailsView as Context, CursorToArtistLocalImpl()
+    private fun initMoreDetailsRepository(moreDetailsView: MoreDetailsView): CardRepository {
+        val cardLocalStorage: CardLocalStorage = CardLocalStorageImpl(
+            moreDetailsView as Context, CursorToCardLocalImpl()
         )
 
-        return ArtistRepositoryImpl(artistLocalStorage, artistExternalService)
+        return CardRepositoryImpl(cardLocalStorage, broker)
     }
 
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(RETROFIT_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-    }
 }
