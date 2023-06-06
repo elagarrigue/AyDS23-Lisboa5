@@ -1,4 +1,4 @@
-package ayds.lisboa.songinfo.moredetails.data.proxy
+package ayds.lisboa.songinfo.moredetails.data.external.proxy
 
 import ayds.aknewyork.external.service.data.NYTimesService
 import ayds.aknewyork.external.service.data.entities.ArtistDataExternal

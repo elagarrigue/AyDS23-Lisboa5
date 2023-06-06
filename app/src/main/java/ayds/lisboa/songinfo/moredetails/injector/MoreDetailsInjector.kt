@@ -6,10 +6,10 @@ import ayds.aknewyork.external.service.injector.NYTimesInjector
 import ayds.lisboa.songinfo.moredetails.cards.CursorToCardLocalImpl
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorage
 import ayds.lisboa.songinfo.moredetails.data.local.sqldb.CardLocalStorageImpl
-import ayds.lisboa.songinfo.moredetails.data.proxy.LastFMProxy
-import ayds.lisboa.songinfo.moredetails.data.proxy.NYTimesProxy
-import ayds.lisboa.songinfo.moredetails.data.proxy.ProxyCard
-import ayds.lisboa.songinfo.moredetails.data.proxy.WikipediaProxy
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.LastFMProxy
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.NYTimesProxy
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.ProxyCard
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.WikipediaProxy
 
 import lisboa5lastfm.artist.ArtistExternalService
 

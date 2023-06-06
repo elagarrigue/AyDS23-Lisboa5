@@ -1,6 +1,6 @@
 package ayds.lisboa.songinfo.moredetails.data.external
 
-import ayds.lisboa.songinfo.moredetails.data.proxy.ProxyCard
+import ayds.lisboa.songinfo.moredetails.data.external.proxy.ProxyCard
 import ayds.lisboa.songinfo.moredetails.domain.entities.Card
 
 interface CardsBroker {
