@@ -7,7 +7,7 @@ import ayds.observer.Observable
 import ayds.observer.Subject
 
 private const val SOURCE = "Source: "
-
+private const val NO_RESULTS = "No results"
 interface MoreDetailsPresenter {
     val artistObservable: Observable<List<CardUiState>>
 
@@ -58,7 +58,7 @@ internal class MoreDetailsPresenterImpl(
 
     private fun updateCardNoResultsUiState(): CardUiState {
         return CardUiState(
-            "No results",
+            NO_RESULTS,
             "",
             "",
             ""
